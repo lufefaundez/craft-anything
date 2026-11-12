@@ -1,0 +1,4562 @@
+{
+  "total": 651,
+  "commands": [
+    {
+      "id": "document.inspect",
+      "label": "Inspect Document",
+      "category": "Agents",
+      "params": "{\"text\"?: bool}",
+      "source_module": "file.rs"
+    },
+    {
+      "id": "document.layout",
+      "label": "Layout Summary",
+      "category": "Agents",
+      "params": null,
+      "source_module": "file.rs"
+    },
+    {
+      "id": "document.paragraph",
+      "label": "Paragraph Details",
+      "category": "Agents",
+      "params": "{\"path\": [n], \"story\"?: Story}",
+      "source_module": "file.rs"
+    },
+    {
+      "id": "document.selection",
+      "label": "Selection",
+      "category": "Agents",
+      "params": null,
+      "source_module": "file.rs"
+    },
+    {
+      "id": "document.setText",
+      "label": "Replace Document Text",
+      "category": "Agents",
+      "params": null,
+      "source_module": "file.rs"
+    },
+    {
+      "id": "document.text",
+      "label": "Document Text",
+      "category": "Agents",
+      "params": null,
+      "source_module": "file.rs"
+    },
+    {
+      "id": "file.closeDocument",
+      "label": "Close Document",
+      "category": "Agents",
+      "params": "{\"id\"?: n (an open document, see view.switchWindows; default the active one), \"force\"?: bool (discard unsaved changes; without it a document with unsaved changes is an error and stays open)} → {\"closed\": id, \"active\": id, \"documents\": [{\"id\", \"title\", \"path\", \"dirty\", \"active\"}]}; closing the last document leaves a new blank one",
+      "source_module": "file.rs"
+    },
+    {
+      "id": "chart.dataLabels",
+      "label": "Data Labels",
+      "category": "Chart Design › Chart Layouts › Add Chart Element",
+      "params": "{\"on\"?: bool} (no value: switch the data labels on or off)",
+      "source_module": "chart.rs"
+    },
+    {
+      "id": "chart.legend",
+      "label": "Legend",
+      "category": "Chart Design › Chart Layouts › Add Chart Element",
+      "params": null,
+      "source_module": "chart.rs"
+    },
+    {
+      "id": "chart.title",
+      "label": "Chart Title",
+      "category": "Chart Design › Chart Layouts › Add Chart Element",
+      "params": null,
+      "source_module": "chart.rs"
+    },
+    {
+      "id": "chart.editData",
+      "label": "Edit Data",
+      "category": "Chart Design › Data",
+      "params": null,
+      "source_module": "chart.rs"
+    },
+    {
+      "id": "chart.type",
+      "label": "Change Chart Type",
+      "category": "Chart Design › Type",
+      "params": "{\"type\": \"column|columnStacked|bar|barStacked|line|area|pie|doughnut|scatter\"}",
+      "source_module": "chart.rs"
+    },
+    {
+      "id": "design.effects",
+      "label": "Effects",
+      "category": "Design › Document Formatting",
+      "params": null,
+      "source_module": "tools/specs.rs"
+    },
+    {
+      "id": "design.paragraphSpacing",
+      "label": "Paragraph Spacing",
+      "category": "Design › Document Formatting",
+      "params": "{\"value\": \"default|none|compact|tight|open|relaxed|double\"}",
+      "source_module": "design.rs"
+    },
+    {
+      "id": "design.scaleFontSizes",
+      "label": "Scale Font Sizes",
+      "category": "Design › Document Formatting",
+      "params": "{\"delta\": pt (-1638..1638, not 0) | \"percent\": number (-99..1000, not 0; 10 = +10%)} (exactly one)",
+      "source_module": "design.rs"
+    },
+    {
+      "id": "design.setDefault",
+      "label": "Set as Default",
+      "category": "Design › Document Formatting",
+      "params": null,
+      "source_module": "design.rs"
+    },
+    {
+      "id": "design.styleSet",
+      "label": "Style Set",
+      "category": "Design › Document Formatting",
+      "params": "{\"name\": \"default|basic|lines|shaded|casual|centered|minimalist|title\"}",
+      "source_module": "design.rs"
+    },
+    {
+      "id": "design.theme",
+      "label": "Themes",
+      "category": "Design › Document Formatting",
+      "params": "{\"name\": string}",
+      "source_module": "design.rs"
+    },
+    {
+      "id": "design.themeColors",
+      "label": "Colors",
+      "category": "Design › Document Formatting",
+      "params": null,
+      "source_module": "design.rs"
+    },
+    {
+      "id": "design.themeFonts",
+      "label": "Fonts",
+      "category": "Design › Document Formatting",
+      "params": "{\"heading\": string, \"body\"?: string}",
+      "source_module": "design.rs"
+    },
+    {
+      "id": "design.themes",
+      "label": "Theme List",
+      "category": "Design › Document Formatting",
+      "params": null,
+      "source_module": "design.rs"
+    },
+    {
+      "id": "design.pageBorders",
+      "label": "Page Borders",
+      "category": "Design › Page Background",
+      "params": null,
+      "source_module": "design.rs"
+    },
+    {
+      "id": "design.pageColor",
+      "label": "Page Color",
+      "category": "Design › Page Background",
+      "params": "{\"color\": \"RRGGBB\" | null}",
+      "source_module": "design.rs"
+    },
+    {
+      "id": "design.watermark",
+      "label": "Watermark",
+      "category": "Design › Page Background",
+      "params": "{\"text\"?: string, \"remove\"?: bool, \"diagonal\"?: bool, \"color\"?: \"RRGGBB\"}",
+      "source_module": "design.rs"
+    },
+    {
+      "id": "draw.convertInk",
+      "label": "Convert to Shapes",
+      "category": "Draw › Convert",
+      "params": null,
+      "source_module": "draw.rs"
+    },
+    {
+      "id": "draw.inkToShape",
+      "label": "Ink to Shape",
+      "category": "Draw › Convert",
+      "params": null,
+      "source_module": "draw.rs"
+    },
+    {
+      "id": "draw.addPen",
+      "label": "Add Pen",
+      "category": "Draw › Pens",
+      "params": "{\"kind\"?: \"pen|pencil|highlighter\", \"color\"?: \"RRGGBB\", \"width\"?: pt}  (adds the pen to the gallery and picks it up)",
+      "source_module": "draw.rs"
+    },
+    {
+      "id": "draw.highlighter",
+      "label": "Highlighter",
+      "category": "Draw › Pens",
+      "params": null,
+      "source_module": "draw.rs"
+    },
+    {
+      "id": "draw.pen",
+      "label": "Pen",
+      "category": "Draw › Pens",
+      "params": null,
+      "source_module": "draw.rs"
+    },
+    {
+      "id": "draw.pencil",
+      "label": "Pencil",
+      "category": "Draw › Pens",
+      "params": null,
+      "source_module": "draw.rs"
+    },
+    {
+      "id": "draw.removePen",
+      "label": "Remove Pen",
+      "category": "Draw › Pens",
+      "params": null,
+      "source_module": "draw.rs"
+    },
+    {
+      "id": "draw.stroke",
+      "label": "Draw Ink",
+      "category": "Draw › Pens",
+      "params": null,
+      "source_module": "draw.rs"
+    },
+    {
+      "id": "draw.replay",
+      "label": "Ink Replay",
+      "category": "Draw › Replay",
+      "params": "{\"value\"?: bool}  (starts or stops Ink Replay; returns the strokes in the order they were drawn)",
+      "source_module": "draw.rs"
+    },
+    {
+      "id": "draw.erase",
+      "label": "Erase Ink",
+      "category": "Draw › Tools",
+      "params": "{\"page\": n, \"x\": pt, \"y\": pt}",
+      "source_module": "draw.rs"
+    },
+    {
+      "id": "draw.eraser",
+      "label": "Eraser",
+      "category": "Draw › Tools",
+      "params": null,
+      "source_module": "draw.rs"
+    },
+    {
+      "id": "draw.lasso",
+      "label": "Lasso Select",
+      "category": "Draw › Tools",
+      "params": "{\"page\"?: n, \"points\"?: [[x, y], …], \"clear\"?: bool}  (no points: use the lasso; points: select the ink inside that loop; clear: drop the selection)",
+      "source_module": "draw.rs"
+    },
+    {
+      "id": "draw.lassoColor",
+      "label": "Recolor Selected Ink",
+      "category": "Draw › Tools",
+      "params": "{\"color\": \"RRGGBB\"}",
+      "source_module": "draw.rs"
+    },
+    {
+      "id": "draw.lassoDelete",
+      "label": "Delete Selected Ink",
+      "category": "Draw › Tools",
+      "params": null,
+      "source_module": "draw.rs"
+    },
+    {
+      "id": "draw.lassoMove",
+      "label": "Move Selected Ink",
+      "category": "Draw › Tools",
+      "params": "{\"dx\": pt, \"dy\": pt}",
+      "source_module": "draw.rs"
+    },
+    {
+      "id": "draw.select",
+      "label": "Select",
+      "category": "Draw › Tools",
+      "params": null,
+      "source_module": "draw.rs"
+    },
+    {
+      "id": "edit.insertSpike",
+      "label": "Insert Spike",
+      "category": "Editing",
+      "params": null,
+      "source_module": "edit.rs"
+    },
+    {
+      "id": "edit.spike",
+      "label": "Spike",
+      "category": "Editing",
+      "params": null,
+      "source_module": "edit.rs"
+    },
+    {
+      "id": "text.backTab",
+      "label": "Shift+Tab",
+      "category": "Editing",
+      "params": null,
+      "source_module": "text.rs"
+    },
+    {
+      "id": "text.backspace",
+      "label": "Backspace",
+      "category": "Editing",
+      "params": null,
+      "source_module": "text.rs"
+    },
+    {
+      "id": "text.delete",
+      "label": "Delete",
+      "category": "Editing",
+      "params": null,
+      "source_module": "text.rs"
+    },
+    {
+      "id": "text.deleteSentenceBack",
+      "label": "Delete Previous Sentence",
+      "category": "Editing",
+      "params": null,
+      "source_module": "text.rs"
+    },
+    {
+      "id": "text.deleteWordBack",
+      "label": "Delete Previous Word",
+      "category": "Editing",
+      "params": null,
+      "source_module": "text.rs"
+    },
+    {
+      "id": "text.deleteWordForward",
+      "label": "Delete Next Word",
+      "category": "Editing",
+      "params": null,
+      "source_module": "text.rs"
+    },
+    {
+      "id": "text.insert",
+      "label": "Type Text",
+      "category": "Editing",
+      "params": "{\"text\": string, \"raw\"?: bool, \"paragraphs\"?: bool} (paragraphs: each line a paragraph, one undo step, at most 10000 lines)",
+      "source_module": "text.rs"
+    },
+    {
+      "id": "text.insertTab",
+      "label": "Tab Character",
+      "category": "Editing",
+      "params": null,
+      "source_module": "text.rs"
+    },
+    {
+      "id": "text.lineBreak",
+      "label": "Line Break",
+      "category": "Editing",
+      "params": null,
+      "source_module": "text.rs"
+    },
+    {
+      "id": "text.newParagraph",
+      "label": "New Paragraph",
+      "category": "Editing",
+      "params": null,
+      "source_module": "text.rs"
+    },
+    {
+      "id": "text.tab",
+      "label": "Tab",
+      "category": "Editing",
+      "params": null,
+      "source_module": "text.rs"
+    },
+    {
+      "id": "text.toggleUnicode",
+      "label": "Toggle Unicode Character",
+      "category": "Editing",
+      "params": null,
+      "source_module": "text.rs"
+    },
+    {
+      "id": "text.typeCode",
+      "label": "Type Character Code",
+      "category": "Editing",
+      "params": "{\"code\": string (decimal digits as typed on the keypad, e.g. \"0233\"), \"ansi\"?: 874 | 1250–1258 (the leading-0 code page, default 1252), \"oem\"?: 437 | 737 | 850 | 852 | 857 | 866 (default from the locale)}",
+      "source_module": "text.rs"
+    },
+    {
+      "id": "select.column",
+      "label": "Column Selection",
+      "category": "Editing › Selection",
+      "params": null,
+      "source_module": "column.rs"
+    },
+    {
+      "id": "select.extend",
+      "label": "Extend Selection",
+      "category": "Editing › Selection",
+      "params": null,
+      "source_module": "tools/specs.rs"
+    },
+    {
+      "id": "equation.backspace",
+      "label": "Delete Back in Equation",
+      "category": "Equation",
+      "params": null,
+      "source_module": "equation.rs"
+    },
+    {
+      "id": "equation.delete",
+      "label": "Delete in Equation",
+      "category": "Equation",
+      "params": null,
+      "source_module": "equation.rs"
+    },
+    {
+      "id": "equation.deleteSurrounding",
+      "label": "Delete Around Caret in Equation",
+      "category": "Equation",
+      "params": "{\"before\": n, \"after\": n}",
+      "source_module": "equation.rs"
+    },
+    {
+      "id": "equation.display",
+      "label": "Change to Display",
+      "category": "Equation",
+      "params": "{\"value\"?: bool}",
+      "source_module": "equation.rs"
+    },
+    {
+      "id": "equation.edit",
+      "label": "Edit Equation",
+      "category": "Equation",
+      "params": "{\"pos\"?: {\"path\": [[node, child]…], \"off\": n}}",
+      "source_module": "equation.rs"
+    },
+    {
+      "id": "equation.enter",
+      "label": "Enter in Equation",
+      "category": "Equation",
+      "params": null,
+      "source_module": "equation.rs"
+    },
+    {
+      "id": "equation.exit",
+      "label": "Leave Equation",
+      "category": "Equation",
+      "params": "{\"before\"?: bool}",
+      "source_module": "equation.rs"
+    },
+    {
+      "id": "equation.get",
+      "label": "Equation Info",
+      "category": "Equation",
+      "params": null,
+      "source_module": "equation.rs"
+    },
+    {
+      "id": "equation.justify",
+      "label": "Justification",
+      "category": "Equation",
+      "params": "{\"jc\": \"centerGroup|center|left|right\"}",
+      "source_module": "equation.rs"
+    },
+    {
+      "id": "equation.move",
+      "label": "Move in Equation",
+      "category": "Equation",
+      "params": "{\"dir\": \"left|right|up|down|home|end|next|prev\"}",
+      "source_module": "equation.rs"
+    },
+    {
+      "id": "equation.number",
+      "label": "Equation Number",
+      "category": "Equation",
+      "params": "{\"value\"?: bool}",
+      "source_module": "equation.rs"
+    },
+    {
+      "id": "equation.set",
+      "label": "Set Equation",
+      "category": "Equation",
+      "params": "{\"linear\"?: string, \"latex\"?: string}",
+      "source_module": "equation.rs"
+    },
+    {
+      "id": "equation.structure",
+      "label": "Change Structure",
+      "category": "Equation",
+      "params": "{\"action\": string (see equation.structureActions), \"level\"?: n}",
+      "source_module": "equation.rs"
+    },
+    {
+      "id": "equation.structureActions",
+      "label": "Structure Actions",
+      "category": "Equation",
+      "params": null,
+      "source_module": "equation.rs"
+    },
+    {
+      "id": "equation.type",
+      "label": "Type in Equation",
+      "category": "Equation",
+      "params": "{\"text\": string}",
+      "source_module": "equation.rs"
+    },
+    {
+      "id": "equation.convert",
+      "label": "Convert",
+      "category": "Equation › Conversions",
+      "params": "{\"to\": \"professional|linear\", \"all\"?: bool}",
+      "source_module": "equation.rs"
+    },
+    {
+      "id": "equation.inputFormat",
+      "label": "Input Format",
+      "category": "Equation › Conversions",
+      "params": "{\"format\": \"unicode|latex\"}",
+      "source_module": "equation.rs"
+    },
+    {
+      "id": "equation.gallery",
+      "label": "Equation Gallery",
+      "category": "Equation › Structures",
+      "params": null,
+      "source_module": "equation.rs"
+    },
+    {
+      "id": "equation.insertStructure",
+      "label": "Insert Structure",
+      "category": "Equation › Structures",
+      "params": "{\"id\"?: string (see equation.gallery), \"linear\"?: string, \"latex\"?: string}",
+      "source_module": "equation.rs"
+    },
+    {
+      "id": "equation.insertSymbol",
+      "label": "Insert Symbol",
+      "category": "Equation › Symbols",
+      "params": "{\"char\": string}",
+      "source_module": "equation.rs"
+    },
+    {
+      "id": "equation.normalText",
+      "label": "Normal Text",
+      "category": "Equation › Tools",
+      "params": "{\"value\"?: bool}",
+      "source_module": "equation.rs"
+    },
+    {
+      "id": "file.close",
+      "label": "Close",
+      "category": "File",
+      "params": null,
+      "source_module": "file.rs"
+    },
+    {
+      "id": "file.info",
+      "label": "Info",
+      "category": "File",
+      "params": null,
+      "source_module": "file.rs"
+    },
+    {
+      "id": "file.new",
+      "label": "New",
+      "category": "File",
+      "params": "{\"template\"?: \"blank|sample|letter|resume|report\"}",
+      "source_module": "file.rs"
+    },
+    {
+      "id": "file.open",
+      "label": "Open",
+      "category": "File",
+      "params": "{\"path\": string, \"data\"?: base64 (the file's bytes; `path` then only names it), \"password\"?: string (for a password-protected Word document)}",
+      "source_module": "file.rs"
+    },
+    {
+      "id": "file.options",
+      "label": "Options",
+      "category": "File",
+      "params": null,
+      "source_module": "options.rs"
+    },
+    {
+      "id": "file.print",
+      "label": "Print",
+      "category": "File",
+      "params": null,
+      "source_module": "file.rs"
+    },
+    {
+      "id": "file.save",
+      "label": "Save",
+      "category": "File",
+      "params": null,
+      "source_module": "file.rs"
+    },
+    {
+      "id": "file.saveAs",
+      "label": "Save As",
+      "category": "File",
+      "params": "{\"path\": string, \"password\"?: string, \"markup\"?: bool, \"format\"?: string (as file.save), \"strict\"?: bool (as file.save)}",
+      "source_module": "file.rs"
+    },
+    {
+      "id": "file.share",
+      "label": "Share",
+      "category": "File",
+      "params": null,
+      "source_module": "tools/specs.rs"
+    },
+    {
+      "id": "file.exportPdf",
+      "label": "Export PDF",
+      "category": "File › Export",
+      "params": null,
+      "source_module": "file.rs"
+    },
+    {
+      "id": "file.exportPng",
+      "label": "Export Page as PNG",
+      "category": "File › Export",
+      "params": "{\"path\": string, \"page\"?: n (1-based), \"scale\"?: px per pt, \"markup\"?: bool (the page with its comments in balloons beside it; default file.printMarkup), \"strict\"?: bool (refuse, writing nothing, if a character on the page can't be drawn or a picture is missing; see file.strictReport)}",
+      "source_module": "file.rs"
+    },
+    {
+      "id": "file.strictReport",
+      "label": "Strict Export Report",
+      "category": "File › Export",
+      "params": null,
+      "source_module": "file.rs"
+    },
+    {
+      "id": "file.compatibility",
+      "label": "Check Compatibility",
+      "category": "File › Info",
+      "params": null,
+      "source_module": "tools/specs.rs"
+    },
+    {
+      "id": "file.inspect",
+      "label": "Inspect Document",
+      "category": "File › Info",
+      "params": null,
+      "source_module": "tools/specs.rs"
+    },
+    {
+      "id": "file.properties",
+      "label": "Properties",
+      "category": "File › Info",
+      "params": "{\"title\"?, \"subject\"?, \"author\"?, \"keywords\"?, \"comments\"?, \"category\"?, \"custom\"?: {name: string | {\"value\": string, \"linkTarget\"?: string | null} | null (removes)}}; text values and bookmark targets are at most 1 MiB; a string keeps an existing target, an object replaces it (omitted/null target unlinks)",
+      "source_module": "file.rs"
+    },
+    {
+      "id": "file.protect",
+      "label": "Protect Document",
+      "category": "File › Info",
+      "params": "{\"mode\": \"none|readOnly|comments|trackedChanges\"} (starting enforcement; \"none\" doesn't stop a protected document — use review.restrict {\"stop\": true})",
+      "source_module": "tools/specs.rs"
+    },
+    {
+      "id": "file.recover",
+      "label": "Recover Unsaved Documents",
+      "category": "File › Info",
+      "params": "{\"restore\"?: recoveryId, \"discard\"?: recoveryId, \"refresh\"?: true}; desktop only; returns {enabled,busy,documents,error}; restore loads asynchronously without a file path",
+      "source_module": "tools/specs.rs"
+    },
+    {
+      "id": "file.rename",
+      "label": "Rename Document",
+      "category": "File › Info",
+      "params": "{\"name\": string (document name; its extension is kept, so the name may be given with or without it)}",
+      "source_module": "file.rs"
+    },
+    {
+      "id": "file.versions",
+      "label": "Version History",
+      "category": "File › Info",
+      "params": null,
+      "source_module": "tools/specs.rs"
+    },
+    {
+      "id": "file.encrypt",
+      "label": "Encrypt with Password",
+      "category": "File › Info › Protect Document",
+      "params": "{\"password\": string (Word documents are saved encrypted with it) | null or \"\" (saved unencrypted)}",
+      "source_module": "file.rs"
+    },
+    {
+      "id": "file.listTemplates",
+      "label": "Personal Templates",
+      "category": "File › New",
+      "params": null,
+      "source_module": "user_templates.rs"
+    },
+    {
+      "id": "file.newFromTemplate",
+      "label": "New from Template",
+      "category": "File › New",
+      "params": null,
+      "source_module": "tools/specs.rs"
+    },
+    {
+      "id": "tools.customizeKeyboard",
+      "label": "Customize Keyboard",
+      "category": "File › Options",
+      "params": null,
+      "source_module": "tools/specs.rs"
+    },
+    {
+      "id": "tools.customizeRibbon",
+      "label": "Customize Ribbon",
+      "category": "File › Options",
+      "params": null,
+      "source_module": "tools/specs.rs"
+    },
+    {
+      "id": "text.overtype",
+      "label": "Overtype",
+      "category": "File › Options › Advanced",
+      "params": "{\"value\"?: bool (default: toggle)}",
+      "source_module": "options.rs"
+    },
+    {
+      "id": "view.numeral",
+      "label": "Numerals",
+      "category": "File › Options › Advanced",
+      "params": null,
+      "source_module": "view.rs"
+    },
+    {
+      "id": "file.setAuthor",
+      "label": "User Name",
+      "category": "File › Options › General",
+      "params": "{\"name\": string (author of new tracked changes and comments)}",
+      "source_module": "file.rs"
+    },
+    {
+      "id": "proof.installPack",
+      "label": "Install Language Pack",
+      "category": "File › Options › Language",
+      "params": null,
+      "source_module": "packs.rs"
+    },
+    {
+      "id": "proof.packs",
+      "label": "Language Packs",
+      "category": "File › Options › Language",
+      "params": null,
+      "source_module": "packs.rs"
+    },
+    {
+      "id": "proof.removePack",
+      "label": "Remove Language Pack",
+      "category": "File › Options › Language",
+      "params": "{\"locale\": string} — removes the installed pack. Opens nothing.",
+      "source_module": "packs.rs"
+    },
+    {
+      "id": "review.language.preferred",
+      "label": "Set as Default Language",
+      "category": "File › Options › Language",
+      "params": "{\"lang\": \"en-US|en-GB|pl-PL|nl-NL|…\" (BCP 47)} — only the saved default proofing language, what future blank documents are written in, as Options › Language › Set as default does; the open document, the selection and the undo history don't change. Returns {\"preferred\": tag}.",
+      "source_module": "tools/specs.rs"
+    },
+    {
+      "id": "review.proofing",
+      "label": "Check Spelling as You Type",
+      "category": "File › Options › Proofing",
+      "params": null,
+      "source_module": "review.rs"
+    },
+    {
+      "id": "tools.autocorrect",
+      "label": "AutoCorrect Options",
+      "category": "File › Options › Proofing",
+      "params": null,
+      "source_module": "tools/specs.rs"
+    },
+    {
+      "id": "file.privacy",
+      "label": "Privacy Settings",
+      "category": "File › Options › Save",
+      "params": "{} → {\"removePersonalInfo\": bool, \"removeDateTime\": bool} (file.privacyOptions changes them)",
+      "source_module": "file.rs"
+    },
+    {
+      "id": "file.privacyOptions",
+      "label": "Privacy Options",
+      "category": "File › Options › Save",
+      "params": null,
+      "source_module": "file.rs"
+    },
+    {
+      "id": "file.printMarkup",
+      "label": "Print Markup",
+      "category": "File › Print",
+      "params": "{\"value\"?: bool (omit to toggle)} — PDFs, prints and copies show comments (balloons beside each page; a list at the end of HTML, Markdown and text) and tracked changes",
+      "source_module": "file.rs"
+    },
+    {
+      "id": "file.printPdf",
+      "label": "Print to PDF",
+      "category": "File › Print",
+      "params": null,
+      "source_module": "file.rs"
+    },
+    {
+      "id": "file.saveTemplate",
+      "label": "Save as Template",
+      "category": "File › Save As",
+      "params": null,
+      "source_module": "tools/specs.rs"
+    },
+    {
+      "id": "insert.closeHeader",
+      "label": "Close Header and Footer",
+      "category": "Header & Footer",
+      "params": null,
+      "source_module": "insert.rs"
+    },
+    {
+      "id": "insert.removeEmptyHeaders",
+      "label": "Close Header and Footer",
+      "category": "Header & Footer",
+      "params": null,
+      "source_module": "insert.rs"
+    },
+    {
+      "id": "hf.next",
+      "label": "Next Section",
+      "category": "Header & Footer › Navigation",
+      "params": null,
+      "source_module": "tools/specs.rs"
+    },
+    {
+      "id": "hf.previous",
+      "label": "Previous Section",
+      "category": "Header & Footer › Navigation",
+      "params": null,
+      "source_module": "tools/specs.rs"
+    },
+    {
+      "id": "layout.linkToPrevious",
+      "label": "Link to Previous",
+      "category": "Header & Footer › Navigation",
+      "params": null,
+      "source_module": "tools/specs.rs"
+    },
+    {
+      "id": "layout.differentFirstPage",
+      "label": "Different First Page",
+      "category": "Header & Footer › Options",
+      "params": null,
+      "source_module": "page.rs"
+    },
+    {
+      "id": "layout.differentOddEven",
+      "label": "Different Odd & Even Pages",
+      "category": "Header & Footer › Options",
+      "params": null,
+      "source_module": "page.rs"
+    },
+    {
+      "id": "hf.position",
+      "label": "Header/Footer Position",
+      "category": "Header & Footer › Position",
+      "params": null,
+      "source_module": "tools/specs.rs"
+    },
+    {
+      "id": "edit.clipboardPane",
+      "label": "Clipboard Pane",
+      "category": "Home › Clipboard",
+      "params": "{\"value\"?: bool}",
+      "source_module": "edit.rs"
+    },
+    {
+      "id": "edit.copy",
+      "label": "Copy",
+      "category": "Home › Clipboard",
+      "params": null,
+      "source_module": "edit.rs"
+    },
+    {
+      "id": "edit.copyFormat",
+      "label": "Copy Formatting",
+      "category": "Home › Clipboard",
+      "params": null,
+      "source_module": "edit.rs"
+    },
+    {
+      "id": "edit.cut",
+      "label": "Cut",
+      "category": "Home › Clipboard",
+      "params": null,
+      "source_module": "edit.rs"
+    },
+    {
+      "id": "edit.formatPainter",
+      "label": "Format Painter",
+      "category": "Home › Clipboard",
+      "params": "{\"sticky\"?: bool}",
+      "source_module": "edit.rs"
+    },
+    {
+      "id": "edit.paste",
+      "label": "Paste",
+      "category": "Home › Clipboard",
+      "params": "{\"text\"?: string, \"html\"?: string, \"rtf\"?: string, \"privateClipboard\"?: bool}",
+      "source_module": "edit.rs"
+    },
+    {
+      "id": "edit.pasteFormat",
+      "label": "Paste Formatting",
+      "category": "Home › Clipboard",
+      "params": null,
+      "source_module": "edit.rs"
+    },
+    {
+      "id": "edit.clearClipboard",
+      "label": "Clear All",
+      "category": "Home › Clipboard › Clipboard Pane",
+      "params": null,
+      "source_module": "edit.rs"
+    },
+    {
+      "id": "edit.clipboardItems",
+      "label": "Clipboard Items",
+      "category": "Home › Clipboard › Clipboard Pane",
+      "params": null,
+      "source_module": "edit.rs"
+    },
+    {
+      "id": "edit.deleteClipboardItem",
+      "label": "Delete Clipboard Item",
+      "category": "Home › Clipboard › Clipboard Pane",
+      "params": "{\"index\": n (0 = newest)}",
+      "source_module": "edit.rs"
+    },
+    {
+      "id": "edit.pasteAllClipboard",
+      "label": "Paste All",
+      "category": "Home › Clipboard › Clipboard Pane",
+      "params": null,
+      "source_module": "edit.rs"
+    },
+    {
+      "id": "edit.pasteClipboardItem",
+      "label": "Paste Clipboard Item",
+      "category": "Home › Clipboard › Clipboard Pane",
+      "params": "{\"index\": n (0 = newest)}",
+      "source_module": "edit.rs"
+    },
+    {
+      "id": "edit.pasteMerge",
+      "label": "Paste: Merge Formatting",
+      "category": "Home › Clipboard › Paste",
+      "params": "{\"text\"?: string, \"html\"?: string, \"rtf\"?: string, \"privateClipboard\"?: bool}",
+      "source_module": "edit.rs"
+    },
+    {
+      "id": "edit.pasteSpecial",
+      "label": "Paste Special",
+      "category": "Home › Clipboard › Paste",
+      "params": "{\"as\"?: \"formatted\"|\"rtf\"|\"html\"|\"picture\"|\"text\", \"text\"?: string, \"html\"?: string, \"rtf\"?: string, \"picture\"?: base64, \"privateClipboard\"?: bool}",
+      "source_module": "paste.rs"
+    },
+    {
+      "id": "edit.pasteText",
+      "label": "Paste: Keep Text Only",
+      "category": "Home › Clipboard › Paste",
+      "params": "{\"text\"?: string}",
+      "source_module": "edit.rs"
+    },
+    {
+      "id": "edit.find",
+      "label": "Find",
+      "category": "Home › Editing",
+      "params": "{\"text\": string, \"matchCase\"?: bool, \"wholeWord\"?: bool, \"matchPrefix\"?: bool, \"matchSuffix\"?: bool, \"ignorePunct\"?: bool, \"ignoreSpace\"?: bool, \"wildcards\"?: bool, \"special\"?: bool (^p ^t ^# … codes, default true), \"regex\"?: bool}",
+      "source_module": "edit.rs"
+    },
+    {
+      "id": "edit.findReplace",
+      "label": "Find and Replace",
+      "category": "Home › Editing",
+      "params": null,
+      "source_module": "edit.rs"
+    },
+    {
+      "id": "edit.replace",
+      "label": "Replace",
+      "category": "Home › Editing",
+      "params": "{\"text\": string, \"with\": string, …options of edit.replaceAll}",
+      "source_module": "edit.rs"
+    },
+    {
+      "id": "edit.advancedFind",
+      "label": "Advanced Find",
+      "category": "Home › Editing › Find",
+      "params": "{\"text\"?: string, …options of edit.find, \"in\"?: \"main|selection\", \"highlight\"?: bool}",
+      "source_module": "edit.rs"
+    },
+    {
+      "id": "edit.findNext",
+      "label": "Find Next",
+      "category": "Home › Editing › Find",
+      "params": "{\"text\"?: string, \"matchCase\"?: bool, \"wholeWord\"?: bool, \"regex\"?: bool}",
+      "source_module": "edit.rs"
+    },
+    {
+      "id": "edit.findPrevious",
+      "label": "Find Previous",
+      "category": "Home › Editing › Find",
+      "params": "{\"text\"?: string, \"matchCase\"?: bool, \"wholeWord\"?: bool, \"regex\"?: bool}",
+      "source_module": "edit.rs"
+    },
+    {
+      "id": "edit.goto",
+      "label": "Go To",
+      "category": "Home › Editing › Find",
+      "params": "{\"page\"?: n, \"pageBy\"?: int (pages forward, negative back, from the caret's page), \"bookmark\"?: string (selects its text), \"paragraph\"?: n}; none opens Find and Replace on its Go To tab",
+      "source_module": "edit.rs"
+    },
+    {
+      "id": "edit.replaceAll",
+      "label": "Replace All",
+      "category": "Home › Editing › Replace",
+      "params": "{\"text\": string, \"with\": string (^p ^t ^& ^c …; \\\\1 with wildcards; with regex also $1 ${n} ${name} $0 $$ \\\\1 \\\\n (paragraph mark) \\\\t), …options of edit.find}",
+      "source_module": "edit.rs"
+    },
+    {
+      "id": "select.addObject",
+      "label": "Add Object to Selection",
+      "category": "Home › Editing › Select",
+      "params": "{\"pos\"?: Pos, \"index\"?: n, \"objects\"?: [Pos | n]}  (n: its Selection Pane index; with no object selected yet, the first one becomes the selection)",
+      "source_module": "objects/specs.rs"
+    },
+    {
+      "id": "select.all",
+      "label": "Select All",
+      "category": "Home › Editing › Select",
+      "params": null,
+      "source_module": "caret.rs"
+    },
+    {
+      "id": "select.objects",
+      "label": "Select Objects",
+      "category": "Home › Editing › Select",
+      "params": null,
+      "source_module": "objects/specs.rs"
+    },
+    {
+      "id": "select.similar",
+      "label": "Select Text with Similar Formatting",
+      "category": "Home › Editing › Select",
+      "params": null,
+      "source_module": "tools/specs.rs"
+    },
+    {
+      "id": "review.editor",
+      "label": "Editor",
+      "category": "Home › Editor",
+      "params": null,
+      "source_module": "tools/specs.rs"
+    },
+    {
+      "id": "font.add",
+      "label": "Add Font…",
+      "category": "Home › Font",
+      "params": "{\"path\"?: string, \"data\"?: base64, \"name\"?: string (file name for \"data\")} — a TTF, OTF, TTC, WOFF or WOFF2 file; none: pick a file",
+      "source_module": "font.rs"
+    },
+    {
+      "id": "font.list",
+      "label": "Added Fonts",
+      "category": "Home › Font",
+      "params": "{\"all\"?: bool (also every available family)}",
+      "source_module": "font.rs"
+    },
+    {
+      "id": "font.loadSystem",
+      "label": "Load System Installed Fonts…",
+      "category": "Home › Font",
+      "params": null,
+      "source_module": "font.rs"
+    },
+    {
+      "id": "font.remove",
+      "label": "Remove Added Font",
+      "category": "Home › Font",
+      "params": "{\"family\": string}",
+      "source_module": "font.rs"
+    },
+    {
+      "id": "format.bold",
+      "label": "Bold",
+      "category": "Home › Font",
+      "params": "{\"value\"?: bool}",
+      "source_module": "format.rs"
+    },
+    {
+      "id": "format.border",
+      "label": "Character Border",
+      "category": "Home › Font",
+      "params": "{\"value\"?: bool}",
+      "source_module": "format.rs"
+    },
+    {
+      "id": "format.changeCase",
+      "label": "Change Case",
+      "category": "Home › Font",
+      "params": "{\"mode\"?: \"sentence|lower|upper|title|toggle\"}",
+      "source_module": "format.rs"
+    },
+    {
+      "id": "format.clear",
+      "label": "Clear All Formatting",
+      "category": "Home › Font",
+      "params": null,
+      "source_module": "format.rs"
+    },
+    {
+      "id": "format.color",
+      "label": "Font Color",
+      "category": "Home › Font",
+      "params": "{\"color\": \"RRGGBB\" | \"auto\"}",
+      "source_module": "format.rs"
+    },
+    {
+      "id": "format.enclose",
+      "label": "Enclose Characters",
+      "category": "Home › Font",
+      "params": "{\"shape\": \"circle|square|triangle|diamond\" | null, \"style\"?: \"shrink|enlarge\", \"text\"?: string}",
+      "source_module": "format.rs"
+    },
+    {
+      "id": "format.font",
+      "label": "Font",
+      "category": "Home › Font",
+      "params": "{\"name\"?: string, \"eastAsia\"?: string}",
+      "source_module": "format.rs"
+    },
+    {
+      "id": "format.fontDialog",
+      "label": "Font Dialog",
+      "category": "Home › Font",
+      "params": null,
+      "source_module": "format.rs"
+    },
+    {
+      "id": "format.growFont",
+      "label": "Increase Font Size",
+      "category": "Home › Font",
+      "params": null,
+      "source_module": "format.rs"
+    },
+    {
+      "id": "format.growFont1",
+      "label": "Grow Font 1 Point",
+      "category": "Home › Font",
+      "params": null,
+      "source_module": "format.rs"
+    },
+    {
+      "id": "format.highlight",
+      "label": "Text Highlight Color",
+      "category": "Home › Font",
+      "params": null,
+      "source_module": "format.rs"
+    },
+    {
+      "id": "format.italic",
+      "label": "Italic",
+      "category": "Home › Font",
+      "params": "{\"value\"?: bool}",
+      "source_module": "format.rs"
+    },
+    {
+      "id": "format.phonetic",
+      "label": "Phonetic Guide",
+      "category": "Home › Font",
+      "params": null,
+      "source_module": "phonetic.rs"
+    },
+    {
+      "id": "format.resetChar",
+      "label": "Reset Character Formatting",
+      "category": "Home › Font",
+      "params": null,
+      "source_module": "format.rs"
+    },
+    {
+      "id": "format.shading",
+      "label": "Character Shading",
+      "category": "Home › Font",
+      "params": "{\"color\": \"RRGGBB\" | null}",
+      "source_module": "format.rs"
+    },
+    {
+      "id": "format.shrinkFont",
+      "label": "Decrease Font Size",
+      "category": "Home › Font",
+      "params": null,
+      "source_module": "format.rs"
+    },
+    {
+      "id": "format.shrinkFont1",
+      "label": "Shrink Font 1 Point",
+      "category": "Home › Font",
+      "params": null,
+      "source_module": "format.rs"
+    },
+    {
+      "id": "format.size",
+      "label": "Font Size",
+      "category": "Home › Font",
+      "params": "{\"size\": number}",
+      "source_module": "format.rs"
+    },
+    {
+      "id": "format.state",
+      "label": "Formatting at Selection",
+      "category": "Home › Font",
+      "params": null,
+      "source_module": "format.rs"
+    },
+    {
+      "id": "format.strikethrough",
+      "label": "Strikethrough",
+      "category": "Home › Font",
+      "params": "{\"value\"?: bool}",
+      "source_module": "format.rs"
+    },
+    {
+      "id": "format.subscript",
+      "label": "Subscript",
+      "category": "Home › Font",
+      "params": null,
+      "source_module": "format.rs"
+    },
+    {
+      "id": "format.superscript",
+      "label": "Superscript",
+      "category": "Home › Font",
+      "params": null,
+      "source_module": "format.rs"
+    },
+    {
+      "id": "format.textEffects",
+      "label": "Text Effects",
+      "category": "Home › Font",
+      "params": null,
+      "source_module": "wordart.rs"
+    },
+    {
+      "id": "format.underline",
+      "label": "Underline",
+      "category": "Home › Font",
+      "params": "{\"value\"?: bool, \"style\"?: \"single|double|thick|dotted|dash|dotDash|dotDotDash|wave|words\"}",
+      "source_module": "format.rs"
+    },
+    {
+      "id": "format.allCaps",
+      "label": "All Caps",
+      "category": "Home › Font › Font",
+      "params": null,
+      "source_module": "format.rs"
+    },
+    {
+      "id": "format.doubleStrikethrough",
+      "label": "Double Strikethrough",
+      "category": "Home › Font › Font",
+      "params": null,
+      "source_module": "format.rs"
+    },
+    {
+      "id": "format.emboss",
+      "label": "Emboss",
+      "category": "Home › Font › Font",
+      "params": null,
+      "source_module": "format.rs"
+    },
+    {
+      "id": "format.emphasisMark",
+      "label": "Emphasis Mark",
+      "category": "Home › Font › Font",
+      "params": null,
+      "source_module": "format.rs"
+    },
+    {
+      "id": "format.engrave",
+      "label": "Engrave",
+      "category": "Home › Font › Font",
+      "params": null,
+      "source_module": "format.rs"
+    },
+    {
+      "id": "format.hidden",
+      "label": "Hidden",
+      "category": "Home › Font › Font",
+      "params": null,
+      "source_module": "format.rs"
+    },
+    {
+      "id": "format.set",
+      "label": "Set Character Formatting",
+      "category": "Home › Font › Font",
+      "params": "{\"props\": CharProps}",
+      "source_module": "format.rs"
+    },
+    {
+      "id": "format.smallCaps",
+      "label": "Small Caps",
+      "category": "Home › Font › Font",
+      "params": null,
+      "source_module": "format.rs"
+    },
+    {
+      "id": "format.position",
+      "label": "Character Position",
+      "category": "Home › Font › Font › Advanced",
+      "params": "{\"points\": number}",
+      "source_module": "format.rs"
+    },
+    {
+      "id": "format.scale",
+      "label": "Character Scale",
+      "category": "Home › Font › Font › Advanced",
+      "params": "{\"percent\": number}",
+      "source_module": "format.rs"
+    },
+    {
+      "id": "format.spacing",
+      "label": "Character Spacing",
+      "category": "Home › Font › Font › Advanced",
+      "params": "{\"points\": number}",
+      "source_module": "format.rs"
+    },
+    {
+      "id": "format.outline",
+      "label": "Outline",
+      "category": "Home › Font › Text Effects",
+      "params": null,
+      "source_module": "format.rs"
+    },
+    {
+      "id": "format.shadow",
+      "label": "Shadow",
+      "category": "Home › Font › Text Effects",
+      "params": null,
+      "source_module": "format.rs"
+    },
+    {
+      "id": "format.doubleUnderline",
+      "label": "Double Underline",
+      "category": "Home › Font › Underline",
+      "params": null,
+      "source_module": "format.rs"
+    },
+    {
+      "id": "format.underlineColor",
+      "label": "Underline Color",
+      "category": "Home › Font › Underline",
+      "params": "{\"color\": \"RRGGBB\" | \"auto\"} (the underline's own colour; \"auto\" follows the text colour)",
+      "source_module": "format.rs"
+    },
+    {
+      "id": "format.wordUnderline",
+      "label": "Underline Words Only",
+      "category": "Home › Font › Underline",
+      "params": null,
+      "source_module": "format.rs"
+    },
+    {
+      "id": "para.align",
+      "label": "Alignment",
+      "category": "Home › Paragraph",
+      "params": null,
+      "source_module": "para.rs"
+    },
+    {
+      "id": "para.alignCenter",
+      "label": "Center",
+      "category": "Home › Paragraph",
+      "params": null,
+      "source_module": "para.rs"
+    },
+    {
+      "id": "para.alignLeft",
+      "label": "Align Left",
+      "category": "Home › Paragraph",
+      "params": null,
+      "source_module": "para.rs"
+    },
+    {
+      "id": "para.alignRight",
+      "label": "Align Right",
+      "category": "Home › Paragraph",
+      "params": null,
+      "source_module": "para.rs"
+    },
+    {
+      "id": "para.borders",
+      "label": "Borders",
+      "category": "Home › Paragraph",
+      "params": null,
+      "source_module": "para.rs"
+    },
+    {
+      "id": "para.bullets",
+      "label": "Bullets",
+      "category": "Home › Paragraph",
+      "params": "{\"kind\"?: \"bullet\" | single char, \"off\"?: bool}",
+      "source_module": "para.rs"
+    },
+    {
+      "id": "para.demote",
+      "label": "Demote",
+      "category": "Home › Paragraph",
+      "params": null,
+      "source_module": "para.rs"
+    },
+    {
+      "id": "para.dialog",
+      "label": "Paragraph Settings",
+      "category": "Home › Paragraph",
+      "params": null,
+      "source_module": "para.rs"
+    },
+    {
+      "id": "para.distribute",
+      "label": "Distributed",
+      "category": "Home › Paragraph",
+      "params": null,
+      "source_module": "para.rs"
+    },
+    {
+      "id": "para.indent",
+      "label": "Increase Indent",
+      "category": "Home › Paragraph",
+      "params": null,
+      "source_module": "para.rs"
+    },
+    {
+      "id": "para.justify",
+      "label": "Justify",
+      "category": "Home › Paragraph",
+      "params": null,
+      "source_module": "para.rs"
+    },
+    {
+      "id": "para.lineSpacing",
+      "label": "Line and Paragraph Spacing",
+      "category": "Home › Paragraph",
+      "params": "{\"value\": number (multiple) } | {\"atLeast\": pt} | {\"exactly\": pt}",
+      "source_module": "para.rs"
+    },
+    {
+      "id": "para.ltr",
+      "label": "Left-to-Right Text Direction",
+      "category": "Home › Paragraph",
+      "params": "{\"value\"?: bool (false = right to left)}",
+      "source_module": "para.rs"
+    },
+    {
+      "id": "para.moveDown",
+      "label": "Move Paragraph Down",
+      "category": "Home › Paragraph",
+      "params": null,
+      "source_module": "para.rs"
+    },
+    {
+      "id": "para.moveUp",
+      "label": "Move Paragraph Up",
+      "category": "Home › Paragraph",
+      "params": null,
+      "source_module": "para.rs"
+    },
+    {
+      "id": "para.multilevel",
+      "label": "Multilevel List",
+      "category": "Home › Paragraph",
+      "params": "{\"kind\"?: \"legal|outline\"}",
+      "source_module": "para.rs"
+    },
+    {
+      "id": "para.numbering",
+      "label": "Numbering",
+      "category": "Home › Paragraph",
+      "params": "{\"kind\"?: \"numbered|numberedParen|upperLetter|lowerLetter|lowerRoman|outline\", \"off\"?: bool}",
+      "source_module": "para.rs"
+    },
+    {
+      "id": "para.outdent",
+      "label": "Decrease Indent",
+      "category": "Home › Paragraph",
+      "params": null,
+      "source_module": "para.rs"
+    },
+    {
+      "id": "para.promote",
+      "label": "Promote",
+      "category": "Home › Paragraph",
+      "params": null,
+      "source_module": "para.rs"
+    },
+    {
+      "id": "para.reset",
+      "label": "Reset Paragraph Formatting",
+      "category": "Home › Paragraph",
+      "params": null,
+      "source_module": "para.rs"
+    },
+    {
+      "id": "para.rtl",
+      "label": "Right-to-Left Text Direction",
+      "category": "Home › Paragraph",
+      "params": "{\"value\"?: bool (false = left to right)}",
+      "source_module": "para.rs"
+    },
+    {
+      "id": "para.shading",
+      "label": "Shading",
+      "category": "Home › Paragraph",
+      "params": null,
+      "source_module": "para.rs"
+    },
+    {
+      "id": "para.sort",
+      "label": "Sort",
+      "category": "Home › Paragraph",
+      "params": "{\"descending\"?: bool}",
+      "source_module": "para.rs"
+    },
+    {
+      "id": "view.marks",
+      "label": "Show/Hide ¶",
+      "category": "Home › Paragraph",
+      "params": null,
+      "source_module": "view.rs"
+    },
+    {
+      "id": "para.asianTypography",
+      "label": "Asian Typography",
+      "category": "Home › Paragraph › Asian Typography",
+      "params": null,
+      "source_module": "para.rs"
+    },
+    {
+      "id": "insert.horizontalLine",
+      "label": "Horizontal Line",
+      "category": "Home › Paragraph › Borders",
+      "params": null,
+      "source_module": "insert.rs"
+    },
+    {
+      "id": "para.defineBullet",
+      "label": "Define New Bullet",
+      "category": "Home › Paragraph › Bullets",
+      "params": "{\"char\": string}",
+      "source_module": "tools/specs.rs"
+    },
+    {
+      "id": "para.listLevel",
+      "label": "Change List Level",
+      "category": "Home › Paragraph › Bullets",
+      "params": "{\"level\": 0-8}",
+      "source_module": "para.rs"
+    },
+    {
+      "id": "para.addSpaceBefore",
+      "label": "Add Space Before Paragraph",
+      "category": "Home › Paragraph › Line Spacing",
+      "params": null,
+      "source_module": "para.rs"
+    },
+    {
+      "id": "para.double",
+      "label": "Double Spacing",
+      "category": "Home › Paragraph › Line Spacing",
+      "params": null,
+      "source_module": "para.rs"
+    },
+    {
+      "id": "para.oneAndHalf",
+      "label": "1.5 Line Spacing",
+      "category": "Home › Paragraph › Line Spacing",
+      "params": null,
+      "source_module": "para.rs"
+    },
+    {
+      "id": "para.removeSpaceAfter",
+      "label": "Remove Space After Paragraph",
+      "category": "Home › Paragraph › Line Spacing",
+      "params": null,
+      "source_module": "para.rs"
+    },
+    {
+      "id": "para.single",
+      "label": "Single Spacing",
+      "category": "Home › Paragraph › Line Spacing",
+      "params": null,
+      "source_module": "para.rs"
+    },
+    {
+      "id": "para.keepLines",
+      "label": "Keep Lines Together",
+      "category": "Home › Paragraph › Line and Page Breaks",
+      "params": "{\"value\"?: bool}",
+      "source_module": "para.rs"
+    },
+    {
+      "id": "para.keepNext",
+      "label": "Keep with Next",
+      "category": "Home › Paragraph › Line and Page Breaks",
+      "params": "{\"value\"?: bool}",
+      "source_module": "para.rs"
+    },
+    {
+      "id": "para.pageBreakBefore",
+      "label": "Page Break Before",
+      "category": "Home › Paragraph › Line and Page Breaks",
+      "params": "{\"value\"?: bool}",
+      "source_module": "para.rs"
+    },
+    {
+      "id": "para.widowControl",
+      "label": "Widow/Orphan Control",
+      "category": "Home › Paragraph › Line and Page Breaks",
+      "params": "{\"value\"?: bool}",
+      "source_module": "para.rs"
+    },
+    {
+      "id": "list.define",
+      "label": "Define New Multilevel List",
+      "category": "Home › Paragraph › Multilevel List",
+      "params": null,
+      "source_module": "lists.rs"
+    },
+    {
+      "id": "list.get",
+      "label": "List Definition",
+      "category": "Home › Paragraph › Multilevel List",
+      "params": "{\"num\"?: list id (default: the caret's list)} → {\"num\", \"levels\": [as list.define]}",
+      "source_module": "lists.rs"
+    },
+    {
+      "id": "list.multilevelPreset",
+      "label": "Multilevel List Library",
+      "category": "Home › Paragraph › Multilevel List",
+      "params": null,
+      "source_module": "lists.rs"
+    },
+    {
+      "id": "para.defineNumber",
+      "label": "Define New Number Format",
+      "category": "Home › Paragraph › Numbering",
+      "params": null,
+      "source_module": "tools/specs.rs"
+    },
+    {
+      "id": "para.restartNumbering",
+      "label": "Restart at 1",
+      "category": "Home › Paragraph › Numbering",
+      "params": null,
+      "source_module": "para.rs"
+    },
+    {
+      "id": "para.setNumberingValue",
+      "label": "Set Numbering Value",
+      "category": "Home › Paragraph › Numbering",
+      "params": null,
+      "source_module": "tools/specs.rs"
+    },
+    {
+      "id": "para.hangingIndent",
+      "label": "Hanging Indent",
+      "category": "Home › Paragraph › Paragraph",
+      "params": null,
+      "source_module": "para.rs"
+    },
+    {
+      "id": "para.outlineLevel",
+      "label": "Outline Level",
+      "category": "Home › Paragraph › Paragraph",
+      "params": null,
+      "source_module": "para.rs"
+    },
+    {
+      "id": "para.removeHanging",
+      "label": "Reduce Hanging Indent",
+      "category": "Home › Paragraph › Paragraph",
+      "params": null,
+      "source_module": "para.rs"
+    },
+    {
+      "id": "para.set",
+      "label": "Set Paragraph Formatting",
+      "category": "Home › Paragraph › Paragraph",
+      "params": null,
+      "source_module": "para.rs"
+    },
+    {
+      "id": "para.tabs",
+      "label": "Tabs",
+      "category": "Home › Paragraph › Paragraph",
+      "params": null,
+      "source_module": "para.rs"
+    },
+    {
+      "id": "para.blankBetween",
+      "label": "Insert Blank Paragraphs Between",
+      "category": "Home › Paragraph › Paragraph Tools",
+      "params": "{\"scope\"?: \"selection|all\", \"after\"?: bool (also after the last paragraph)}",
+      "source_module": "para.rs"
+    },
+    {
+      "id": "para.convertBreaks",
+      "label": "Convert Line Breaks to Paragraphs",
+      "category": "Home › Paragraph › Paragraph Tools",
+      "params": "{\"scope\"?: \"selection|all\"}",
+      "source_module": "para.rs"
+    },
+    {
+      "id": "para.indentToSpaces",
+      "label": "Convert Indents to Spaces",
+      "category": "Home › Paragraph › Paragraph Tools",
+      "params": "{\"scope\"?: \"selection|all\"}",
+      "source_module": "para.rs"
+    },
+    {
+      "id": "para.removeBlank",
+      "label": "Delete Blank Paragraphs",
+      "category": "Home › Paragraph › Paragraph Tools",
+      "params": "{\"scope\"?: \"selection|all\"}",
+      "source_module": "para.rs"
+    },
+    {
+      "id": "para.removeExtraSpaces",
+      "label": "Remove Extra Spaces",
+      "category": "Home › Paragraph › Paragraph Tools",
+      "params": "{\"scope\"?: \"selection|all\"}",
+      "source_module": "para.rs"
+    },
+    {
+      "id": "para.removeLineBreaks",
+      "label": "Remove Line Breaks",
+      "category": "Home › Paragraph › Paragraph Tools",
+      "params": "{\"scope\"?: \"selection|all\"}",
+      "source_module": "para.rs"
+    },
+    {
+      "id": "para.separateParagraphs",
+      "label": "Separate Paragraphs",
+      "category": "Home › Paragraph › Paragraph Tools",
+      "params": "{\"scope\"?: \"selection|all\"}",
+      "source_module": "para.rs"
+    },
+    {
+      "id": "para.spacesToIndent",
+      "label": "Convert Spaces to Indentation",
+      "category": "Home › Paragraph › Paragraph Tools",
+      "params": "{\"scope\"?: \"selection|all\"}",
+      "source_module": "para.rs"
+    },
+    {
+      "id": "para.trimLeadingSpaces",
+      "label": "Remove Leading Spaces",
+      "category": "Home › Paragraph › Paragraph Tools",
+      "params": "{\"scope\"?: \"selection|all\"}",
+      "source_module": "para.rs"
+    },
+    {
+      "id": "format.charStyle",
+      "label": "Apply Character Style",
+      "category": "Home › Styles",
+      "params": "{\"style\": string}",
+      "source_module": "format.rs"
+    },
+    {
+      "id": "para.heading1",
+      "label": "Heading 1",
+      "category": "Home › Styles",
+      "params": null,
+      "source_module": "para.rs"
+    },
+    {
+      "id": "para.heading2",
+      "label": "Heading 2",
+      "category": "Home › Styles",
+      "params": null,
+      "source_module": "para.rs"
+    },
+    {
+      "id": "para.heading3",
+      "label": "Heading 3",
+      "category": "Home › Styles",
+      "params": null,
+      "source_module": "para.rs"
+    },
+    {
+      "id": "para.normal",
+      "label": "Normal Style",
+      "category": "Home › Styles",
+      "params": null,
+      "source_module": "para.rs"
+    },
+    {
+      "id": "para.style",
+      "label": "Apply Style",
+      "category": "Home › Styles",
+      "params": "{\"style\": string (name or id)}",
+      "source_module": "para.rs"
+    },
+    {
+      "id": "styles.addToGallery",
+      "label": "Add to Style Gallery",
+      "category": "Home › Styles",
+      "params": null,
+      "source_module": "para.rs"
+    },
+    {
+      "id": "styles.apply",
+      "label": "Apply Styles",
+      "category": "Home › Styles",
+      "params": "{\"style\"?: string (name or id)}",
+      "source_module": "para.rs"
+    },
+    {
+      "id": "styles.create",
+      "label": "Create a Style",
+      "category": "Home › Styles",
+      "params": "{\"name\": string, \"basedOn\"?: string, \"fromSelection\"?: bool}",
+      "source_module": "para.rs"
+    },
+    {
+      "id": "styles.delete",
+      "label": "Delete Style",
+      "category": "Home › Styles",
+      "params": "{\"style\": string (name or id; custom styles only)}",
+      "source_module": "para.rs"
+    },
+    {
+      "id": "styles.inspector",
+      "label": "Style Inspector",
+      "category": "Home › Styles",
+      "params": "{\"value\"?: bool (show/hide the pane)}",
+      "source_module": "inspector.rs"
+    },
+    {
+      "id": "styles.list",
+      "label": "Styles",
+      "category": "Home › Styles",
+      "params": null,
+      "source_module": "para.rs"
+    },
+    {
+      "id": "styles.manage",
+      "label": "Manage Styles",
+      "category": "Home › Styles",
+      "params": null,
+      "source_module": "para.rs"
+    },
+    {
+      "id": "styles.modify",
+      "label": "Modify Style",
+      "category": "Home › Styles",
+      "params": "{\"style\": string, \"chr\"?: CharProps, \"para\"?: ParaProps, \"name\"?: string, \"next\"?: string}",
+      "source_module": "para.rs"
+    },
+    {
+      "id": "styles.pane",
+      "label": "Styles Pane",
+      "category": "Home › Styles",
+      "params": null,
+      "source_module": "para.rs"
+    },
+    {
+      "id": "styles.setVisibility",
+      "label": "Show or Hide Style",
+      "category": "Home › Styles",
+      "params": "{\"style\": string, \"gallery\"?: bool (Styles gallery, w:qFormat), \"hidden\"?: bool (hidden from style lists, w:semiHidden)}",
+      "source_module": "para.rs"
+    },
+    {
+      "id": "styles.updateToMatch",
+      "label": "Update Style to Match Selection",
+      "category": "Home › Styles",
+      "params": "{\"style\"?: string}",
+      "source_module": "para.rs"
+    },
+    {
+      "id": "view.stylesPane",
+      "label": "Styles Pane",
+      "category": "Home › Styles",
+      "params": null,
+      "source_module": "view.rs"
+    },
+    {
+      "id": "view.stylesPaneDock",
+      "label": "Styles Pane Position",
+      "category": "Home › Styles",
+      "params": "{\"dock\"?: \"left\" | \"right\" | \"float\"}",
+      "source_module": "view.rs"
+    },
+    {
+      "id": "styles.inspect",
+      "label": "Inspect Styles at Selection",
+      "category": "Home › Styles › Style Inspector",
+      "params": null,
+      "source_module": "inspector.rs"
+    },
+    {
+      "id": "styles.inspectorClear",
+      "label": "Clear Formatting Level",
+      "category": "Home › Styles › Style Inspector",
+      "params": "{\"level\": \"paragraphStyle|paragraphFormatting|characterStyle|characterFormatting\"}",
+      "source_module": "inspector.rs"
+    },
+    {
+      "id": "insert.createFooter",
+      "label": "Footer",
+      "category": "Insert › Header & Footer",
+      "params": "{\"page\"?: number (0-based; default: the caret's section)} — the footer that page shows, created if it has none, with the caret in it",
+      "source_module": "insert.rs"
+    },
+    {
+      "id": "insert.createHeader",
+      "label": "Header",
+      "category": "Insert › Header & Footer",
+      "params": "{\"page\"?: number (0-based; default: the caret's section)} — the header that page shows, created if it has none, with the caret in it",
+      "source_module": "insert.rs"
+    },
+    {
+      "id": "insert.footer",
+      "label": "Footer",
+      "category": "Insert › Header & Footer",
+      "params": "{\"text\"?: string, \"preset\"?: \"blank|blankThree|pageNumber\"}",
+      "source_module": "insert.rs"
+    },
+    {
+      "id": "insert.header",
+      "label": "Header",
+      "category": "Insert › Header & Footer",
+      "params": "{\"text\"?: string, \"preset\"?: \"blank|blankThree|title\"}",
+      "source_module": "insert.rs"
+    },
+    {
+      "id": "insert.pageNumber",
+      "label": "Page Number",
+      "category": "Insert › Header & Footer",
+      "params": "{\"position\"?: \"top|bottom|current\", \"align\"?: \"left|center|right\", \"format\"?: \"x of y\"}",
+      "source_module": "insert.rs"
+    },
+    {
+      "id": "insert.editFooter",
+      "label": "Edit Footer",
+      "category": "Insert › Header & Footer › Footer",
+      "params": "{\"page\"?: number (0-based: the footer that page shows, created if it has none)}",
+      "source_module": "insert.rs"
+    },
+    {
+      "id": "insert.removeFooter",
+      "label": "Remove Footer",
+      "category": "Insert › Header & Footer › Footer",
+      "params": null,
+      "source_module": "insert.rs"
+    },
+    {
+      "id": "insert.editHeader",
+      "label": "Edit Header",
+      "category": "Insert › Header & Footer › Header",
+      "params": "{\"page\"?: number (0-based: the header that page shows, created if it has none)}",
+      "source_module": "insert.rs"
+    },
+    {
+      "id": "insert.removeHeader",
+      "label": "Remove Header",
+      "category": "Insert › Header & Footer › Header",
+      "params": null,
+      "source_module": "insert.rs"
+    },
+    {
+      "id": "layout.pageNumberFormat",
+      "label": "Format Page Numbers",
+      "category": "Insert › Header & Footer › Page Number",
+      "params": null,
+      "source_module": "page.rs"
+    },
+    {
+      "id": "insert.canvas",
+      "label": "Drawing Canvas",
+      "category": "Insert › Illustrations",
+      "params": "{\"width\"?: pt (default 432 = 6\"), \"height\"?: pt (default 216 = 3\"), \"fill\"?: \"RRGGBB\", \"outline\"?: \"RRGGBB\"}  (in line with text at the caret; it stays selected, so the next Pictures, Shapes or Text Box goes inside it)",
+      "source_module": "canvas.rs"
+    },
+    {
+      "id": "insert.chart",
+      "label": "Chart",
+      "category": "Insert › Illustrations",
+      "params": null,
+      "source_module": "chart.rs"
+    },
+    {
+      "id": "insert.icon",
+      "label": "Icons",
+      "category": "Insert › Illustrations",
+      "params": "{\"id\"?: string (omit to list the library), \"color\"?: \"RRGGBB\", \"size\"?: pt, \"query\"?: string, \"category\"?: string}",
+      "source_module": "insert.rs"
+    },
+    {
+      "id": "insert.picture",
+      "label": "Pictures",
+      "category": "Insert › Illustrations",
+      "params": "{\"path\"?: string, \"data\"?: base64, \"width\"?: pt, \"alt\"?: string}",
+      "source_module": "insert.rs"
+    },
+    {
+      "id": "insert.shape",
+      "label": "Shapes",
+      "category": "Insert › Illustrations",
+      "params": "{\"kind\": \"rectangle|roundedRectangle|ellipse|triangle|diamond|line|arrow|star|heart|straightConnector|elbowConnector|curvedConnector\", \"width\"?: pt, \"height\"?: pt, \"fill\"?: \"RRGGBB\", \"stroke\"?: \"RRGGBB\", \"arrow\"?: \"none\"|\"start\"|\"end\"|\"both\" (lines and connectors; glue a connector's ends with shape.connect)}",
+      "source_module": "insert.rs"
+    },
+    {
+      "id": "insert.smartArt",
+      "label": "SmartArt",
+      "category": "Insert › Illustrations",
+      "params": null,
+      "source_module": "smart_art.rs"
+    },
+    {
+      "id": "insert.bookmark",
+      "label": "Bookmark",
+      "category": "Insert › Links",
+      "params": "{\"name\": string}",
+      "source_module": "insert.rs"
+    },
+    {
+      "id": "insert.crossReference",
+      "label": "Cross-reference",
+      "category": "Insert › Links",
+      "params": "{\"to\": \"heading|bookmark|figure|table|equation|label:<Name> (a caption label of your own)\", \"target\": string (text / name / number), \"show\"?: \"text|page|number|aboveBelow\"} or {} to list targets",
+      "source_module": "citations.rs"
+    },
+    {
+      "id": "insert.deleteBookmark",
+      "label": "Delete Bookmark",
+      "category": "Insert › Links",
+      "params": "{\"name\": string}",
+      "source_module": "insert.rs"
+    },
+    {
+      "id": "insert.link",
+      "label": "Link",
+      "category": "Insert › Links",
+      "params": null,
+      "source_module": "insert.rs"
+    },
+    {
+      "id": "insert.removeLink",
+      "label": "Remove Hyperlink",
+      "category": "Insert › Links",
+      "params": null,
+      "source_module": "insert.rs"
+    },
+    {
+      "id": "link.targets",
+      "label": "Link",
+      "category": "Insert › Links",
+      "params": null,
+      "source_module": "insert.rs"
+    },
+    {
+      "id": "insert.blankPage",
+      "label": "Blank Page",
+      "category": "Insert › Pages",
+      "params": null,
+      "source_module": "insert.rs"
+    },
+    {
+      "id": "insert.coverPage",
+      "label": "Cover Page",
+      "category": "Insert › Pages",
+      "params": "{\"title\"?: string, \"subtitle\"?: string, \"author\"?: string}",
+      "source_module": "insert.rs"
+    },
+    {
+      "id": "insert.pageBreak",
+      "label": "Page Break",
+      "category": "Insert › Pages",
+      "params": null,
+      "source_module": "insert.rs"
+    },
+    {
+      "id": "text.pageBreak",
+      "label": "Page Break",
+      "category": "Insert › Pages",
+      "params": null,
+      "source_module": "text.rs"
+    },
+    {
+      "id": "insert.equation",
+      "label": "Equation",
+      "category": "Insert › Symbols",
+      "params": "{\"linear\"?: string, \"latex\"?: string, \"builtin\"?: \"pythagoras|area|quadratic|binomial|expansion|euler|derivative|taylor|gaussian|fourier|trig1|trig2|normal|bayes\", \"display\"?: bool, \"edit\"?: bool (default true)}",
+      "source_module": "equation.rs"
+    },
+    {
+      "id": "insert.symbol",
+      "label": "Symbol",
+      "category": "Insert › Symbols",
+      "params": "{\"char\": string, \"font\"?: family (the symbol's own font)}",
+      "source_module": "insert.rs"
+    },
+    {
+      "id": "text.copyright",
+      "label": "Copyright Sign",
+      "category": "Insert › Symbols",
+      "params": null,
+      "source_module": "text.rs"
+    },
+    {
+      "id": "text.ellipsis",
+      "label": "Ellipsis",
+      "category": "Insert › Symbols",
+      "params": null,
+      "source_module": "text.rs"
+    },
+    {
+      "id": "text.emDash",
+      "label": "Em Dash",
+      "category": "Insert › Symbols",
+      "params": null,
+      "source_module": "text.rs"
+    },
+    {
+      "id": "text.nbHyphen",
+      "label": "Nonbreaking Hyphen",
+      "category": "Insert › Symbols",
+      "params": null,
+      "source_module": "text.rs"
+    },
+    {
+      "id": "text.nbsp",
+      "label": "Nonbreaking Space",
+      "category": "Insert › Symbols",
+      "params": null,
+      "source_module": "text.rs"
+    },
+    {
+      "id": "text.optionalHyphen",
+      "label": "Optional Hyphen",
+      "category": "Insert › Symbols",
+      "params": null,
+      "source_module": "text.rs"
+    },
+    {
+      "id": "text.registered",
+      "label": "Registered Sign",
+      "category": "Insert › Symbols",
+      "params": null,
+      "source_module": "text.rs"
+    },
+    {
+      "id": "text.trademark",
+      "label": "Trademark Sign",
+      "category": "Insert › Symbols",
+      "params": null,
+      "source_module": "text.rs"
+    },
+    {
+      "id": "insert.spreadsheet",
+      "label": "Spreadsheet Table",
+      "category": "Insert › Tables",
+      "params": null,
+      "source_module": "tools/specs.rs"
+    },
+    {
+      "id": "insert.table",
+      "label": "Table",
+      "category": "Insert › Tables",
+      "params": "{\"rows\": n, \"cols\": n, \"style\"?: string}",
+      "source_module": "insert.rs"
+    },
+    {
+      "id": "table.draw",
+      "label": "Draw Table",
+      "category": "Insert › Tables",
+      "params": null,
+      "source_module": "table_draw.rs"
+    },
+    {
+      "id": "table.fromText",
+      "label": "Convert Text to Table",
+      "category": "Insert › Tables",
+      "params": "{\"separator\"?: \"tab|comma|paragraph|other\", \"char\"?: string (with other), \"columns\"?: n, \"autofit\"?: \"initial|fixed|contents|window\", \"width\"?: pt (initial column width, 0 = Auto, at most 1584)}",
+      "source_module": "table.rs"
+    },
+    {
+      "id": "table.quick",
+      "label": "Quick Tables",
+      "category": "Insert › Tables",
+      "params": "{\"kind\"?: \"calendar|tabular|matrix\"}",
+      "source_module": "table.rs"
+    },
+    {
+      "id": "insert.dateTime",
+      "label": "Date & Time",
+      "category": "Insert › Text",
+      "params": "{\"format\"?: \"M/d/yyyy\", \"update\"?: bool, \"language\"?: \"en-US|pt-BR\"}",
+      "source_module": "insert.rs"
+    },
+    {
+      "id": "insert.dropCap",
+      "label": "Drop Cap",
+      "category": "Insert › Text",
+      "params": "{\"position\"?: \"none\"|\"dropped\"|\"margin\" (default dropped), \"lines\"?: 1..10 (default 3; 0 = none), \"distance\"?: pt from the text (0..1584, default 0), \"font\"?: family (omit for the text's font), \"keep\"?: bool (true: each selected paragraph that has a drop cap keeps its own lines, distance and font unless given here)}",
+      "source_module": "insert.rs"
+    },
+    {
+      "id": "insert.object",
+      "label": "Object",
+      "category": "Insert › Text",
+      "params": "{\"path\": string}",
+      "source_module": "tools/specs.rs"
+    },
+    {
+      "id": "insert.quickParts",
+      "label": "Quick Parts",
+      "category": "Insert › Text",
+      "params": null,
+      "source_module": "tools/specs.rs"
+    },
+    {
+      "id": "insert.signatureLine",
+      "label": "Signature Line",
+      "category": "Insert › Text",
+      "params": null,
+      "source_module": "tools/specs.rs"
+    },
+    {
+      "id": "insert.textBox",
+      "label": "Text Box",
+      "category": "Insert › Text",
+      "params": "{\"text\"?: string, \"width\"?: pt, \"height\"?: pt}",
+      "source_module": "insert.rs"
+    },
+    {
+      "id": "insert.wordArt",
+      "label": "WordArt",
+      "category": "Insert › Text",
+      "params": null,
+      "source_module": "wordart.rs"
+    },
+    {
+      "id": "insert.textFromFile",
+      "label": "Text from File",
+      "category": "Insert › Text › Object",
+      "params": null,
+      "source_module": "insert.rs"
+    },
+    {
+      "id": "fields.lock",
+      "label": "Lock Fields",
+      "category": "Insert › Text › Quick Parts",
+      "params": null,
+      "source_module": "fields.rs"
+    },
+    {
+      "id": "fields.next",
+      "label": "Next Field",
+      "category": "Insert › Text › Quick Parts",
+      "params": null,
+      "source_module": "fields.rs"
+    },
+    {
+      "id": "fields.previous",
+      "label": "Previous Field",
+      "category": "Insert › Text › Quick Parts",
+      "params": null,
+      "source_module": "fields.rs"
+    },
+    {
+      "id": "fields.selected",
+      "label": "Selected Fields",
+      "category": "Insert › Text › Quick Parts",
+      "params": null,
+      "source_module": "fields.rs"
+    },
+    {
+      "id": "fields.setCode",
+      "label": "Edit Field Code",
+      "category": "Insert › Text › Quick Parts",
+      "params": "{\"code\": string}",
+      "source_module": "fields.rs"
+    },
+    {
+      "id": "fields.toggleCode",
+      "label": "Toggle Field Codes",
+      "category": "Insert › Text › Quick Parts",
+      "params": null,
+      "source_module": "fields.rs"
+    },
+    {
+      "id": "fields.unlink",
+      "label": "Unlink Fields",
+      "category": "Insert › Text › Quick Parts",
+      "params": null,
+      "source_module": "fields.rs"
+    },
+    {
+      "id": "fields.unlock",
+      "label": "Unlock Fields",
+      "category": "Insert › Text › Quick Parts",
+      "params": null,
+      "source_module": "fields.rs"
+    },
+    {
+      "id": "insert.autoText",
+      "label": "AutoText",
+      "category": "Insert › Text › Quick Parts",
+      "params": "{\"save\"?: name, \"in\"?: \"document\", \"insert\"?: name, \"delete\"?: name} → {\"parts\": names, \"document\": the document's AutoText}",
+      "source_module": "tools/specs.rs"
+    },
+    {
+      "id": "insert.dateField",
+      "label": "Insert Date Field",
+      "category": "Insert › Text › Quick Parts",
+      "params": null,
+      "source_module": "insert.rs"
+    },
+    {
+      "id": "insert.docProperty",
+      "label": "Document Property",
+      "category": "Insert › Text › Quick Parts",
+      "params": null,
+      "source_module": "tools/specs.rs"
+    },
+    {
+      "id": "insert.field",
+      "label": "Field",
+      "category": "Insert › Text › Quick Parts",
+      "params": "{\"instr\": string, \"result\"?: string}",
+      "source_module": "insert.rs"
+    },
+    {
+      "id": "insert.pageField",
+      "label": "Insert Page Field",
+      "category": "Insert › Text › Quick Parts",
+      "params": null,
+      "source_module": "insert.rs"
+    },
+    {
+      "id": "insert.timeField",
+      "label": "Insert Time Field",
+      "category": "Insert › Text › Quick Parts",
+      "params": null,
+      "source_module": "insert.rs"
+    },
+    {
+      "id": "arrange.align",
+      "label": "Align",
+      "category": "Layout › Arrange",
+      "params": null,
+      "source_module": "objects/specs.rs"
+    },
+    {
+      "id": "arrange.bounds",
+      "label": "Move or Resize",
+      "category": "Layout › Arrange",
+      "params": "{\"width\"?: pt, \"height\"?: pt, \"x\"?: pt, \"y\"?: pt, \"page\"?: n, \"to\"?: Pos}  (x/y: the top-left on page `page` (0-based, default its page); moving an inline object by x/y floats it. to: an In Line with Text object moves to that text position and stays inline, as a drag does)",
+      "source_module": "objects/specs.rs"
+    },
+    {
+      "id": "arrange.bringForward",
+      "label": "Bring Forward",
+      "category": "Layout › Arrange",
+      "params": null,
+      "source_module": "objects/specs.rs"
+    },
+    {
+      "id": "arrange.copyTo",
+      "label": "Copy to",
+      "category": "Layout › Arrange",
+      "params": "{\"x\": pt, \"y\": pt, \"page\"?: n} | {\"to\": Pos}  (Ctrl+drag: a copy of the selected object lands with its top-left there, or an In Line with Text one at the text position `to`, and is selected; the original and the clipboard stay as they were)",
+      "source_module": "objects/specs.rs"
+    },
+    {
+      "id": "arrange.group",
+      "label": "Group",
+      "category": "Layout › Arrange",
+      "params": "{}  (groups the selected pictures, shapes and text boxes: the selected one plus those added with select.addObject)",
+      "source_module": "objects/specs.rs"
+    },
+    {
+      "id": "arrange.nudge",
+      "label": "Nudge",
+      "category": "Layout › Arrange",
+      "params": null,
+      "source_module": "objects/specs.rs"
+    },
+    {
+      "id": "arrange.position",
+      "label": "Position",
+      "category": "Layout › Arrange",
+      "params": null,
+      "source_module": "objects/specs.rs"
+    },
+    {
+      "id": "arrange.rotate",
+      "label": "Rotate",
+      "category": "Layout › Arrange",
+      "params": null,
+      "source_module": "objects/specs.rs"
+    },
+    {
+      "id": "arrange.rotation",
+      "label": "Rotation",
+      "category": "Layout › Arrange",
+      "params": null,
+      "source_module": "objects/specs.rs"
+    },
+    {
+      "id": "arrange.selectionPane",
+      "label": "Selection Pane",
+      "category": "Layout › Arrange",
+      "params": null,
+      "source_module": "objects/specs.rs"
+    },
+    {
+      "id": "arrange.sendBackward",
+      "label": "Send Backward",
+      "category": "Layout › Arrange",
+      "params": null,
+      "source_module": "objects/specs.rs"
+    },
+    {
+      "id": "arrange.ungroup",
+      "label": "Ungroup",
+      "category": "Layout › Arrange",
+      "params": null,
+      "source_module": "objects/specs.rs"
+    },
+    {
+      "id": "arrange.wrap",
+      "label": "Wrap Text",
+      "category": "Layout › Arrange",
+      "params": "{\"wrap\": \"inline|square|tight|through|topAndBottom|behindText|inFrontOfText\"}",
+      "source_module": "objects/specs.rs"
+    },
+    {
+      "id": "arrange.wrapText",
+      "label": "Wrap Text Sides",
+      "category": "Layout › Arrange",
+      "params": null,
+      "source_module": "objects/specs.rs"
+    },
+    {
+      "id": "arrange.moveWithText",
+      "label": "Move with Text",
+      "category": "Layout › Arrange › Wrap Text",
+      "params": "{\"value\": bool}  (true: Move with Text, the floating object's vertical position follows its paragraph; false: Fix Position on Page. It stays where it is)",
+      "source_module": "objects/specs.rs"
+    },
+    {
+      "id": "text.columnBreak",
+      "label": "Column Break",
+      "category": "Layout › Breaks",
+      "params": null,
+      "source_module": "text.rs"
+    },
+    {
+      "id": "layout.break",
+      "label": "Breaks",
+      "category": "Layout › Page Setup",
+      "params": "{\"kind\": \"page|column|textWrapping|nextPage|continuous|evenPage|oddPage\"}",
+      "source_module": "page.rs"
+    },
+    {
+      "id": "layout.columns",
+      "label": "Columns",
+      "category": "Layout › Page Setup",
+      "params": null,
+      "source_module": "page.rs"
+    },
+    {
+      "id": "layout.hyphenation",
+      "label": "Hyphenation",
+      "category": "Layout › Page Setup",
+      "params": "{\"value\"?: bool (automatic; toggles when nothing is given), \"zone\"?: pt, \"caps\"?: bool (hyphenate words in capitals), \"limit\"?: n (consecutive hyphens, 0 = no limit)}",
+      "source_module": "page.rs"
+    },
+    {
+      "id": "layout.lineNumbers",
+      "label": "Line Numbers",
+      "category": "Layout › Page Setup",
+      "params": null,
+      "source_module": "page.rs"
+    },
+    {
+      "id": "layout.margins",
+      "label": "Margins",
+      "category": "Layout › Page Setup",
+      "params": null,
+      "source_module": "page.rs"
+    },
+    {
+      "id": "layout.orientation",
+      "label": "Orientation",
+      "category": "Layout › Page Setup",
+      "params": "{\"value\": \"portrait|landscape\"}",
+      "source_module": "page.rs"
+    },
+    {
+      "id": "layout.pageSetup",
+      "label": "Page Setup",
+      "category": "Layout › Page Setup",
+      "params": null,
+      "source_module": "page.rs"
+    },
+    {
+      "id": "layout.section",
+      "label": "Section Properties",
+      "category": "Layout › Page Setup",
+      "params": null,
+      "source_module": "page.rs"
+    },
+    {
+      "id": "layout.sectionRtl",
+      "label": "Right-to-Left Section",
+      "category": "Layout › Page Setup",
+      "params": "{\"value\"?: bool} (true: the section's columns run right to left; without a value it toggles)",
+      "source_module": "page.rs"
+    },
+    {
+      "id": "layout.size",
+      "label": "Size",
+      "category": "Layout › Page Setup",
+      "params": "{\"name\"?: \"Letter|Legal|A4|…\", \"width\"?: pt, \"height\"?: pt} (each side clamped to 7.2–1584 pt, 0.1–22 in; the section keeps its orientation)",
+      "source_module": "page.rs"
+    },
+    {
+      "id": "layout.textDirection",
+      "label": "Text Direction",
+      "category": "Layout › Page Setup",
+      "params": null,
+      "source_module": "page.rs"
+    },
+    {
+      "id": "layout.documentGrid",
+      "label": "Document Grid",
+      "category": "Layout › Page Setup › Document Grid",
+      "params": null,
+      "source_module": "page.rs"
+    },
+    {
+      "id": "layout.manualHyphenation",
+      "label": "Manual Hyphenation",
+      "category": "Layout › Page Setup › Hyphenation",
+      "params": "{\"from\"?: Pos (default: the caret)} → the next word at a line end that could be hyphenated: {\"word\", \"pos\", \"points\": [char index], \"suggest\": char index} or {\"done\": true}",
+      "source_module": "page.rs"
+    },
+    {
+      "id": "layout.verticalAlign",
+      "label": "Vertical Alignment",
+      "category": "Layout › Page Setup › Layout",
+      "params": "{\"value\": \"top|center|justify|bottom\"} (also both|justified; anything else is top). Justified shares each page's spare room between its paragraphs and tables",
+      "source_module": "page.rs"
+    },
+    {
+      "id": "para.indents",
+      "label": "Indents",
+      "category": "Layout › Paragraph",
+      "params": null,
+      "source_module": "para.rs"
+    },
+    {
+      "id": "para.spacing",
+      "label": "Paragraph Spacing",
+      "category": "Layout › Paragraph",
+      "params": null,
+      "source_module": "para.rs"
+    },
+    {
+      "id": "mailings.envelopes",
+      "label": "Envelopes",
+      "category": "Mailings › Create",
+      "params": null,
+      "source_module": "mailings.rs"
+    },
+    {
+      "id": "mailings.labels",
+      "label": "Labels",
+      "category": "Mailings › Create",
+      "params": null,
+      "source_module": "mailings.rs"
+    },
+    {
+      "id": "mailings.checkErrors",
+      "label": "Check for Errors",
+      "category": "Mailings › Finish",
+      "params": null,
+      "source_module": "mailings.rs"
+    },
+    {
+      "id": "mailings.finish",
+      "label": "Finish & Merge",
+      "category": "Mailings › Finish",
+      "params": "{\"path\"?: string (save the merged document), \"records\"?: \"all|current\" (current: the previewed record; default all, or from/to), \"from\"?: n, \"to\"?: n (record numbers, 1 = the first)}",
+      "source_module": "mailings.rs"
+    },
+    {
+      "id": "mailings.printDocuments",
+      "label": "Print Documents",
+      "category": "Mailings › Finish › Finish & Merge",
+      "params": null,
+      "source_module": "mailings.rs"
+    },
+    {
+      "id": "mailings.findRecipient",
+      "label": "Find Recipient",
+      "category": "Mailings › Preview Results",
+      "params": null,
+      "source_module": "mailings.rs"
+    },
+    {
+      "id": "mailings.first",
+      "label": "First Record",
+      "category": "Mailings › Preview Results",
+      "params": null,
+      "source_module": "mailings.rs"
+    },
+    {
+      "id": "mailings.goToRecord",
+      "label": "Go to Record",
+      "category": "Mailings › Preview Results",
+      "params": null,
+      "source_module": "mailings.rs"
+    },
+    {
+      "id": "mailings.last",
+      "label": "Last Record",
+      "category": "Mailings › Preview Results",
+      "params": null,
+      "source_module": "mailings.rs"
+    },
+    {
+      "id": "mailings.next",
+      "label": "Next Record",
+      "category": "Mailings › Preview Results",
+      "params": null,
+      "source_module": "mailings.rs"
+    },
+    {
+      "id": "mailings.preview",
+      "label": "Preview Results",
+      "category": "Mailings › Preview Results",
+      "params": null,
+      "source_module": "mailings.rs"
+    },
+    {
+      "id": "mailings.previous",
+      "label": "Previous Record",
+      "category": "Mailings › Preview Results",
+      "params": null,
+      "source_module": "mailings.rs"
+    },
+    {
+      "id": "mailings.editRecipients",
+      "label": "Edit Recipient List",
+      "category": "Mailings › Start Mail Merge",
+      "params": null,
+      "source_module": "mailings.rs"
+    },
+    {
+      "id": "mailings.recipients",
+      "label": "Select Recipients",
+      "category": "Mailings › Start Mail Merge",
+      "params": null,
+      "source_module": "mailings.rs"
+    },
+    {
+      "id": "mailings.start",
+      "label": "Start Mail Merge",
+      "category": "Mailings › Start Mail Merge",
+      "params": null,
+      "source_module": "mailings.rs"
+    },
+    {
+      "id": "mailings.filterRecipients",
+      "label": "Filter Recipients",
+      "category": "Mailings › Start Mail Merge › Edit Recipient List",
+      "params": null,
+      "source_module": "mailings.rs"
+    },
+    {
+      "id": "mailings.sortRecipients",
+      "label": "Sort Recipients",
+      "category": "Mailings › Start Mail Merge › Edit Recipient List",
+      "params": "{\"sort\"?: [{\"field\": string, \"descending\"?: bool}]} | {\"field\": string, \"descending\"?: bool} (no params: the list's own order)",
+      "source_module": "mailings.rs"
+    },
+    {
+      "id": "mailings.addressBlock",
+      "label": "Address Block",
+      "category": "Mailings › Write & Insert Fields",
+      "params": null,
+      "source_module": "mailings.rs"
+    },
+    {
+      "id": "mailings.greetingLine",
+      "label": "Greeting Line",
+      "category": "Mailings › Write & Insert Fields",
+      "params": null,
+      "source_module": "mailings.rs"
+    },
+    {
+      "id": "mailings.highlightFields",
+      "label": "Highlight Merge Fields",
+      "category": "Mailings › Write & Insert Fields",
+      "params": null,
+      "source_module": "mailings.rs"
+    },
+    {
+      "id": "mailings.insertField",
+      "label": "Insert Merge Field",
+      "category": "Mailings › Write & Insert Fields",
+      "params": "{\"field\": string}",
+      "source_module": "mailings.rs"
+    },
+    {
+      "id": "mailings.matchFields",
+      "label": "Match Fields",
+      "category": "Mailings › Write & Insert Fields",
+      "params": null,
+      "source_module": "mailings.rs"
+    },
+    {
+      "id": "mailings.rules",
+      "label": "Rules",
+      "category": "Mailings › Write & Insert Fields",
+      "params": null,
+      "source_module": "mailings.rs"
+    },
+    {
+      "id": "caret.docEnd",
+      "label": "Document End",
+      "category": "Navigation",
+      "params": null,
+      "source_module": "caret.rs"
+    },
+    {
+      "id": "caret.docStart",
+      "label": "Document Start",
+      "category": "Navigation",
+      "params": null,
+      "source_module": "caret.rs"
+    },
+    {
+      "id": "caret.down",
+      "label": "Down",
+      "category": "Navigation",
+      "params": null,
+      "source_module": "caret.rs"
+    },
+    {
+      "id": "caret.end",
+      "label": "Line End",
+      "category": "Navigation",
+      "params": null,
+      "source_module": "caret.rs"
+    },
+    {
+      "id": "caret.home",
+      "label": "Line Start",
+      "category": "Navigation",
+      "params": null,
+      "source_module": "caret.rs"
+    },
+    {
+      "id": "caret.left",
+      "label": "Left",
+      "category": "Navigation",
+      "params": null,
+      "source_module": "caret.rs"
+    },
+    {
+      "id": "caret.pageDown",
+      "label": "Page Down",
+      "category": "Navigation",
+      "params": null,
+      "source_module": "caret.rs"
+    },
+    {
+      "id": "caret.pageUp",
+      "label": "Page Up",
+      "category": "Navigation",
+      "params": null,
+      "source_module": "caret.rs"
+    },
+    {
+      "id": "caret.paraDown",
+      "label": "Paragraph Down",
+      "category": "Navigation",
+      "params": null,
+      "source_module": "caret.rs"
+    },
+    {
+      "id": "caret.paraUp",
+      "label": "Paragraph Up",
+      "category": "Navigation",
+      "params": null,
+      "source_module": "caret.rs"
+    },
+    {
+      "id": "caret.right",
+      "label": "Right",
+      "category": "Navigation",
+      "params": null,
+      "source_module": "caret.rs"
+    },
+    {
+      "id": "caret.set",
+      "label": "Set Caret",
+      "category": "Navigation",
+      "params": "{\"pos\": Pos, \"extend\"?: bool} | {\"page\": n, \"x\": pt, \"y\": pt}",
+      "source_module": "caret.rs"
+    },
+    {
+      "id": "caret.up",
+      "label": "Up",
+      "category": "Navigation",
+      "params": null,
+      "source_module": "caret.rs"
+    },
+    {
+      "id": "caret.wordLeft",
+      "label": "Word Left",
+      "category": "Navigation",
+      "params": null,
+      "source_module": "caret.rs"
+    },
+    {
+      "id": "caret.wordRight",
+      "label": "Word Right",
+      "category": "Navigation",
+      "params": null,
+      "source_module": "caret.rs"
+    },
+    {
+      "id": "edit.goBack",
+      "label": "Go Back",
+      "category": "Navigation",
+      "params": null,
+      "source_module": "edit.rs"
+    },
+    {
+      "id": "select.collapse",
+      "label": "Collapse Selection",
+      "category": "Navigation",
+      "params": null,
+      "source_module": "caret.rs"
+    },
+    {
+      "id": "select.dragUnit",
+      "label": "Extend Selection by Units",
+      "category": "Navigation",
+      "params": "{\"unit\": \"word|sentence|line|paragraph|document\", \"start\": Pos, \"end\": Pos, \"pos\": Pos}",
+      "source_module": "caret.rs"
+    },
+    {
+      "id": "select.line",
+      "label": "Select Line",
+      "category": "Navigation",
+      "params": "{\"pos\"?: Pos}",
+      "source_module": "caret.rs"
+    },
+    {
+      "id": "select.paragraph",
+      "label": "Select Paragraph",
+      "category": "Navigation",
+      "params": null,
+      "source_module": "caret.rs"
+    },
+    {
+      "id": "select.range",
+      "label": "Select Range",
+      "category": "Navigation",
+      "params": "{\"anchor\": Pos, \"focus\": Pos}",
+      "source_module": "caret.rs"
+    },
+    {
+      "id": "select.sentence",
+      "label": "Select Sentence",
+      "category": "Navigation",
+      "params": null,
+      "source_module": "caret.rs"
+    },
+    {
+      "id": "select.text",
+      "label": "Select Text",
+      "category": "Navigation",
+      "params": "{\"text\": string, \"occurrence\"?: n}",
+      "source_module": "caret.rs"
+    },
+    {
+      "id": "select.word",
+      "label": "Select Word",
+      "category": "Navigation",
+      "params": null,
+      "source_module": "caret.rs"
+    },
+    {
+      "id": "outline.state",
+      "label": "Outline State",
+      "category": "Outlining",
+      "params": null,
+      "source_module": "outline.rs"
+    },
+    {
+      "id": "outline.close",
+      "label": "Close Outline View",
+      "category": "Outlining › Close",
+      "params": null,
+      "source_module": "outline.rs"
+    },
+    {
+      "id": "outline.collapse",
+      "label": "Collapse",
+      "category": "Outlining › Outline Tools",
+      "params": null,
+      "source_module": "outline.rs"
+    },
+    {
+      "id": "outline.demote",
+      "label": "Demote",
+      "category": "Outlining › Outline Tools",
+      "params": null,
+      "source_module": "outline.rs"
+    },
+    {
+      "id": "outline.demoteToBody",
+      "label": "Demote to Body Text",
+      "category": "Outlining › Outline Tools",
+      "params": null,
+      "source_module": "outline.rs"
+    },
+    {
+      "id": "outline.expand",
+      "label": "Expand",
+      "category": "Outlining › Outline Tools",
+      "params": null,
+      "source_module": "outline.rs"
+    },
+    {
+      "id": "outline.firstLineOnly",
+      "label": "Show First Line Only",
+      "category": "Outlining › Outline Tools",
+      "params": "{\"value\"?: bool}",
+      "source_module": "outline.rs"
+    },
+    {
+      "id": "outline.level",
+      "label": "Outline Level",
+      "category": "Outlining › Outline Tools",
+      "params": null,
+      "source_module": "outline.rs"
+    },
+    {
+      "id": "outline.moveDown",
+      "label": "Move Down",
+      "category": "Outlining › Outline Tools",
+      "params": null,
+      "source_module": "outline.rs"
+    },
+    {
+      "id": "outline.moveUp",
+      "label": "Move Up",
+      "category": "Outlining › Outline Tools",
+      "params": null,
+      "source_module": "outline.rs"
+    },
+    {
+      "id": "outline.promote",
+      "label": "Promote",
+      "category": "Outlining › Outline Tools",
+      "params": null,
+      "source_module": "outline.rs"
+    },
+    {
+      "id": "outline.promoteToHeading1",
+      "label": "Promote to Heading 1",
+      "category": "Outlining › Outline Tools",
+      "params": null,
+      "source_module": "outline.rs"
+    },
+    {
+      "id": "outline.selectSubtree",
+      "label": "Select Heading and Content",
+      "category": "Outlining › Outline Tools",
+      "params": null,
+      "source_module": "outline.rs"
+    },
+    {
+      "id": "outline.showAll",
+      "label": "Show All Levels",
+      "category": "Outlining › Outline Tools",
+      "params": null,
+      "source_module": "outline.rs"
+    },
+    {
+      "id": "outline.showFormatting",
+      "label": "Show Text Formatting",
+      "category": "Outlining › Outline Tools",
+      "params": "{\"value\"?: bool}",
+      "source_module": "outline.rs"
+    },
+    {
+      "id": "outline.showLevel",
+      "label": "Show Level",
+      "category": "Outlining › Outline Tools",
+      "params": null,
+      "source_module": "outline.rs"
+    },
+    {
+      "id": "outline.showLevel1",
+      "label": "Show Level 1",
+      "category": "Outlining › Outline Tools",
+      "params": null,
+      "source_module": "outline.rs"
+    },
+    {
+      "id": "outline.showLevel2",
+      "label": "Show Level 2",
+      "category": "Outlining › Outline Tools",
+      "params": null,
+      "source_module": "outline.rs"
+    },
+    {
+      "id": "outline.showLevel3",
+      "label": "Show Level 3",
+      "category": "Outlining › Outline Tools",
+      "params": null,
+      "source_module": "outline.rs"
+    },
+    {
+      "id": "outline.showLevel4",
+      "label": "Show Level 4",
+      "category": "Outlining › Outline Tools",
+      "params": null,
+      "source_module": "outline.rs"
+    },
+    {
+      "id": "outline.showLevel5",
+      "label": "Show Level 5",
+      "category": "Outlining › Outline Tools",
+      "params": null,
+      "source_module": "outline.rs"
+    },
+    {
+      "id": "outline.showLevel6",
+      "label": "Show Level 6",
+      "category": "Outlining › Outline Tools",
+      "params": null,
+      "source_module": "outline.rs"
+    },
+    {
+      "id": "outline.showLevel7",
+      "label": "Show Level 7",
+      "category": "Outlining › Outline Tools",
+      "params": null,
+      "source_module": "outline.rs"
+    },
+    {
+      "id": "outline.showLevel8",
+      "label": "Show Level 8",
+      "category": "Outlining › Outline Tools",
+      "params": null,
+      "source_module": "outline.rs"
+    },
+    {
+      "id": "outline.showLevel9",
+      "label": "Show Level 9",
+      "category": "Outlining › Outline Tools",
+      "params": null,
+      "source_module": "outline.rs"
+    },
+    {
+      "id": "outline.toggle",
+      "label": "Expand or Collapse Heading",
+      "category": "Outlining › Outline Tools",
+      "params": null,
+      "source_module": "outline.rs"
+    },
+    {
+      "id": "picture.altText",
+      "label": "Alt Text",
+      "category": "Picture Format › Accessibility",
+      "params": "{\"text\": string, \"title\"?: string, \"decorative\"?: bool}",
+      "source_module": "objects/specs.rs"
+    },
+    {
+      "id": "picture.change",
+      "label": "Change Picture",
+      "category": "Picture Format › Adjust",
+      "params": null,
+      "source_module": "objects/specs.rs"
+    },
+    {
+      "id": "picture.color",
+      "label": "Color",
+      "category": "Picture Format › Adjust",
+      "params": null,
+      "source_module": "objects/specs.rs"
+    },
+    {
+      "id": "picture.compress",
+      "label": "Compress Pictures",
+      "category": "Picture Format › Adjust",
+      "params": "{\"maxPixels\"?: n}",
+      "source_module": "objects/specs.rs"
+    },
+    {
+      "id": "picture.corrections",
+      "label": "Corrections",
+      "category": "Picture Format › Adjust",
+      "params": null,
+      "source_module": "objects/specs.rs"
+    },
+    {
+      "id": "picture.effects",
+      "label": "Artistic Effects",
+      "category": "Picture Format › Adjust",
+      "params": "{\"effect\": \"blur|sharpen|invert|posterize|pixelate|none\"} (replaces the picture's effect)",
+      "source_module": "objects/specs.rs"
+    },
+    {
+      "id": "picture.iconColor",
+      "label": "Icon Color",
+      "category": "Picture Format › Adjust",
+      "params": null,
+      "source_module": "objects/specs.rs"
+    },
+    {
+      "id": "picture.removeBackground",
+      "label": "Remove Background",
+      "category": "Picture Format › Adjust",
+      "params": "{\"tolerance\"?: 0..255}",
+      "source_module": "objects/specs.rs"
+    },
+    {
+      "id": "picture.reset",
+      "label": "Reset Picture",
+      "category": "Picture Format › Adjust",
+      "params": null,
+      "source_module": "objects/specs.rs"
+    },
+    {
+      "id": "picture.transparency",
+      "label": "Transparency",
+      "category": "Picture Format › Adjust",
+      "params": null,
+      "source_module": "objects/specs.rs"
+    },
+    {
+      "id": "picture.border",
+      "label": "Picture Border",
+      "category": "Picture Format › Picture Styles",
+      "params": "{\"color\"?: \"RRGGBB\", \"width\"?: px} (replaces the picture's border)",
+      "source_module": "objects/specs.rs"
+    },
+    {
+      "id": "picture.style",
+      "label": "Picture Styles",
+      "category": "Picture Format › Picture Styles",
+      "params": null,
+      "source_module": "objects/specs.rs"
+    },
+    {
+      "id": "picture.crop",
+      "label": "Crop",
+      "category": "Picture Format › Size",
+      "params": null,
+      "source_module": "objects/specs.rs"
+    },
+    {
+      "id": "picture.size",
+      "label": "Size",
+      "category": "Picture Format › Size",
+      "params": null,
+      "source_module": "objects/specs.rs"
+    },
+    {
+      "id": "edit.redo",
+      "label": "Redo",
+      "category": "Quick Access Toolbar",
+      "params": null,
+      "source_module": "edit.rs"
+    },
+    {
+      "id": "edit.repeat",
+      "label": "Repeat",
+      "category": "Quick Access Toolbar",
+      "params": null,
+      "source_module": "tools/specs.rs"
+    },
+    {
+      "id": "edit.undo",
+      "label": "Undo",
+      "category": "Quick Access Toolbar",
+      "params": null,
+      "source_module": "edit.rs"
+    },
+    {
+      "id": "edit.undoHistory",
+      "label": "Undo History",
+      "category": "Quick Access Toolbar",
+      "params": null,
+      "source_module": "edit.rs"
+    },
+    {
+      "id": "edit.undoTo",
+      "label": "Undo Actions",
+      "category": "Quick Access Toolbar",
+      "params": "{\"count\": n (1 = the newest step, like edit.undo; n undoes the newest n steps at once; at most the undo depth)}",
+      "source_module": "edit.rs"
+    },
+    {
+      "id": "file.autosave",
+      "label": "AutoSave",
+      "category": "Quick Access Toolbar",
+      "params": null,
+      "source_module": "tools/specs.rs"
+    },
+    {
+      "id": "view.readColumnWidth",
+      "label": "Reading Column Width",
+      "category": "Reading › Layout",
+      "params": "{\"value\": \"auto\" | \"narrow\" | \"medium\" | \"wide\" | \"page\"}",
+      "source_module": "view.rs"
+    },
+    {
+      "id": "view.readLineSpacing",
+      "label": "Reading Line Spacing",
+      "category": "Reading › Layout",
+      "params": "{\"value\": \"document\" | 1.0 | 1.25 | 1.5 | 2.0}",
+      "source_module": "view.rs"
+    },
+    {
+      "id": "view.readPageColor",
+      "label": "Reading Page Color",
+      "category": "Reading › Layout",
+      "params": "{\"value\": \"none\" | \"sepia\" | \"inverse\"}",
+      "source_module": "view.rs"
+    },
+    {
+      "id": "view.readTextSize",
+      "label": "Reading Text Size",
+      "category": "Reading › Layout",
+      "params": "{\"value\": percent (75–150)}",
+      "source_module": "view.rs"
+    },
+    {
+      "id": "references.updateFields",
+      "label": "Update Field",
+      "category": "References",
+      "params": "{\"all\"?: bool (the body and every header, footer, note and text box, wherever the caret is; default: the story the caret is in)}",
+      "source_module": "references.rs"
+    },
+    {
+      "id": "references.caption",
+      "label": "Insert Caption",
+      "category": "References › Captions",
+      "params": "{\"label\"?: \"Figure|Table|Equation|any label\", \"text\"?: string, \"position\"?: \"below|above\", \"excludeLabel\"?: bool, \"format\"?: \"ARABIC|alphabetic|ALPHABETIC|roman|ROMAN\", \"chapter\"?: heading level 1-9, \"separator\"?: \"-|.|:|—|–\"}",
+      "source_module": "references.rs"
+    },
+    {
+      "id": "references.tableOfFigures",
+      "label": "Insert Table of Figures",
+      "category": "References › Captions",
+      "params": null,
+      "source_module": "citations.rs"
+    },
+    {
+      "id": "references.updateFigures",
+      "label": "Update Table",
+      "category": "References › Captions",
+      "params": null,
+      "source_module": "citations.rs"
+    },
+    {
+      "id": "references.bibliography",
+      "label": "Bibliography",
+      "category": "References › Citations & Bibliography",
+      "params": "{\"title\"?: string}",
+      "source_module": "citations.rs"
+    },
+    {
+      "id": "references.citation",
+      "label": "Insert Citation",
+      "category": "References › Citations & Bibliography",
+      "params": "{\"tag\"?: string, \"source\"?: Source (added if new), \"pages\"?: string}",
+      "source_module": "citations.rs"
+    },
+    {
+      "id": "references.citationStyle",
+      "label": "Style",
+      "category": "References › Citations & Bibliography",
+      "params": null,
+      "source_module": "citations.rs"
+    },
+    {
+      "id": "references.sources",
+      "label": "Manage Sources",
+      "category": "References › Citations & Bibliography",
+      "params": "{\"add\"?: Source, \"remove\"?: tag, \"import\"?: path (a Word bibliography file, `b:Sources` / `Sources.xml`)} → list",
+      "source_module": "citations.rs"
+    },
+    {
+      "id": "references.convertNotes",
+      "label": "Convert Notes",
+      "category": "References › Footnotes",
+      "params": null,
+      "source_module": "references.rs"
+    },
+    {
+      "id": "references.endnote",
+      "label": "Insert Endnote",
+      "category": "References › Footnotes",
+      "params": "{\"text\"?: string, \"mark\"?: string (a custom mark instead of the number)}",
+      "source_module": "references.rs"
+    },
+    {
+      "id": "references.footnote",
+      "label": "Insert Footnote",
+      "category": "References › Footnotes",
+      "params": "{\"text\"?: string, \"mark\"?: string (a custom mark instead of the number)}",
+      "source_module": "references.rs"
+    },
+    {
+      "id": "references.nextFootnote",
+      "label": "Next Footnote",
+      "category": "References › Footnotes",
+      "params": null,
+      "source_module": "references.rs"
+    },
+    {
+      "id": "references.noteOptions",
+      "label": "Footnote and Endnote",
+      "category": "References › Footnotes",
+      "params": null,
+      "source_module": "citations.rs"
+    },
+    {
+      "id": "references.notes",
+      "label": "Show Notes",
+      "category": "References › Footnotes",
+      "params": null,
+      "source_module": "references.rs"
+    },
+    {
+      "id": "references.index",
+      "label": "Insert Index",
+      "category": "References › Index",
+      "params": null,
+      "source_module": "index.rs"
+    },
+    {
+      "id": "references.markEntry",
+      "label": "Mark Entry",
+      "category": "References › Index",
+      "params": null,
+      "source_module": "index.rs"
+    },
+    {
+      "id": "references.updateIndex",
+      "label": "Update Index",
+      "category": "References › Index",
+      "params": null,
+      "source_module": "index.rs"
+    },
+    {
+      "id": "references.researcher",
+      "label": "Researcher",
+      "category": "References › Research",
+      "params": null,
+      "source_module": "citations.rs"
+    },
+    {
+      "id": "references.markCitation",
+      "label": "Mark Citation",
+      "category": "References › Table of Authorities",
+      "params": null,
+      "source_module": "citations.rs"
+    },
+    {
+      "id": "references.tableOfAuthorities",
+      "label": "Insert Table of Authorities",
+      "category": "References › Table of Authorities",
+      "params": null,
+      "source_module": "citations.rs"
+    },
+    {
+      "id": "references.updateAuthorities",
+      "label": "Update Table",
+      "category": "References › Table of Authorities",
+      "params": null,
+      "source_module": "citations.rs"
+    },
+    {
+      "id": "references.addText",
+      "label": "Add Text",
+      "category": "References › Table of Contents",
+      "params": "{\"level\": 0 (do not show) | 1-9}",
+      "source_module": "references.rs"
+    },
+    {
+      "id": "references.removeToc",
+      "label": "Remove Table of Contents",
+      "category": "References › Table of Contents",
+      "params": null,
+      "source_module": "references.rs"
+    },
+    {
+      "id": "references.toc",
+      "label": "Table of Contents",
+      "category": "References › Table of Contents",
+      "params": null,
+      "source_module": "references.rs"
+    },
+    {
+      "id": "references.updateToc",
+      "label": "Update Table",
+      "category": "References › Table of Contents",
+      "params": null,
+      "source_module": "references.rs"
+    },
+    {
+      "id": "file.accessibility",
+      "label": "Check Accessibility",
+      "category": "Review › Accessibility",
+      "params": null,
+      "source_module": "tools/specs.rs"
+    },
+    {
+      "id": "view.accessibilityPane",
+      "label": "Accessibility Pane",
+      "category": "Review › Accessibility",
+      "params": "{\"value\"?: bool}",
+      "source_module": "view.rs"
+    },
+    {
+      "id": "view.altTextPane",
+      "label": "Alt Text Pane",
+      "category": "Review › Accessibility",
+      "params": "{\"value\"?: bool}",
+      "source_module": "view.rs"
+    },
+    {
+      "id": "review.accept",
+      "label": "Accept",
+      "category": "Review › Changes",
+      "params": "{\"next\"?: bool (then select the next change)}",
+      "source_module": "review.rs"
+    },
+    {
+      "id": "review.acceptAll",
+      "label": "Accept All Changes",
+      "category": "Review › Changes",
+      "params": "{\"stopTracking\"?: bool (also turn Track Changes off)}",
+      "source_module": "review.rs"
+    },
+    {
+      "id": "review.nextChange",
+      "label": "Next Change",
+      "category": "Review › Changes",
+      "params": null,
+      "source_module": "review.rs"
+    },
+    {
+      "id": "review.previousChange",
+      "label": "Previous Change",
+      "category": "Review › Changes",
+      "params": null,
+      "source_module": "review.rs"
+    },
+    {
+      "id": "review.reject",
+      "label": "Reject",
+      "category": "Review › Changes",
+      "params": "{\"next\"?: bool (then select the next change)}",
+      "source_module": "review.rs"
+    },
+    {
+      "id": "review.rejectAll",
+      "label": "Reject All Changes",
+      "category": "Review › Changes",
+      "params": "{\"stopTracking\"?: bool (also turn Track Changes off)}",
+      "source_module": "review.rs"
+    },
+    {
+      "id": "review.comments",
+      "label": "Show Comments",
+      "category": "Review › Comments",
+      "params": null,
+      "source_module": "review.rs"
+    },
+    {
+      "id": "review.deleteComment",
+      "label": "Delete",
+      "category": "Review › Comments",
+      "params": "{\"id\"?: non-negative JSON integer (omit to use the caret), \"all\"?: bool}",
+      "source_module": "review.rs"
+    },
+    {
+      "id": "review.editComment",
+      "label": "Edit Comment",
+      "category": "Review › Comments",
+      "params": "{\"id\": non-negative JSON integer, \"text\": string}",
+      "source_module": "review.rs"
+    },
+    {
+      "id": "review.newComment",
+      "label": "New Comment",
+      "category": "Review › Comments",
+      "params": "{\"text\": string}",
+      "source_module": "review.rs"
+    },
+    {
+      "id": "review.nextComment",
+      "label": "Next",
+      "category": "Review › Comments",
+      "params": null,
+      "source_module": "review.rs"
+    },
+    {
+      "id": "review.previousComment",
+      "label": "Previous",
+      "category": "Review › Comments",
+      "params": null,
+      "source_module": "review.rs"
+    },
+    {
+      "id": "review.reply",
+      "label": "Reply",
+      "category": "Review › Comments",
+      "params": "{\"id\": non-negative JSON integer, \"text\": string}",
+      "source_module": "review.rs"
+    },
+    {
+      "id": "review.resolveComment",
+      "label": "Resolve",
+      "category": "Review › Comments",
+      "params": null,
+      "source_module": "review.rs"
+    },
+    {
+      "id": "view.commentsPane",
+      "label": "Comments Pane",
+      "category": "Review › Comments",
+      "params": null,
+      "source_module": "view.rs"
+    },
+    {
+      "id": "review.combine",
+      "label": "Combine",
+      "category": "Review › Compare",
+      "params": null,
+      "source_module": "tools/specs.rs"
+    },
+    {
+      "id": "review.compare",
+      "label": "Compare",
+      "category": "Review › Compare",
+      "params": null,
+      "source_module": "tools/specs.rs"
+    },
+    {
+      "id": "review.hideInk",
+      "label": "Hide Ink",
+      "category": "Review › Ink",
+      "params": "{\"value\"?: bool}",
+      "source_module": "draw.rs"
+    },
+    {
+      "id": "review.language",
+      "label": "Language",
+      "category": "Review › Language",
+      "params": null,
+      "source_module": "tools/specs.rs"
+    },
+    {
+      "id": "review.addToDictionary",
+      "label": "Add to Dictionary",
+      "category": "Review › Proofing",
+      "params": null,
+      "source_module": "review.rs"
+    },
+    {
+      "id": "review.applySuggestion",
+      "label": "Change",
+      "category": "Review › Proofing",
+      "params": "{\"text\": string}",
+      "source_module": "review.rs"
+    },
+    {
+      "id": "review.ignoreAll",
+      "label": "Ignore All",
+      "category": "Review › Proofing",
+      "params": null,
+      "source_module": "review.rs"
+    },
+    {
+      "id": "review.issues",
+      "label": "Proofing Issues",
+      "category": "Review › Proofing",
+      "params": null,
+      "source_module": "review.rs"
+    },
+    {
+      "id": "review.spelling",
+      "label": "Spelling & Grammar",
+      "category": "Review › Proofing",
+      "params": "{\"wrap\"?: bool (default true; false stops at the end of the current story)}",
+      "source_module": "review.rs"
+    },
+    {
+      "id": "review.suggestions",
+      "label": "Spelling Suggestions",
+      "category": "Review › Proofing",
+      "params": "{\"pos\"?: Pos}",
+      "source_module": "review.rs"
+    },
+    {
+      "id": "review.thesaurus",
+      "label": "Thesaurus",
+      "category": "Review › Proofing",
+      "params": null,
+      "source_module": "review.rs"
+    },
+    {
+      "id": "review.wordCount",
+      "label": "Word Count",
+      "category": "Review › Proofing",
+      "params": "{\"includeTextBoxes\"?: bool}",
+      "source_module": "review.rs"
+    },
+    {
+      "id": "review.restrict",
+      "label": "Restrict Editing",
+      "category": "Review › Protect",
+      "params": null,
+      "source_module": "protect.rs"
+    },
+    {
+      "id": "readAloud.next",
+      "label": "Next Sentence",
+      "category": "Review › Speech",
+      "params": null,
+      "source_module": "speech.rs"
+    },
+    {
+      "id": "readAloud.playPause",
+      "label": "Play/Pause",
+      "category": "Review › Speech",
+      "params": null,
+      "source_module": "speech.rs"
+    },
+    {
+      "id": "readAloud.previous",
+      "label": "Previous Sentence",
+      "category": "Review › Speech",
+      "params": null,
+      "source_module": "speech.rs"
+    },
+    {
+      "id": "readAloud.skipCitations",
+      "label": "Skip Citations and Bibliography",
+      "category": "Review › Speech",
+      "params": "{\"value\"?: bool}",
+      "source_module": "speech.rs"
+    },
+    {
+      "id": "readAloud.speed",
+      "label": "Reading Speed",
+      "category": "Review › Speech",
+      "params": "{\"value\": number (0.5…3, 1 = normal)}",
+      "source_module": "speech.rs"
+    },
+    {
+      "id": "readAloud.status",
+      "label": "Read Aloud Status",
+      "category": "Review › Speech",
+      "params": null,
+      "source_module": "speech.rs"
+    },
+    {
+      "id": "readAloud.stop",
+      "label": "Stop Reading",
+      "category": "Review › Speech",
+      "params": null,
+      "source_module": "speech.rs"
+    },
+    {
+      "id": "review.readAloud",
+      "label": "Read Aloud",
+      "category": "Review › Speech",
+      "params": "{\"skipCitations\"?: bool}",
+      "source_module": "speech.rs"
+    },
+    {
+      "id": "review.changes",
+      "label": "Reviewing Pane",
+      "category": "Review › Tracking",
+      "params": null,
+      "source_module": "review.rs"
+    },
+    {
+      "id": "review.markup",
+      "label": "Display for Review",
+      "category": "Review › Tracking",
+      "params": null,
+      "source_module": "review.rs"
+    },
+    {
+      "id": "review.showMarkup",
+      "label": "Show Markup",
+      "category": "Review › Tracking",
+      "params": null,
+      "source_module": "tools/specs.rs"
+    },
+    {
+      "id": "review.trackChanges",
+      "label": "Track Changes",
+      "category": "Review › Tracking",
+      "params": "{\"value\"?: bool (omit to toggle)}",
+      "source_module": "review.rs"
+    },
+    {
+      "id": "review.trackingOptions",
+      "label": "Track Changes Options",
+      "category": "Review › Tracking",
+      "params": null,
+      "source_module": "review.rs"
+    },
+    {
+      "id": "object.altText",
+      "label": "Alt Text",
+      "category": "Shape Format › Accessibility",
+      "params": "{\"text\"?: string, \"title\"?: string, \"decorative\"?: bool} (the selected picture, shape, text box, group or chart)",
+      "source_module": "objects/specs.rs"
+    },
+    {
+      "id": "canvas.expand",
+      "label": "Expand",
+      "category": "Shape Format › Drawing Canvas",
+      "params": "{\"by\"?: pt (default 36)}  (grows the frame right and down; at least enough to show every member)",
+      "source_module": "canvas.rs"
+    },
+    {
+      "id": "canvas.fit",
+      "label": "Fit",
+      "category": "Shape Format › Drawing Canvas",
+      "params": "{}  (shrinks the selected canvas's frame to its drawing: the members move to its top-left corner)",
+      "source_module": "canvas.rs"
+    },
+    {
+      "id": "canvas.member",
+      "label": "Canvas Member",
+      "category": "Shape Format › Drawing Canvas",
+      "params": "{\"index\": n, \"x\"?: pt, \"y\"?: pt, \"width\"?: pt, \"height\"?: pt, \"delete\"?: bool}  (moves, resizes or removes member `index` of the selected canvas; x/y from the canvas's top-left; with no change, returns the members)",
+      "source_module": "canvas.rs"
+    },
+    {
+      "id": "canvas.scale",
+      "label": "Scale Drawing",
+      "category": "Shape Format › Drawing Canvas",
+      "params": "{\"factor\": number (0.1–10)}  (scales the frame and every member together)",
+      "source_module": "canvas.rs"
+    },
+    {
+      "id": "select.member",
+      "label": "Select Canvas Member",
+      "category": "Shape Format › Drawing Canvas",
+      "params": "{\"index\": n | null}  (picks member `index` of the selected drawing canvas on its own: Shape Format, Size, Rotate, Alt Text, Delete, Cut and Copy then act on it, and Move or Resize and Nudge move it inside the canvas; null: the canvas itself again)",
+      "source_module": "canvas.rs"
+    },
+    {
+      "id": "shape.change",
+      "label": "Change Shape",
+      "category": "Shape Format › Insert Shapes",
+      "params": null,
+      "source_module": "objects/specs.rs"
+    },
+    {
+      "id": "shape.connect",
+      "label": "Connect Shapes",
+      "category": "Shape Format › Insert Shapes",
+      "params": null,
+      "source_module": "connectors.rs"
+    },
+    {
+      "id": "shape.effects",
+      "label": "Shape Effects",
+      "category": "Shape Format › Shape Styles",
+      "params": null,
+      "source_module": "objects/specs.rs"
+    },
+    {
+      "id": "shape.fill",
+      "label": "Shape Fill",
+      "category": "Shape Format › Shape Styles",
+      "params": null,
+      "source_module": "shape_fill.rs"
+    },
+    {
+      "id": "shape.outline",
+      "label": "Shape Outline",
+      "category": "Shape Format › Shape Styles",
+      "params": null,
+      "source_module": "objects/specs.rs"
+    },
+    {
+      "id": "view.formatShapePane",
+      "label": "Format Shape Pane",
+      "category": "Shape Format › Shape Styles",
+      "params": "{\"value\"?: bool}",
+      "source_module": "view.rs"
+    },
+    {
+      "id": "shape.alignText",
+      "label": "Align Text",
+      "category": "Shape Format › Text",
+      "params": null,
+      "source_module": "objects/specs.rs"
+    },
+    {
+      "id": "shape.breakLink",
+      "label": "Break Link",
+      "category": "Shape Format › Text",
+      "params": null,
+      "source_module": "objects/specs.rs"
+    },
+    {
+      "id": "shape.link",
+      "label": "Create Link",
+      "category": "Shape Format › Text",
+      "params": "{\"target\": Pos | n}  (the empty text box the selected box's text continues in: its position, or its Selection Pane index)",
+      "source_module": "objects/specs.rs"
+    },
+    {
+      "id": "shape.textDirection",
+      "label": "Text Direction",
+      "category": "Shape Format › Text",
+      "params": null,
+      "source_module": "objects/specs.rs"
+    },
+    {
+      "id": "wordArt.style",
+      "label": "WordArt Styles",
+      "category": "Shape Format › WordArt Styles",
+      "params": "{\"style\": \"solid\"|\"outlined\"|\"hollow\"|\"gradient\"|\"shadowed\"|\"glowing\"|\"reflected\"|\"sunset\"}",
+      "source_module": "wordart.rs"
+    },
+    {
+      "id": "wordArt.textFill",
+      "label": "Text Fill",
+      "category": "Shape Format › WordArt Styles",
+      "params": "{\"fill\": \"RRGGBB\"|\"none\"|{\"gradient\": [\"RRGGBB\", …], \"angle\"?: deg}|null}",
+      "source_module": "wordart.rs"
+    },
+    {
+      "id": "wordArt.textOutline",
+      "label": "Text Outline",
+      "category": "Shape Format › WordArt Styles",
+      "params": "{\"color\"?: \"RRGGBB\"|null, \"width\"?: pt} or {\"outline\": \"none\"|null}",
+      "source_module": "wordart.rs"
+    },
+    {
+      "id": "wordArt.transform",
+      "label": "Transform",
+      "category": "Shape Format › WordArt Styles",
+      "params": "{\"preset\": \"textArchUp\"|\"textArchDown\"|\"textCircle\"|\"textWave1\"|\"textSlantUp\"|\"textSlantDown\"|\"textInflate\"|\"textDeflate\"|\"textChevron\"|\"textChevronInverted\"|\"textTriangle\"|\"textTriangleInverted\"|… (any DrawingML preset text warp)|\"none\", \"adj\"?: n (the preset's adjust value)}",
+      "source_module": "wordart.rs"
+    },
+    {
+      "id": "smartArt.addShape",
+      "label": "Add Shape",
+      "category": "SmartArt Design › Create Graphic",
+      "params": null,
+      "source_module": "smart_art.rs"
+    },
+    {
+      "id": "smartArt.demote",
+      "label": "Demote",
+      "category": "SmartArt Design › Create Graphic",
+      "params": null,
+      "source_module": "smart_art.rs"
+    },
+    {
+      "id": "smartArt.items",
+      "label": "Edit Items",
+      "category": "SmartArt Design › Create Graphic",
+      "params": "{\"items\": [string | {\"text\": string, \"level\"?: 0-7, \"color\"?: RRGGBB}]} (replaces the outline)",
+      "source_module": "smart_art.rs"
+    },
+    {
+      "id": "smartArt.promote",
+      "label": "Promote",
+      "category": "SmartArt Design › Create Graphic",
+      "params": null,
+      "source_module": "smart_art.rs"
+    },
+    {
+      "id": "smartArt.textPane",
+      "label": "Text Pane",
+      "category": "SmartArt Design › Create Graphic",
+      "params": "{\"value\"?: bool} (no value: show or hide the Text Pane)",
+      "source_module": "smart_art.rs"
+    },
+    {
+      "id": "smartArt.layout",
+      "label": "Change Layout",
+      "category": "SmartArt Design › Layouts",
+      "params": "{\"layout\": \"basicList|process|cycle|hierarchy|pyramid|radial|matrix|venn\"}",
+      "source_module": "smart_art.rs"
+    },
+    {
+      "id": "smartArt.reset",
+      "label": "Reset Graphic",
+      "category": "SmartArt Design › Reset",
+      "params": null,
+      "source_module": "smart_art.rs"
+    },
+    {
+      "id": "smartArt.colors",
+      "label": "Change Colors",
+      "category": "SmartArt Design › SmartArt Styles",
+      "params": null,
+      "source_module": "smart_art.rs"
+    },
+    {
+      "id": "smartArt.itemColor",
+      "label": "Item Color",
+      "category": "SmartArt Design › SmartArt Styles",
+      "params": null,
+      "source_module": "smart_art.rs"
+    },
+    {
+      "id": "font.missing",
+      "label": "Missing Fonts",
+      "category": "Status Bar",
+      "params": "{} → {\"missing\": [{\"font\": string, \"shownAs\": [string] (the families drawn instead), \"metricCompatible\": bool (its substitute measures like the font)}]} — the text the current view shows",
+      "source_module": "font.rs"
+    },
+    {
+      "id": "table.borderPainter",
+      "label": "Border Painter",
+      "category": "Table Design › Borders",
+      "params": null,
+      "source_module": "tools/specs.rs"
+    },
+    {
+      "id": "table.borders",
+      "label": "Borders",
+      "category": "Table Design › Borders",
+      "params": "{\"kind\": \"all|outside|inside|none|top|bottom|left|right\", \"width\"?: pt, \"color\"?: \"RRGGBB\"}",
+      "source_module": "table.rs"
+    },
+    {
+      "id": "table.look",
+      "label": "Table Style Options",
+      "category": "Table Design › Table Style Options",
+      "params": null,
+      "source_module": "table.rs"
+    },
+    {
+      "id": "table.deleteStyle",
+      "label": "Delete Table Style",
+      "category": "Table Design › Table Styles",
+      "params": "{\"style\"?: string (default: the current table's)}",
+      "source_module": "table_style.rs"
+    },
+    {
+      "id": "table.modifyStyle",
+      "label": "Modify Table Style",
+      "category": "Table Design › Table Styles",
+      "params": null,
+      "source_module": "table_style.rs"
+    },
+    {
+      "id": "table.newStyle",
+      "label": "New Table Style",
+      "category": "Table Design › Table Styles",
+      "params": null,
+      "source_module": "table_style.rs"
+    },
+    {
+      "id": "table.shading",
+      "label": "Shading",
+      "category": "Table Design › Table Styles",
+      "params": "{\"color\": \"RRGGBB\" | null}",
+      "source_module": "table.rs"
+    },
+    {
+      "id": "table.style",
+      "label": "Table Styles",
+      "category": "Table Design › Table Styles",
+      "params": "{\"style\": string}",
+      "source_module": "table.rs"
+    },
+    {
+      "id": "table.cellAlign",
+      "label": "Alignment",
+      "category": "Table Layout › Alignment",
+      "params": null,
+      "source_module": "table.rs"
+    },
+    {
+      "id": "table.cellMargins",
+      "label": "Cell Margins",
+      "category": "Table Layout › Alignment",
+      "params": null,
+      "source_module": "tools/specs.rs"
+    },
+    {
+      "id": "table.textDirection",
+      "label": "Text Direction",
+      "category": "Table Layout › Alignment",
+      "params": "{\"value\"?: \"horizontal|down|up\"} (default: the next direction after the caret cell's, like Word's button)",
+      "source_module": "table.rs"
+    },
+    {
+      "id": "table.autofit",
+      "label": "AutoFit",
+      "category": "Table Layout › Cell Size",
+      "params": "{\"mode\": \"contents|window|fixed\"}",
+      "source_module": "table.rs"
+    },
+    {
+      "id": "table.columnWidth",
+      "label": "Table Column Width",
+      "category": "Table Layout › Cell Size",
+      "params": null,
+      "source_module": "table.rs"
+    },
+    {
+      "id": "table.distributeColumns",
+      "label": "Distribute Columns",
+      "category": "Table Layout › Cell Size",
+      "params": null,
+      "source_module": "table.rs"
+    },
+    {
+      "id": "table.distributeRows",
+      "label": "Distribute Rows",
+      "category": "Table Layout › Cell Size",
+      "params": null,
+      "source_module": "table.rs"
+    },
+    {
+      "id": "table.fitColumn",
+      "label": "AutoFit Column by Double-Clicking",
+      "category": "Table Layout › Cell Size",
+      "params": null,
+      "source_module": "table_mouse.rs"
+    },
+    {
+      "id": "table.resizeDrag",
+      "label": "Resize Table by Dragging",
+      "category": "Table Layout › Cell Size",
+      "params": null,
+      "source_module": "table_resize.rs"
+    },
+    {
+      "id": "table.rowHeight",
+      "label": "Table Row Height",
+      "category": "Table Layout › Cell Size",
+      "params": null,
+      "source_module": "table.rs"
+    },
+    {
+      "id": "table.formula",
+      "label": "Formula",
+      "category": "Table Layout › Data",
+      "params": "{\"formula\"?: \"=SUM(ABOVE)\"}",
+      "source_module": "table.rs"
+    },
+    {
+      "id": "table.repeatHeader",
+      "label": "Repeat Header Rows",
+      "category": "Table Layout › Data",
+      "params": null,
+      "source_module": "table.rs"
+    },
+    {
+      "id": "table.sort",
+      "label": "Sort",
+      "category": "Table Layout › Data",
+      "params": "{\"column\"?: non-negative JSON integer (0-based, default 0; must name a column in the table), \"descending\"?: bool, \"header\"?: bool}",
+      "source_module": "table.rs"
+    },
+    {
+      "id": "table.toText",
+      "label": "Convert to Text",
+      "category": "Table Layout › Data",
+      "params": "{\"separator\"?: \"tab|comma|paragraph|other\", \"char\"?: string (with other)} (the selected rows, or the whole table)",
+      "source_module": "table.rs"
+    },
+    {
+      "id": "table.eraser",
+      "label": "Eraser",
+      "category": "Table Layout › Draw",
+      "params": null,
+      "source_module": "table_draw.rs"
+    },
+    {
+      "id": "table.merge",
+      "label": "Merge Cells",
+      "category": "Table Layout › Merge",
+      "params": null,
+      "source_module": "table.rs"
+    },
+    {
+      "id": "table.split",
+      "label": "Split Cells",
+      "category": "Table Layout › Merge",
+      "params": "{\"columns\"?: n (2), \"rows\"?: n (1), \"mergeFirst\"?: bool (true: several selected cells are merged first)}",
+      "source_module": "table.rs"
+    },
+    {
+      "id": "table.splitTable",
+      "label": "Split Table",
+      "category": "Table Layout › Merge",
+      "params": null,
+      "source_module": "table.rs"
+    },
+    {
+      "id": "table.insertAt",
+      "label": "Insert Row or Column by Clicking",
+      "category": "Table Layout › Rows & Columns",
+      "params": null,
+      "source_module": "table_mouse.rs"
+    },
+    {
+      "id": "table.insertColumnLeft",
+      "label": "Insert Left",
+      "category": "Table Layout › Rows & Columns",
+      "params": null,
+      "source_module": "table.rs"
+    },
+    {
+      "id": "table.insertColumnRight",
+      "label": "Insert Right",
+      "category": "Table Layout › Rows & Columns",
+      "params": null,
+      "source_module": "table.rs"
+    },
+    {
+      "id": "table.insertRowAbove",
+      "label": "Insert Above",
+      "category": "Table Layout › Rows & Columns",
+      "params": null,
+      "source_module": "table.rs"
+    },
+    {
+      "id": "table.insertRowBelow",
+      "label": "Insert Below",
+      "category": "Table Layout › Rows & Columns",
+      "params": null,
+      "source_module": "table.rs"
+    },
+    {
+      "id": "table.deleteCells",
+      "label": "Delete Cells",
+      "category": "Table Layout › Rows & Columns › Delete",
+      "params": null,
+      "source_module": "table.rs"
+    },
+    {
+      "id": "table.deleteColumn",
+      "label": "Delete Columns",
+      "category": "Table Layout › Rows & Columns › Delete",
+      "params": null,
+      "source_module": "table.rs"
+    },
+    {
+      "id": "table.deleteRow",
+      "label": "Delete Rows",
+      "category": "Table Layout › Rows & Columns › Delete",
+      "params": null,
+      "source_module": "table.rs"
+    },
+    {
+      "id": "table.deleteTable",
+      "label": "Delete Table",
+      "category": "Table Layout › Rows & Columns › Delete",
+      "params": null,
+      "source_module": "table.rs"
+    },
+    {
+      "id": "table.moveDrag",
+      "label": "Move Table by Dragging",
+      "category": "Table Layout › Table",
+      "params": null,
+      "source_module": "table_mouse.rs"
+    },
+    {
+      "id": "table.properties",
+      "label": "Properties",
+      "category": "Table Layout › Table",
+      "params": null,
+      "source_module": "table.rs"
+    },
+    {
+      "id": "table.rtl",
+      "label": "Right-to-Left Table",
+      "category": "Table Layout › Table",
+      "params": null,
+      "source_module": "table.rs"
+    },
+    {
+      "id": "table.viewGridlines",
+      "label": "View Gridlines",
+      "category": "Table Layout › Table",
+      "params": "{\"value\"?: bool}",
+      "source_module": "view.rs"
+    },
+    {
+      "id": "table.altText",
+      "label": "Alt Text",
+      "category": "Table Layout › Table › Properties",
+      "params": null,
+      "source_module": "table.rs"
+    },
+    {
+      "id": "table.selectAt",
+      "label": "Select Table Cells by Clicking",
+      "category": "Table Layout › Table › Select",
+      "params": null,
+      "source_module": "table_mouse.rs"
+    },
+    {
+      "id": "table.selectCell",
+      "label": "Select Cell",
+      "category": "Table Layout › Table › Select",
+      "params": null,
+      "source_module": "table.rs"
+    },
+    {
+      "id": "table.selectColumn",
+      "label": "Select Column",
+      "category": "Table Layout › Table › Select",
+      "params": null,
+      "source_module": "table.rs"
+    },
+    {
+      "id": "table.selectRow",
+      "label": "Select Row",
+      "category": "Table Layout › Table › Select",
+      "params": null,
+      "source_module": "table.rs"
+    },
+    {
+      "id": "table.selectTable",
+      "label": "Select Table",
+      "category": "Table Layout › Table › Select",
+      "params": null,
+      "source_module": "table.rs"
+    },
+    {
+      "id": "tools.search",
+      "label": "Search",
+      "category": "Title Bar",
+      "params": "{\"query\"?: string} → {matches: [{id, label, location, shortcut}]} (every word of the query in the label, location or id; at most 50); no query opens the Search box",
+      "source_module": "tools/specs.rs"
+    },
+    {
+      "id": "view.state",
+      "label": "View State",
+      "category": "View",
+      "params": null,
+      "source_module": "view.rs"
+    },
+    {
+      "id": "view.darkMode",
+      "label": "Switch Modes",
+      "category": "View › Dark Mode",
+      "params": null,
+      "source_module": "view.rs"
+    },
+    {
+      "id": "view.interfaceTheme",
+      "label": "Interface Theme",
+      "category": "View › Dark Mode",
+      "params": null,
+      "source_module": "view.rs"
+    },
+    {
+      "id": "view.paperColor",
+      "label": "Screen Paper Color",
+      "category": "View › Display",
+      "params": null,
+      "source_module": "view.rs"
+    },
+    {
+      "id": "view.focus",
+      "label": "Focus",
+      "category": "View › Immersive",
+      "params": "{\"value\"?: bool}",
+      "source_module": "view.rs"
+    },
+    {
+      "id": "view.fullScreenView",
+      "label": "Full Screen View",
+      "category": "View › Immersive",
+      "params": "{\"value\"?: bool}",
+      "source_module": "view.rs"
+    },
+    {
+      "id": "view.immersive",
+      "label": "Immersive Reader",
+      "category": "View › Immersive",
+      "params": null,
+      "source_module": "tools/specs.rs"
+    },
+    {
+      "id": "tools.macros",
+      "label": "Macros",
+      "category": "View › Macros",
+      "params": "{\"run\"?: name, \"define\"?: {\"name\": string, \"steps\": [{\"command\", \"params\"}]}, \"delete\"?: name}",
+      "source_module": "tools/specs.rs"
+    },
+    {
+      "id": "tools.recordMacro",
+      "label": "Record Macro",
+      "category": "View › Macros",
+      "params": null,
+      "source_module": "tools/specs.rs"
+    },
+    {
+      "id": "view.sideToSide",
+      "label": "Side to Side",
+      "category": "View › Page Movement",
+      "params": null,
+      "source_module": "tools/specs.rs"
+    },
+    {
+      "id": "view.vertical",
+      "label": "Vertical",
+      "category": "View › Page Movement",
+      "params": null,
+      "source_module": "tools/specs.rs"
+    },
+    {
+      "id": "view.fieldCodes",
+      "label": "Field Codes",
+      "category": "View › Show",
+      "params": "{\"value\"?: bool}",
+      "source_module": "fields.rs"
+    },
+    {
+      "id": "view.gridlines",
+      "label": "Gridlines",
+      "category": "View › Show",
+      "params": "{\"value\"?: bool}",
+      "source_module": "view.rs"
+    },
+    {
+      "id": "view.hideWhiteSpace",
+      "label": "Hide White Space",
+      "category": "View › Show",
+      "params": "{\"value\"?: bool}",
+      "source_module": "view.rs"
+    },
+    {
+      "id": "view.navigationPane",
+      "label": "Navigation Pane",
+      "category": "View › Show",
+      "params": null,
+      "source_module": "view.rs"
+    },
+    {
+      "id": "view.ruler",
+      "label": "Ruler",
+      "category": "View › Show",
+      "params": null,
+      "source_module": "view.rs"
+    },
+    {
+      "id": "tools.templates",
+      "label": "Templates and Add-ins",
+      "category": "View › Templates",
+      "params": "{} → {\"template\": path|null, \"linkStyles\": bool} (from the ribbon, the app shows the dialog)",
+      "source_module": "templates.rs"
+    },
+    {
+      "id": "styles.copyFrom",
+      "label": "Copy Styles",
+      "category": "View › Templates › Organizer",
+      "params": "{\"path\": string, \"data\"?: base64, \"styles\": [name or id]} → {\"added\", \"replaced\", \"skipped\"}",
+      "source_module": "templates.rs"
+    },
+    {
+      "id": "styles.organizer",
+      "label": "Organizer",
+      "category": "View › Templates › Organizer",
+      "params": "{\"path\"?: string, \"data\"?: base64} → {\"document\": [style], \"file\"?: {\"path\", \"styles\": [style]}}",
+      "source_module": "templates.rs"
+    },
+    {
+      "id": "styles.rename",
+      "label": "Rename Style",
+      "category": "View › Templates › Organizer",
+      "params": "{\"style\": string (name or id; custom styles only), \"name\": string}",
+      "source_module": "templates.rs"
+    },
+    {
+      "id": "view.draft",
+      "label": "Draft",
+      "category": "View › Views",
+      "params": null,
+      "source_module": "view.rs"
+    },
+    {
+      "id": "view.outline",
+      "label": "Outline",
+      "category": "View › Views",
+      "params": null,
+      "source_module": "view.rs"
+    },
+    {
+      "id": "view.printLayout",
+      "label": "Print Layout",
+      "category": "View › Views",
+      "params": null,
+      "source_module": "view.rs"
+    },
+    {
+      "id": "view.readMode",
+      "label": "Read Mode",
+      "category": "View › Views",
+      "params": null,
+      "source_module": "view.rs"
+    },
+    {
+      "id": "view.webLayout",
+      "label": "Web Layout",
+      "category": "View › Views",
+      "params": null,
+      "source_module": "view.rs"
+    },
+    {
+      "id": "view.arrangeAll",
+      "label": "Arrange All",
+      "category": "View › Window",
+      "params": null,
+      "source_module": "view.rs"
+    },
+    {
+      "id": "view.fullScreen",
+      "label": "Full Screen",
+      "category": "View › Window",
+      "params": "{\"value\"?: bool}",
+      "source_module": "view.rs"
+    },
+    {
+      "id": "view.newWindow",
+      "label": "New Window",
+      "category": "View › Window",
+      "params": null,
+      "source_module": "view.rs"
+    },
+    {
+      "id": "view.sideBySide",
+      "label": "View Side by Side",
+      "category": "View › Window",
+      "params": "{\"value\"?: bool, \"window\"?: id of the other window (optional when one other window is open)}",
+      "source_module": "view.rs"
+    },
+    {
+      "id": "view.split",
+      "label": "Split",
+      "category": "View › Window",
+      "params": null,
+      "source_module": "view.rs"
+    },
+    {
+      "id": "view.switchWindows",
+      "label": "Switch Windows",
+      "category": "View › Window",
+      "params": "{\"id\"?: n (make this open document the active one), \"window\"?: n (make this open window the active one)} → {\"documents\": [{\"id\", \"title\", \"path\", \"dirty\", \"active\"}]} in the order they were opened",
+      "source_module": "view.rs"
+    },
+    {
+      "id": "view.syncScroll",
+      "label": "Synchronous Scrolling",
+      "category": "View › Window",
+      "params": null,
+      "source_module": "view.rs"
+    },
+    {
+      "id": "view.multiplePages",
+      "label": "Multiple Pages",
+      "category": "View › Zoom",
+      "params": null,
+      "source_module": "view.rs"
+    },
+    {
+      "id": "view.onePage",
+      "label": "One Page",
+      "category": "View › Zoom",
+      "params": null,
+      "source_module": "view.rs"
+    },
+    {
+      "id": "view.pageWidth",
+      "label": "Page Width",
+      "category": "View › Zoom",
+      "params": null,
+      "source_module": "view.rs"
+    },
+    {
+      "id": "view.zoom",
+      "label": "Zoom",
+      "category": "View › Zoom",
+      "params": "{\"value\": percent (10-500) | \"pageWidth\" | \"onePage\" | \"multiplePages\"}",
+      "source_module": "view.rs"
+    },
+    {
+      "id": "view.zoom100",
+      "label": "100%",
+      "category": "View › Zoom",
+      "params": null,
+      "source_module": "view.rs"
+    },
+    {
+      "id": "view.zoomIn",
+      "label": "Zoom In",
+      "category": "View › Zoom",
+      "params": null,
+      "source_module": "view.rs"
+    },
+    {
+      "id": "view.zoomOut",
+      "label": "Zoom Out",
+      "category": "View › Zoom",
+      "params": null,
+      "source_module": "view.rs"
+    },
+    {
+      "id": "caret.pastCitation",
+      "label": "Move Past Citation",
+      "category": "Zotero › Citations",
+      "params": null,
+      "source_module": "speech.rs"
+    }
+  ]
+}

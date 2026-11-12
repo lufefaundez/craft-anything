@@ -1,0 +1,15 @@
+{
+  "images": [
+    {
+      "filename": "ic_ui_modeSelector.svg",
+      "idiom": "universal"
+    }
+  ],
+  "info": {
+    "author": "ofiofi-cleanroom",
+    "version": 1
+  },
+  "properties": {
+    "preserves-vector-representation": true
+  }
+}

@@ -1,3 +1,12 @@
 target/
 **/*.rs.bk
 .DS_Store
+apps/android/app/src/main/jniLibs/
+apps/android/app/src/main/assets/fonts/
+apps/android/app/src/main/assets/language-packs/
+apps/apple/Frameworks/WordMobileFFI.xcframework/
+apps/apple/Packages/OfficeCoreKit/Sources/OfficeCoreKit/Resources/fonts/
+apps/apple/Packages/OfficeCoreKit/Sources/OfficeCoreKit/Resources/language-packs/
+*.so
+*.dylib
+*.a

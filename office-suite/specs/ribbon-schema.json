@@ -1,0 +1,6640 @@
+{
+  "version": "1.0.0",
+  "suite": "OfiOfi",
+  "app": "DocxDocx",
+  "target_reference": "Microsoft Word 16.115 (es-CL)",
+  "total_engine_commands": 651,
+  "mapped_ui_commands_count": 410,
+  "headless_or_keybinding_commands_count": 241,
+  "title_bar": {
+    "qat": [
+      {
+        "command_id": "file.autosave",
+        "kind": "toggle",
+        "row": 0,
+        "icon": "ic_file_autosave",
+        "labels": {
+          "es-CL": "Autoguardado",
+          "en-US": "AutoSave"
+        }
+      },
+      {
+        "command_id": "ui.openBackstage",
+        "kind": "small_button",
+        "row": 0,
+        "icon": "ic_ui_openBackstage",
+        "labels": {
+          "es-CL": "Inicio",
+          "en-US": "Home"
+        }
+      },
+      {
+        "command_id": "file.save",
+        "kind": "small_button",
+        "row": 0,
+        "icon": "ic_file_save",
+        "labels": {
+          "es-CL": "Guardar",
+          "en-US": "Save"
+        }
+      },
+      {
+        "command_id": "edit.undo",
+        "kind": "split_button",
+        "row": 0,
+        "icon": "ic_edit_undo",
+        "labels": {
+          "es-CL": "Deshacer",
+          "en-US": "Undo"
+        },
+        "submenu": [
+          {
+            "command_id": "edit.undoTo",
+            "kind": "menu_item",
+            "row": 0,
+            "icon": "ic_edit_undoTo",
+            "labels": {
+              "es-CL": "Deshacer acciones",
+              "en-US": "Undo Actions"
+            }
+          },
+          {
+            "command_id": "edit.undoHistory",
+            "kind": "menu_item",
+            "row": 0,
+            "icon": "ic_edit_undoHistory",
+            "labels": {
+              "es-CL": "Historial de deshacer",
+              "en-US": "Undo History"
+            }
+          }
+        ]
+      },
+      {
+        "command_id": "edit.redo",
+        "kind": "small_button",
+        "row": 0,
+        "icon": "ic_edit_redo",
+        "labels": {
+          "es-CL": "Repetir",
+          "en-US": "Redo"
+        },
+        "submenu": [
+          {
+            "command_id": "edit.repeat",
+            "kind": "menu_item",
+            "row": 0,
+            "icon": "ic_edit_repeat",
+            "labels": {
+              "es-CL": "Repetir acción",
+              "en-US": "Repeat"
+            }
+          }
+        ]
+      },
+      {
+        "command_id": "file.print",
+        "kind": "small_button",
+        "row": 0,
+        "icon": "ic_file_print",
+        "labels": {
+          "es-CL": "Imprimir",
+          "en-US": "Print"
+        }
+      }
+    ],
+    "right_actions": [
+      {
+        "command_id": "view.commentsPane",
+        "kind": "small_button",
+        "row": 0,
+        "icon": "ic_view_commentsPane",
+        "labels": {
+          "es-CL": "Comments Pane",
+          "en-US": "Comments Pane"
+        }
+      },
+      {
+        "command_id": "ui.modeSelector",
+        "kind": "dropdown",
+        "row": 0,
+        "icon": "ic_ui_modeSelector",
+        "labels": {
+          "es-CL": "Edición",
+          "en-US": "Editing"
+        }
+      },
+      {
+        "command_id": "file.share",
+        "kind": "primary_pill",
+        "row": 0,
+        "icon": "ic_file_share",
+        "labels": {
+          "es-CL": "Compartir",
+          "en-US": "Share"
+        },
+        "submenu": [
+          {
+            "command_id": "file.exportPdf",
+            "kind": "menu_item",
+            "row": 0,
+            "icon": "ic_file_exportPdf",
+            "labels": {
+              "es-CL": "Exportar a PDF",
+              "en-US": "Export PDF"
+            }
+          },
+          {
+            "command_id": "file.exportPng",
+            "kind": "menu_item",
+            "row": 0,
+            "icon": "ic_file_exportPng",
+            "labels": {
+              "es-CL": "Exportar página como PNG",
+              "en-US": "Export Page as PNG"
+            }
+          }
+        ]
+      },
+      {
+        "command_id": "tools.search",
+        "kind": "small_button",
+        "row": 0,
+        "icon": "ic_tools_search",
+        "labels": {
+          "es-CL": "Buscar en el documento",
+          "en-US": "Search"
+        }
+      }
+    ]
+  },
+  "backstage": {
+    "id": "file",
+    "labels": {
+      "es-CL": "Archivo",
+      "en-US": "File"
+    },
+    "storage_providers": [
+      {
+        "id": "local",
+        "labels": {
+          "es-CL": "En este dispositivo",
+          "en-US": "This Device"
+        }
+      },
+      {
+        "id": "icloud",
+        "labels": {
+          "es-CL": "iCloud Drive (Apple)",
+          "en-US": "iCloud Drive"
+        },
+        "platforms": [
+          "ios",
+          "ipados",
+          "visionos"
+        ]
+      },
+      {
+        "id": "google_drive",
+        "labels": {
+          "es-CL": "Google Drive (SAF / OAuth)",
+          "en-US": "Google Drive"
+        }
+      },
+      {
+        "id": "webdav",
+        "labels": {
+          "es-CL": "Servidor WebDAV",
+          "en-US": "WebDAV Server"
+        }
+      }
+    ],
+    "sections": [
+      {
+        "command_id": "file.new",
+        "kind": "backstage_nav",
+        "row": 0,
+        "icon": "ic_file_new",
+        "labels": {
+          "es-CL": "Nuevo",
+          "en-US": "New"
+        },
+        "submenu": [
+          {
+            "command_id": "file.newFromTemplate",
+            "kind": "menu_item",
+            "row": 0,
+            "icon": "ic_file_newFromTemplate",
+            "labels": {
+              "es-CL": "Nuevo desde plantilla",
+              "en-US": "New from Template"
+            }
+          },
+          {
+            "command_id": "file.listTemplates",
+            "kind": "menu_item",
+            "row": 0,
+            "icon": "ic_file_listTemplates",
+            "labels": {
+              "es-CL": "Plantillas personales",
+              "en-US": "Personal Templates"
+            }
+          }
+        ]
+      },
+      {
+        "command_id": "file.open",
+        "kind": "backstage_nav",
+        "row": 0,
+        "icon": "ic_file_open",
+        "labels": {
+          "es-CL": "Abrir",
+          "en-US": "Open"
+        }
+      },
+      {
+        "command_id": "file.info",
+        "kind": "backstage_nav",
+        "row": 0,
+        "icon": "ic_file_info",
+        "labels": {
+          "es-CL": "Información",
+          "en-US": "Info"
+        },
+        "submenu": [
+          {
+            "command_id": "file.properties",
+            "kind": "menu_item",
+            "row": 0,
+            "icon": "ic_file_properties",
+            "labels": {
+              "es-CL": "Propiedades",
+              "en-US": "Properties"
+            }
+          },
+          {
+            "command_id": "file.inspect",
+            "kind": "menu_item",
+            "row": 0,
+            "icon": "ic_file_inspect",
+            "labels": {
+              "es-CL": "Inspeccionar documento",
+              "en-US": "Inspect Document"
+            }
+          },
+          {
+            "command_id": "file.protect",
+            "kind": "menu_item",
+            "row": 0,
+            "icon": "ic_file_protect",
+            "labels": {
+              "es-CL": "Proteger documento",
+              "en-US": "Protect Document"
+            }
+          },
+          {
+            "command_id": "file.encrypt",
+            "kind": "menu_item",
+            "row": 0,
+            "icon": "ic_file_encrypt",
+            "labels": {
+              "es-CL": "Cifrar con contraseña",
+              "en-US": "Encrypt with Password"
+            }
+          },
+          {
+            "command_id": "file.versions",
+            "kind": "menu_item",
+            "row": 0,
+            "icon": "ic_file_versions",
+            "labels": {
+              "es-CL": "Historial de versiones",
+              "en-US": "Version History"
+            }
+          },
+          {
+            "command_id": "file.recover",
+            "kind": "menu_item",
+            "row": 0,
+            "icon": "ic_file_recover",
+            "labels": {
+              "es-CL": "Recuperar documentos",
+              "en-US": "Recover Unsaved Documents"
+            }
+          },
+          {
+            "command_id": "file.compatibility",
+            "kind": "menu_item",
+            "row": 0,
+            "icon": "ic_file_compatibility",
+            "labels": {
+              "es-CL": "Comprobar compatibilidad",
+              "en-US": "Check Compatibility"
+            }
+          }
+        ]
+      },
+      {
+        "command_id": "file.save",
+        "kind": "backstage_nav",
+        "row": 0,
+        "icon": "ic_file_save",
+        "labels": {
+          "es-CL": "Guardar",
+          "en-US": "Save"
+        }
+      },
+      {
+        "command_id": "file.saveAs",
+        "kind": "backstage_nav",
+        "row": 0,
+        "icon": "ic_file_saveAs",
+        "labels": {
+          "es-CL": "Guardar como",
+          "en-US": "Save As"
+        },
+        "submenu": [
+          {
+            "command_id": "file.saveTemplate",
+            "kind": "menu_item",
+            "row": 0,
+            "icon": "ic_file_saveTemplate",
+            "labels": {
+              "es-CL": "Guardar como plantilla",
+              "en-US": "Save as Template"
+            }
+          },
+          {
+            "command_id": "file.rename",
+            "kind": "menu_item",
+            "row": 0,
+            "icon": "ic_file_rename",
+            "labels": {
+              "es-CL": "Cambiar nombre",
+              "en-US": "Rename Document"
+            }
+          }
+        ]
+      },
+      {
+        "command_id": "file.exportPdf",
+        "kind": "backstage_nav",
+        "row": 0,
+        "icon": "ic_file_exportPdf",
+        "labels": {
+          "es-CL": "Exportar a PDF",
+          "en-US": "Export PDF"
+        },
+        "submenu": [
+          {
+            "command_id": "file.exportPng",
+            "kind": "menu_item",
+            "row": 0,
+            "icon": "ic_file_exportPng",
+            "labels": {
+              "es-CL": "Exportar página como PNG",
+              "en-US": "Export Page as PNG"
+            }
+          },
+          {
+            "command_id": "file.strictReport",
+            "kind": "menu_item",
+            "row": 0,
+            "icon": "ic_file_strictReport",
+            "labels": {
+              "es-CL": "Informe Strict",
+              "en-US": "Strict Export Report"
+            }
+          }
+        ]
+      },
+      {
+        "command_id": "file.print",
+        "kind": "backstage_nav",
+        "row": 0,
+        "icon": "ic_file_print",
+        "labels": {
+          "es-CL": "Imprimir",
+          "en-US": "Print"
+        },
+        "submenu": [
+          {
+            "command_id": "file.printPdf",
+            "kind": "menu_item",
+            "row": 0,
+            "icon": "ic_file_printPdf",
+            "labels": {
+              "es-CL": "Imprimir en PDF",
+              "en-US": "Print to PDF"
+            }
+          },
+          {
+            "command_id": "file.printMarkup",
+            "kind": "menu_item",
+            "row": 0,
+            "icon": "ic_file_printMarkup",
+            "labels": {
+              "es-CL": "Imprimir con marcas",
+              "en-US": "Print Markup"
+            }
+          }
+        ]
+      },
+      {
+        "command_id": "file.share",
+        "kind": "backstage_nav",
+        "row": 0,
+        "icon": "ic_file_share",
+        "labels": {
+          "es-CL": "Compartir",
+          "en-US": "Share"
+        }
+      },
+      {
+        "command_id": "file.options",
+        "kind": "backstage_nav",
+        "row": 0,
+        "icon": "ic_file_options",
+        "labels": {
+          "es-CL": "Opciones",
+          "en-US": "Options"
+        },
+        "submenu": [
+          {
+            "command_id": "file.setAuthor",
+            "kind": "menu_item",
+            "row": 0,
+            "icon": "ic_file_setAuthor",
+            "labels": {
+              "es-CL": "Nombre de usuario",
+              "en-US": "User Name"
+            }
+          },
+          {
+            "command_id": "review.proofing",
+            "kind": "menu_item",
+            "row": 0,
+            "icon": "ic_review_proofing",
+            "labels": {
+              "es-CL": "Revisar ortografía mientras escribe",
+              "en-US": "Check Spelling as You Type"
+            }
+          },
+          {
+            "command_id": "tools.autocorrect",
+            "kind": "menu_item",
+            "row": 0,
+            "icon": "ic_tools_autocorrect",
+            "labels": {
+              "es-CL": "Opciones de Autocorrección",
+              "en-US": "AutoCorrect Options"
+            }
+          },
+          {
+            "command_id": "tools.customizeRibbon",
+            "kind": "menu_item",
+            "row": 0,
+            "icon": "ic_tools_customizeRibbon",
+            "labels": {
+              "es-CL": "Personalizar cinta",
+              "en-US": "Customize Ribbon"
+            }
+          },
+          {
+            "command_id": "tools.customizeKeyboard",
+            "kind": "menu_item",
+            "row": 0,
+            "icon": "ic_tools_customizeKeyboard",
+            "labels": {
+              "es-CL": "Personalizar teclado",
+              "en-US": "Customize Keyboard"
+            }
+          },
+          {
+            "command_id": "proof.packs",
+            "kind": "menu_item",
+            "row": 0,
+            "icon": "ic_proof_packs",
+            "labels": {
+              "es-CL": "Paquetes de idioma",
+              "en-US": "Language Packs"
+            }
+          },
+          {
+            "command_id": "review.language.preferred",
+            "kind": "menu_item",
+            "row": 0,
+            "icon": "ic_review_language_preferred",
+            "labels": {
+              "es-CL": "Idioma preferido",
+              "en-US": "Set as Default Language"
+            }
+          }
+        ]
+      },
+      {
+        "command_id": "file.close",
+        "kind": "backstage_nav",
+        "row": 0,
+        "icon": "ic_file_close",
+        "labels": {
+          "es-CL": "Cerrar",
+          "en-US": "Close"
+        }
+      }
+    ]
+  },
+  "tabs": [
+    {
+      "id": "home",
+      "labels": {
+        "es-CL": "Inicio",
+        "en-US": "Home"
+      },
+      "groups": [
+        {
+          "id": "clipboard",
+          "labels": {
+            "es-CL": "Portapapeles",
+            "en-US": "Clipboard"
+          },
+          "controls": [
+            {
+              "command_id": "edit.paste",
+              "kind": "split_button",
+              "row": "full",
+              "icon": "ic_edit_paste",
+              "labels": {
+                "es-CL": "Pegar",
+                "en-US": "Paste"
+              },
+              "submenu": [
+                {
+                  "command_id": "edit.pasteMerge",
+                  "kind": "menu_item",
+                  "row": 0,
+                  "icon": "ic_edit_pasteMerge",
+                  "labels": {
+                    "es-CL": "Combinar formato",
+                    "en-US": "Paste: Merge Formatting"
+                  }
+                },
+                {
+                  "command_id": "edit.pasteText",
+                  "kind": "menu_item",
+                  "row": 0,
+                  "icon": "ic_edit_pasteText",
+                  "labels": {
+                    "es-CL": "Conservar solo texto",
+                    "en-US": "Paste: Keep Text Only"
+                  }
+                },
+                {
+                  "command_id": "edit.pasteSpecial",
+                  "kind": "menu_item",
+                  "row": 0,
+                  "icon": "ic_edit_pasteSpecial",
+                  "labels": {
+                    "es-CL": "Pegado especial",
+                    "en-US": "Paste Special"
+                  }
+                }
+              ]
+            },
+            {
+              "command_id": "edit.cut",
+              "kind": "small_button",
+              "row": 0,
+              "icon": "ic_edit_cut",
+              "labels": {
+                "es-CL": "Cortar",
+                "en-US": "Cut"
+              }
+            },
+            {
+              "command_id": "edit.copy",
+              "kind": "small_button",
+              "row": 1,
+              "icon": "ic_edit_copy",
+              "labels": {
+                "es-CL": "Copiar",
+                "en-US": "Copy"
+              }
+            },
+            {
+              "command_id": "edit.formatPainter",
+              "kind": "small_button",
+              "row": 0,
+              "icon": "ic_edit_formatPainter",
+              "labels": {
+                "es-CL": "Copiar formato",
+                "en-US": "Format Painter"
+              }
+            }
+          ],
+          "dialog_command_id": "edit.clipboardPane"
+        },
+        {
+          "id": "font",
+          "labels": {
+            "es-CL": "Fuente",
+            "en-US": "Font"
+          },
+          "controls": [
+            {
+              "command_id": "format.font",
+              "kind": "font_picker",
+              "row": 0,
+              "icon": "ic_format_font",
+              "labels": {
+                "es-CL": "Fuente",
+                "en-US": "Font"
+              },
+              "submenu": [
+                {
+                  "command_id": "font.add",
+                  "kind": "menu_item",
+                  "row": 0,
+                  "icon": "ic_font_add",
+                  "labels": {
+                    "es-CL": "Agregar fuente…",
+                    "en-US": "Add Font…"
+                  }
+                },
+                {
+                  "command_id": "font.loadSystem",
+                  "kind": "menu_item",
+                  "row": 0,
+                  "icon": "ic_font_loadSystem",
+                  "labels": {
+                    "es-CL": "Cargar fuentes del sistema…",
+                    "en-US": "Load System Installed Fonts…"
+                  }
+                }
+              ]
+            },
+            {
+              "command_id": "format.size",
+              "kind": "size_picker",
+              "row": 0,
+              "icon": "ic_format_size",
+              "labels": {
+                "es-CL": "Tamaño de fuente",
+                "en-US": "Font Size"
+              }
+            },
+            {
+              "command_id": "format.growFont",
+              "kind": "small_button",
+              "row": 0,
+              "icon": "ic_format_growFont",
+              "labels": {
+                "es-CL": "Aumentar tamaño de fuente",
+                "en-US": "Increase Font Size"
+              }
+            },
+            {
+              "command_id": "format.shrinkFont",
+              "kind": "small_button",
+              "row": 0,
+              "icon": "ic_format_shrinkFont",
+              "labels": {
+                "es-CL": "Disminuir tamaño de fuente",
+                "en-US": "Decrease Font Size"
+              }
+            },
+            {
+              "command_id": "format.changeCase",
+              "kind": "dropdown",
+              "row": 0,
+              "icon": "ic_format_changeCase",
+              "labels": {
+                "es-CL": "Cambiar mayúsculas y minúsculas",
+                "en-US": "Change Case"
+              }
+            },
+            {
+              "command_id": "format.clear",
+              "kind": "small_button",
+              "row": 0,
+              "icon": "ic_format_clear",
+              "labels": {
+                "es-CL": "Borrar todo el formato",
+                "en-US": "Clear All Formatting"
+              }
+            },
+            {
+              "command_id": "format.bold",
+              "kind": "toggle",
+              "row": 1,
+              "icon": "ic_format_bold",
+              "labels": {
+                "es-CL": "Negrita",
+                "en-US": "Bold"
+              }
+            },
+            {
+              "command_id": "format.italic",
+              "kind": "toggle",
+              "row": 1,
+              "icon": "ic_format_italic",
+              "labels": {
+                "es-CL": "Cursiva",
+                "en-US": "Italic"
+              }
+            },
+            {
+              "command_id": "format.underline",
+              "kind": "split_button",
+              "row": 1,
+              "icon": "ic_format_underline",
+              "labels": {
+                "es-CL": "Subrayado",
+                "en-US": "Underline"
+              },
+              "submenu": [
+                {
+                  "command_id": "format.doubleUnderline",
+                  "kind": "menu_item",
+                  "row": 0,
+                  "icon": "ic_format_doubleUnderline",
+                  "labels": {
+                    "es-CL": "Subrayado doble",
+                    "en-US": "Double Underline"
+                  }
+                },
+                {
+                  "command_id": "format.wordUnderline",
+                  "kind": "menu_item",
+                  "row": 0,
+                  "icon": "ic_format_wordUnderline",
+                  "labels": {
+                    "es-CL": "Solo palabras",
+                    "en-US": "Underline Words Only"
+                  }
+                },
+                {
+                  "command_id": "format.underlineColor",
+                  "kind": "menu_item",
+                  "row": 0,
+                  "icon": "ic_format_underlineColor",
+                  "labels": {
+                    "es-CL": "Color de subrayado",
+                    "en-US": "Underline Color"
+                  }
+                }
+              ]
+            },
+            {
+              "command_id": "format.strikethrough",
+              "kind": "toggle",
+              "row": 1,
+              "icon": "ic_format_strikethrough",
+              "labels": {
+                "es-CL": "Tachado",
+                "en-US": "Strikethrough"
+              }
+            },
+            {
+              "command_id": "format.subscript",
+              "kind": "toggle",
+              "row": 1,
+              "icon": "ic_format_subscript",
+              "labels": {
+                "es-CL": "Subíndice",
+                "en-US": "Subscript"
+              }
+            },
+            {
+              "command_id": "format.superscript",
+              "kind": "toggle",
+              "row": 1,
+              "icon": "ic_format_superscript",
+              "labels": {
+                "es-CL": "Superíndice",
+                "en-US": "Superscript"
+              }
+            },
+            {
+              "command_id": "format.textEffects",
+              "kind": "dropdown",
+              "row": 1,
+              "icon": "ic_format_textEffects",
+              "labels": {
+                "es-CL": "Efectos de texto y tipografía",
+                "en-US": "Text Effects"
+              },
+              "submenu": [
+                {
+                  "command_id": "format.outline",
+                  "kind": "menu_item",
+                  "row": 0,
+                  "icon": "ic_format_outline",
+                  "labels": {
+                    "es-CL": "Contorno",
+                    "en-US": "Outline"
+                  }
+                },
+                {
+                  "command_id": "format.shadow",
+                  "kind": "menu_item",
+                  "row": 0,
+                  "icon": "ic_format_shadow",
+                  "labels": {
+                    "es-CL": "Sombra",
+                    "en-US": "Shadow"
+                  }
+                }
+              ]
+            },
+            {
+              "command_id": "format.highlight",
+              "kind": "color_picker",
+              "row": 1,
+              "icon": "ic_format_highlight",
+              "labels": {
+                "es-CL": "Color de resaltado del texto",
+                "en-US": "Text Highlight Color"
+              }
+            },
+            {
+              "command_id": "format.color",
+              "kind": "color_picker",
+              "row": 1,
+              "icon": "ic_format_color",
+              "labels": {
+                "es-CL": "Color de fuente",
+                "en-US": "Font Color"
+              }
+            }
+          ],
+          "dialog_command_id": "format.fontDialog"
+        },
+        {
+          "id": "paragraph",
+          "labels": {
+            "es-CL": "Párrafo",
+            "en-US": "Paragraph"
+          },
+          "controls": [
+            {
+              "command_id": "para.bullets",
+              "kind": "split_button",
+              "row": 0,
+              "icon": "ic_para_bullets",
+              "labels": {
+                "es-CL": "Viñetas",
+                "en-US": "Bullets"
+              },
+              "submenu": [
+                {
+                  "command_id": "para.defineBullet",
+                  "kind": "menu_item",
+                  "row": 0,
+                  "icon": "ic_para_defineBullet",
+                  "labels": {
+                    "es-CL": "Define New Bullet",
+                    "en-US": "Define New Bullet"
+                  }
+                },
+                {
+                  "command_id": "para.listLevel",
+                  "kind": "menu_item",
+                  "row": 0,
+                  "icon": "ic_para_listLevel",
+                  "labels": {
+                    "es-CL": "Change List Level",
+                    "en-US": "Change List Level"
+                  }
+                }
+              ]
+            },
+            {
+              "command_id": "para.numbering",
+              "kind": "split_button",
+              "row": 0,
+              "icon": "ic_para_numbering",
+              "labels": {
+                "es-CL": "Numeración",
+                "en-US": "Numbering"
+              },
+              "submenu": [
+                {
+                  "command_id": "para.defineNumber",
+                  "kind": "menu_item",
+                  "row": 0,
+                  "icon": "ic_para_defineNumber",
+                  "labels": {
+                    "es-CL": "Define New Number Format",
+                    "en-US": "Define New Number Format"
+                  }
+                },
+                {
+                  "command_id": "para.restartNumbering",
+                  "kind": "menu_item",
+                  "row": 0,
+                  "icon": "ic_para_restartNumbering",
+                  "labels": {
+                    "es-CL": "Restart at 1",
+                    "en-US": "Restart at 1"
+                  }
+                },
+                {
+                  "command_id": "para.setNumberingValue",
+                  "kind": "menu_item",
+                  "row": 0,
+                  "icon": "ic_para_setNumberingValue",
+                  "labels": {
+                    "es-CL": "Set Numbering Value",
+                    "en-US": "Set Numbering Value"
+                  }
+                }
+              ]
+            },
+            {
+              "command_id": "para.multilevel",
+              "kind": "dropdown",
+              "row": 0,
+              "icon": "ic_para_multilevel",
+              "labels": {
+                "es-CL": "Lista multinivel",
+                "en-US": "Multilevel List"
+              },
+              "submenu": [
+                {
+                  "command_id": "list.multilevelPreset",
+                  "kind": "menu_item",
+                  "row": 0,
+                  "icon": "ic_list_multilevelPreset",
+                  "labels": {
+                    "es-CL": "Multilevel List Library",
+                    "en-US": "Multilevel List Library"
+                  }
+                },
+                {
+                  "command_id": "list.define",
+                  "kind": "menu_item",
+                  "row": 0,
+                  "icon": "ic_list_define",
+                  "labels": {
+                    "es-CL": "Define New Multilevel List",
+                    "en-US": "Define New Multilevel List"
+                  }
+                }
+              ]
+            },
+            {
+              "command_id": "para.outdent",
+              "kind": "small_button",
+              "row": 0,
+              "icon": "ic_para_outdent",
+              "labels": {
+                "es-CL": "Disminuir sangría",
+                "en-US": "Decrease Indent"
+              }
+            },
+            {
+              "command_id": "para.indent",
+              "kind": "small_button",
+              "row": 0,
+              "icon": "ic_para_indent",
+              "labels": {
+                "es-CL": "Aumentar sangría",
+                "en-US": "Increase Indent"
+              }
+            },
+            {
+              "command_id": "para.sort",
+              "kind": "small_button",
+              "row": 0,
+              "icon": "ic_para_sort",
+              "labels": {
+                "es-CL": "Ordenar",
+                "en-US": "Sort"
+              }
+            },
+            {
+              "command_id": "view.marks",
+              "kind": "toggle",
+              "row": 0,
+              "icon": "ic_view_marks",
+              "labels": {
+                "es-CL": "Mostrar todo ¶",
+                "en-US": "Show/Hide ¶"
+              }
+            },
+            {
+              "command_id": "para.alignLeft",
+              "kind": "toggle",
+              "row": 1,
+              "icon": "ic_para_alignLeft",
+              "labels": {
+                "es-CL": "Alinear a la izquierda",
+                "en-US": "Align Left"
+              }
+            },
+            {
+              "command_id": "para.alignCenter",
+              "kind": "toggle",
+              "row": 1,
+              "icon": "ic_para_alignCenter",
+              "labels": {
+                "es-CL": "Centrar",
+                "en-US": "Center"
+              }
+            },
+            {
+              "command_id": "para.alignRight",
+              "kind": "toggle",
+              "row": 1,
+              "icon": "ic_para_alignRight",
+              "labels": {
+                "es-CL": "Alinear a la derecha",
+                "en-US": "Align Right"
+              }
+            },
+            {
+              "command_id": "para.justify",
+              "kind": "toggle",
+              "row": 1,
+              "icon": "ic_para_justify",
+              "labels": {
+                "es-CL": "Justificar",
+                "en-US": "Justify"
+              }
+            },
+            {
+              "command_id": "para.lineSpacing",
+              "kind": "dropdown",
+              "row": 1,
+              "icon": "ic_para_lineSpacing",
+              "labels": {
+                "es-CL": "Espaciado entre líneas y párrafos",
+                "en-US": "Line and Paragraph Spacing"
+              },
+              "submenu": [
+                {
+                  "command_id": "para.single",
+                  "kind": "menu_item",
+                  "row": 0,
+                  "icon": "ic_para_single",
+                  "labels": {
+                    "es-CL": "Interlineado 1,0",
+                    "en-US": "Single Spacing"
+                  }
+                },
+                {
+                  "command_id": "para.oneAndHalf",
+                  "kind": "menu_item",
+                  "row": 0,
+                  "icon": "ic_para_oneAndHalf",
+                  "labels": {
+                    "es-CL": "Interlineado 1,5",
+                    "en-US": "1.5 Line Spacing"
+                  }
+                },
+                {
+                  "command_id": "para.double",
+                  "kind": "menu_item",
+                  "row": 0,
+                  "icon": "ic_para_double",
+                  "labels": {
+                    "es-CL": "Interlineado 2,0",
+                    "en-US": "Double Spacing"
+                  }
+                },
+                {
+                  "command_id": "para.addSpaceBefore",
+                  "kind": "menu_item",
+                  "row": 0,
+                  "icon": "ic_para_addSpaceBefore",
+                  "labels": {
+                    "es-CL": "Agregar espacio antes del párrafo",
+                    "en-US": "Add Space Before Paragraph"
+                  }
+                },
+                {
+                  "command_id": "para.removeSpaceAfter",
+                  "kind": "menu_item",
+                  "row": 0,
+                  "icon": "ic_para_removeSpaceAfter",
+                  "labels": {
+                    "es-CL": "Quitar espacio después del párrafo",
+                    "en-US": "Remove Space After Paragraph"
+                  }
+                }
+              ]
+            },
+            {
+              "command_id": "para.shading",
+              "kind": "color_picker",
+              "row": 1,
+              "icon": "ic_para_shading",
+              "labels": {
+                "es-CL": "Sombreado",
+                "en-US": "Shading"
+              }
+            },
+            {
+              "command_id": "para.borders",
+              "kind": "dropdown",
+              "row": 1,
+              "icon": "ic_para_borders",
+              "labels": {
+                "es-CL": "Bordes",
+                "en-US": "Borders"
+              },
+              "submenu": [
+                {
+                  "command_id": "insert.horizontalLine",
+                  "kind": "menu_item",
+                  "row": 0,
+                  "icon": "ic_insert_horizontalLine",
+                  "labels": {
+                    "es-CL": "Línea horizontal",
+                    "en-US": "Horizontal Line"
+                  }
+                }
+              ]
+            }
+          ],
+          "dialog_command_id": "para.dialog"
+        },
+        {
+          "id": "styles",
+          "labels": {
+            "es-CL": "Estilos",
+            "en-US": "Styles"
+          },
+          "controls": [
+            {
+              "command_id": "styles.list",
+              "kind": "style_gallery",
+              "row": "full",
+              "icon": "ic_styles_list",
+              "labels": {
+                "es-CL": "Galería de estilos",
+                "en-US": "Styles"
+              }
+            },
+            {
+              "command_id": "para.normal",
+              "kind": "small_button",
+              "row": 0,
+              "icon": "ic_para_normal",
+              "labels": {
+                "es-CL": "Normal",
+                "en-US": "Normal Style"
+              }
+            },
+            {
+              "command_id": "para.heading1",
+              "kind": "small_button",
+              "row": 0,
+              "icon": "ic_para_heading1",
+              "labels": {
+                "es-CL": "Título 1",
+                "en-US": "Heading 1"
+              }
+            },
+            {
+              "command_id": "para.heading2",
+              "kind": "small_button",
+              "row": 1,
+              "icon": "ic_para_heading2",
+              "labels": {
+                "es-CL": "Título 2",
+                "en-US": "Heading 2"
+              }
+            },
+            {
+              "command_id": "para.heading3",
+              "kind": "small_button",
+              "row": 1,
+              "icon": "ic_para_heading3",
+              "labels": {
+                "es-CL": "Título 3",
+                "en-US": "Heading 3"
+              }
+            },
+            {
+              "command_id": "styles.pane",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_styles_pane",
+              "labels": {
+                "es-CL": "Panel de estilos",
+                "en-US": "Styles Pane"
+              },
+              "submenu": [
+                {
+                  "command_id": "styles.create",
+                  "kind": "menu_item",
+                  "row": 0,
+                  "icon": "ic_styles_create",
+                  "labels": {
+                    "es-CL": "Crear un estilo",
+                    "en-US": "Create a Style"
+                  }
+                },
+                {
+                  "command_id": "styles.modify",
+                  "kind": "menu_item",
+                  "row": 0,
+                  "icon": "ic_styles_modify",
+                  "labels": {
+                    "es-CL": "Modificar estilo",
+                    "en-US": "Modify Style"
+                  }
+                },
+                {
+                  "command_id": "styles.manage",
+                  "kind": "menu_item",
+                  "row": 0,
+                  "icon": "ic_styles_manage",
+                  "labels": {
+                    "es-CL": "Administrar estilos",
+                    "en-US": "Manage Styles"
+                  }
+                },
+                {
+                  "command_id": "styles.inspector",
+                  "kind": "menu_item",
+                  "row": 0,
+                  "icon": "ic_styles_inspector",
+                  "labels": {
+                    "es-CL": "Inspector de estilos",
+                    "en-US": "Style Inspector"
+                  }
+                }
+              ]
+            }
+          ],
+          "dialog_command_id": "styles.pane"
+        },
+        {
+          "id": "editing",
+          "labels": {
+            "es-CL": "Edición",
+            "en-US": "Editing"
+          },
+          "controls": [
+            {
+              "command_id": "edit.find",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_edit_find",
+              "labels": {
+                "es-CL": "Buscar",
+                "en-US": "Find"
+              },
+              "submenu": [
+                {
+                  "command_id": "edit.advancedFind",
+                  "kind": "menu_item",
+                  "row": 0,
+                  "icon": "ic_edit_advancedFind",
+                  "labels": {
+                    "es-CL": "Advanced Find",
+                    "en-US": "Advanced Find"
+                  }
+                },
+                {
+                  "command_id": "edit.goto",
+                  "kind": "menu_item",
+                  "row": 0,
+                  "icon": "ic_edit_goto",
+                  "labels": {
+                    "es-CL": "Ir a",
+                    "en-US": "Go To"
+                  }
+                }
+              ]
+            },
+            {
+              "command_id": "edit.replace",
+              "kind": "small_button",
+              "row": 0,
+              "icon": "ic_edit_replace",
+              "labels": {
+                "es-CL": "Reemplazar",
+                "en-US": "Replace"
+              }
+            },
+            {
+              "command_id": "select.all",
+              "kind": "dropdown",
+              "row": 1,
+              "icon": "ic_select_all",
+              "labels": {
+                "es-CL": "Seleccionar todo",
+                "en-US": "Select All"
+              },
+              "submenu": [
+                {
+                  "command_id": "select.objects",
+                  "kind": "menu_item",
+                  "row": 0,
+                  "icon": "ic_select_objects",
+                  "labels": {
+                    "es-CL": "Seleccionar objetos",
+                    "en-US": "Select Objects"
+                  }
+                },
+                {
+                  "command_id": "select.similar",
+                  "kind": "menu_item",
+                  "row": 0,
+                  "icon": "ic_select_similar",
+                  "labels": {
+                    "es-CL": "Seleccionar texto con formato similar",
+                    "en-US": "Select Text with Similar Formatting"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "editor",
+          "labels": {
+            "es-CL": "Editor",
+            "en-US": "Editor"
+          },
+          "controls": [
+            {
+              "command_id": "review.editor",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_review_editor",
+              "labels": {
+                "es-CL": "Editor",
+                "en-US": "Editor"
+              }
+            },
+            {
+              "command_id": "review.spelling",
+              "kind": "small_button",
+              "row": 0,
+              "icon": "ic_review_spelling",
+              "labels": {
+                "es-CL": "Ortografía y gramática",
+                "en-US": "Spelling & Grammar"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "insert",
+      "labels": {
+        "es-CL": "Insertar",
+        "en-US": "Insert"
+      },
+      "groups": [
+        {
+          "id": "pages",
+          "labels": {
+            "es-CL": "Páginas",
+            "en-US": "Pages"
+          },
+          "controls": [
+            {
+              "command_id": "insert.coverPage",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_insert_coverPage",
+              "labels": {
+                "es-CL": "Portada",
+                "en-US": "Cover Page"
+              }
+            },
+            {
+              "command_id": "insert.blankPage",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_insert_blankPage",
+              "labels": {
+                "es-CL": "Página en blanco",
+                "en-US": "Blank Page"
+              }
+            },
+            {
+              "command_id": "insert.pageBreak",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_insert_pageBreak",
+              "labels": {
+                "es-CL": "Salto de página",
+                "en-US": "Page Break"
+              }
+            }
+          ]
+        },
+        {
+          "id": "tables",
+          "labels": {
+            "es-CL": "Tablas",
+            "en-US": "Tables"
+          },
+          "controls": [
+            {
+              "command_id": "insert.table",
+              "kind": "table_grid",
+              "row": "full",
+              "icon": "ic_insert_table",
+              "labels": {
+                "es-CL": "Tabla",
+                "en-US": "Table"
+              },
+              "submenu": [
+                {
+                  "command_id": "table.draw",
+                  "kind": "menu_item",
+                  "row": 0,
+                  "icon": "ic_table_draw",
+                  "labels": {
+                    "es-CL": "Dibujar tabla",
+                    "en-US": "Draw Table"
+                  }
+                },
+                {
+                  "command_id": "table.fromText",
+                  "kind": "menu_item",
+                  "row": 0,
+                  "icon": "ic_table_fromText",
+                  "labels": {
+                    "es-CL": "Convertir texto en tabla",
+                    "en-US": "Convert Text to Table"
+                  }
+                },
+                {
+                  "command_id": "table.quick",
+                  "kind": "menu_item",
+                  "row": 0,
+                  "icon": "ic_table_quick",
+                  "labels": {
+                    "es-CL": "Tablas rápidas",
+                    "en-US": "Quick Tables"
+                  }
+                },
+                {
+                  "command_id": "insert.spreadsheet",
+                  "kind": "menu_item",
+                  "row": 0,
+                  "icon": "ic_insert_spreadsheet",
+                  "labels": {
+                    "es-CL": "Hoja de cálculo",
+                    "en-US": "Spreadsheet Table"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "illustrations",
+          "labels": {
+            "es-CL": "Ilustraciones",
+            "en-US": "Illustrations"
+          },
+          "controls": [
+            {
+              "command_id": "insert.picture",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_insert_picture",
+              "labels": {
+                "es-CL": "Imágenes",
+                "en-US": "Pictures"
+              }
+            },
+            {
+              "command_id": "insert.shape",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_insert_shape",
+              "labels": {
+                "es-CL": "Formas",
+                "en-US": "Shapes"
+              }
+            },
+            {
+              "command_id": "insert.icon",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_insert_icon",
+              "labels": {
+                "es-CL": "Iconos",
+                "en-US": "Icons"
+              }
+            },
+            {
+              "command_id": "insert.smartArt",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_insert_smartArt",
+              "labels": {
+                "es-CL": "SmartArt",
+                "en-US": "SmartArt"
+              }
+            },
+            {
+              "command_id": "insert.chart",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_insert_chart",
+              "labels": {
+                "es-CL": "Gráfico",
+                "en-US": "Chart"
+              }
+            },
+            {
+              "command_id": "insert.canvas",
+              "kind": "small_button",
+              "row": 0,
+              "icon": "ic_insert_canvas",
+              "labels": {
+                "es-CL": "Lienzo de dibujo",
+                "en-US": "Drawing Canvas"
+              }
+            }
+          ]
+        },
+        {
+          "id": "links",
+          "labels": {
+            "es-CL": "Vínculos",
+            "en-US": "Links"
+          },
+          "controls": [
+            {
+              "command_id": "insert.link",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_insert_link",
+              "labels": {
+                "es-CL": "Vínculo",
+                "en-US": "Link"
+              },
+              "submenu": [
+                {
+                  "command_id": "insert.removeLink",
+                  "kind": "menu_item",
+                  "row": 0,
+                  "icon": "ic_insert_removeLink",
+                  "labels": {
+                    "es-CL": "Quitar hipervínculo",
+                    "en-US": "Remove Hyperlink"
+                  }
+                }
+              ]
+            },
+            {
+              "command_id": "insert.bookmark",
+              "kind": "small_button",
+              "row": 0,
+              "icon": "ic_insert_bookmark",
+              "labels": {
+                "es-CL": "Marcador",
+                "en-US": "Bookmark"
+              }
+            },
+            {
+              "command_id": "insert.crossReference",
+              "kind": "small_button",
+              "row": 1,
+              "icon": "ic_insert_crossReference",
+              "labels": {
+                "es-CL": "Referencia cruzada",
+                "en-US": "Cross-reference"
+              }
+            }
+          ]
+        },
+        {
+          "id": "header_footer",
+          "labels": {
+            "es-CL": "Encabezado y pie de página",
+            "en-US": "Header & Footer"
+          },
+          "controls": [
+            {
+              "command_id": "insert.header",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_insert_header",
+              "labels": {
+                "es-CL": "Encabezado",
+                "en-US": "Header"
+              },
+              "submenu": [
+                {
+                  "command_id": "insert.editHeader",
+                  "kind": "menu_item",
+                  "row": 0,
+                  "icon": "ic_insert_editHeader",
+                  "labels": {
+                    "es-CL": "Edit Header",
+                    "en-US": "Edit Header"
+                  }
+                },
+                {
+                  "command_id": "insert.removeHeader",
+                  "kind": "menu_item",
+                  "row": 0,
+                  "icon": "ic_insert_removeHeader",
+                  "labels": {
+                    "es-CL": "Remove Header",
+                    "en-US": "Remove Header"
+                  }
+                }
+              ]
+            },
+            {
+              "command_id": "insert.footer",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_insert_footer",
+              "labels": {
+                "es-CL": "Pie de página",
+                "en-US": "Footer"
+              },
+              "submenu": [
+                {
+                  "command_id": "insert.editFooter",
+                  "kind": "menu_item",
+                  "row": 0,
+                  "icon": "ic_insert_editFooter",
+                  "labels": {
+                    "es-CL": "Edit Footer",
+                    "en-US": "Edit Footer"
+                  }
+                },
+                {
+                  "command_id": "insert.removeFooter",
+                  "kind": "menu_item",
+                  "row": 0,
+                  "icon": "ic_insert_removeFooter",
+                  "labels": {
+                    "es-CL": "Remove Footer",
+                    "en-US": "Remove Footer"
+                  }
+                }
+              ]
+            },
+            {
+              "command_id": "insert.pageNumber",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_insert_pageNumber",
+              "labels": {
+                "es-CL": "Número de página",
+                "en-US": "Page Number"
+              },
+              "submenu": [
+                {
+                  "command_id": "layout.pageNumberFormat",
+                  "kind": "menu_item",
+                  "row": 0,
+                  "icon": "ic_layout_pageNumberFormat",
+                  "labels": {
+                    "es-CL": "Format Page Numbers",
+                    "en-US": "Format Page Numbers"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "text",
+          "labels": {
+            "es-CL": "Texto",
+            "en-US": "Text"
+          },
+          "controls": [
+            {
+              "command_id": "insert.textBox",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_insert_textBox",
+              "labels": {
+                "es-CL": "Cuadro de texto",
+                "en-US": "Text Box"
+              }
+            },
+            {
+              "command_id": "insert.quickParts",
+              "kind": "small_button",
+              "row": 0,
+              "icon": "ic_insert_quickParts",
+              "labels": {
+                "es-CL": "Elementos rápidos",
+                "en-US": "Quick Parts"
+              },
+              "submenu": [
+                {
+                  "command_id": "insert.autoText",
+                  "kind": "menu_item",
+                  "row": 0,
+                  "icon": "ic_insert_autoText",
+                  "labels": {
+                    "es-CL": "AutoText",
+                    "en-US": "AutoText"
+                  }
+                },
+                {
+                  "command_id": "insert.docProperty",
+                  "kind": "menu_item",
+                  "row": 0,
+                  "icon": "ic_insert_docProperty",
+                  "labels": {
+                    "es-CL": "Document Property",
+                    "en-US": "Document Property"
+                  }
+                },
+                {
+                  "command_id": "insert.field",
+                  "kind": "menu_item",
+                  "row": 0,
+                  "icon": "ic_insert_field",
+                  "labels": {
+                    "es-CL": "Field",
+                    "en-US": "Field"
+                  }
+                }
+              ]
+            },
+            {
+              "command_id": "insert.wordArt",
+              "kind": "small_button",
+              "row": 1,
+              "icon": "ic_insert_wordArt",
+              "labels": {
+                "es-CL": "WordArt",
+                "en-US": "WordArt"
+              }
+            },
+            {
+              "command_id": "insert.dropCap",
+              "kind": "small_button",
+              "row": 0,
+              "icon": "ic_insert_dropCap",
+              "labels": {
+                "es-CL": "Letra capital",
+                "en-US": "Drop Cap"
+              }
+            },
+            {
+              "command_id": "insert.signatureLine",
+              "kind": "small_button",
+              "row": 1,
+              "icon": "ic_insert_signatureLine",
+              "labels": {
+                "es-CL": "Línea de firma",
+                "en-US": "Signature Line"
+              }
+            },
+            {
+              "command_id": "insert.dateTime",
+              "kind": "small_button",
+              "row": 0,
+              "icon": "ic_insert_dateTime",
+              "labels": {
+                "es-CL": "Fecha y hora",
+                "en-US": "Date & Time"
+              }
+            },
+            {
+              "command_id": "insert.object",
+              "kind": "small_button",
+              "row": 1,
+              "icon": "ic_insert_object",
+              "labels": {
+                "es-CL": "Objeto",
+                "en-US": "Object"
+              },
+              "submenu": [
+                {
+                  "command_id": "insert.textFromFile",
+                  "kind": "menu_item",
+                  "row": 0,
+                  "icon": "ic_insert_textFromFile",
+                  "labels": {
+                    "es-CL": "Insertar texto de archivo",
+                    "en-US": "Text from File"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "symbols",
+          "labels": {
+            "es-CL": "Símbolos",
+            "en-US": "Symbols"
+          },
+          "controls": [
+            {
+              "command_id": "insert.equation",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_insert_equation",
+              "labels": {
+                "es-CL": "Ecuación",
+                "en-US": "Equation"
+              }
+            },
+            {
+              "command_id": "insert.symbol",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_insert_symbol",
+              "labels": {
+                "es-CL": "Símbolo",
+                "en-US": "Symbol"
+              },
+              "submenu": [
+                {
+                  "command_id": "text.copyright",
+                  "kind": "menu_item",
+                  "row": 0,
+                  "icon": "ic_text_copyright",
+                  "labels": {
+                    "es-CL": "Copyright Sign",
+                    "en-US": "Copyright Sign"
+                  }
+                },
+                {
+                  "command_id": "text.registered",
+                  "kind": "menu_item",
+                  "row": 0,
+                  "icon": "ic_text_registered",
+                  "labels": {
+                    "es-CL": "Registered Sign",
+                    "en-US": "Registered Sign"
+                  }
+                },
+                {
+                  "command_id": "text.trademark",
+                  "kind": "menu_item",
+                  "row": 0,
+                  "icon": "ic_text_trademark",
+                  "labels": {
+                    "es-CL": "Trademark Sign",
+                    "en-US": "Trademark Sign"
+                  }
+                },
+                {
+                  "command_id": "text.emDash",
+                  "kind": "menu_item",
+                  "row": 0,
+                  "icon": "ic_text_emDash",
+                  "labels": {
+                    "es-CL": "Em Dash",
+                    "en-US": "Em Dash"
+                  }
+                },
+                {
+                  "command_id": "text.nbsp",
+                  "kind": "menu_item",
+                  "row": 0,
+                  "icon": "ic_text_nbsp",
+                  "labels": {
+                    "es-CL": "Nonbreaking Space",
+                    "en-US": "Nonbreaking Space"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "draw",
+      "labels": {
+        "es-CL": "Dibujar",
+        "en-US": "Draw"
+      },
+      "groups": [
+        {
+          "id": "draw_tools",
+          "labels": {
+            "es-CL": "Herramientas",
+            "en-US": "Tools"
+          },
+          "controls": [
+            {
+              "command_id": "draw.select",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_draw_select",
+              "labels": {
+                "es-CL": "Seleccionar",
+                "en-US": "Select"
+              }
+            },
+            {
+              "command_id": "draw.lasso",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_draw_lasso",
+              "labels": {
+                "es-CL": "Selección de lazo",
+                "en-US": "Lasso Select"
+              }
+            },
+            {
+              "command_id": "draw.eraser",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_draw_eraser",
+              "labels": {
+                "es-CL": "Borrador",
+                "en-US": "Eraser"
+              }
+            }
+          ]
+        },
+        {
+          "id": "pens",
+          "labels": {
+            "es-CL": "Lápices",
+            "en-US": "Pens"
+          },
+          "controls": [
+            {
+              "command_id": "draw.pen",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_draw_pen",
+              "labels": {
+                "es-CL": "Pluma",
+                "en-US": "Pen"
+              }
+            },
+            {
+              "command_id": "draw.pencil",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_draw_pencil",
+              "labels": {
+                "es-CL": "Lápiz",
+                "en-US": "Pencil"
+              }
+            },
+            {
+              "command_id": "draw.highlighter",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_draw_highlighter",
+              "labels": {
+                "es-CL": "Resaltador",
+                "en-US": "Highlighter"
+              }
+            },
+            {
+              "command_id": "draw.addPen",
+              "kind": "small_button",
+              "row": 0,
+              "icon": "ic_draw_addPen",
+              "labels": {
+                "es-CL": "Agregar lápiz",
+                "en-US": "Add Pen"
+              }
+            }
+          ]
+        },
+        {
+          "id": "convert",
+          "labels": {
+            "es-CL": "Convertir",
+            "en-US": "Convert"
+          },
+          "controls": [
+            {
+              "command_id": "draw.inkToShape",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_draw_inkToShape",
+              "labels": {
+                "es-CL": "Entrada a forma",
+                "en-US": "Ink to Shape"
+              }
+            },
+            {
+              "command_id": "draw.convertInk",
+              "kind": "small_button",
+              "row": 0,
+              "icon": "ic_draw_convertInk",
+              "labels": {
+                "es-CL": "Convertir a formas",
+                "en-US": "Convert to Shapes"
+              }
+            }
+          ]
+        },
+        {
+          "id": "replay",
+          "labels": {
+            "es-CL": "Reproducción",
+            "en-US": "Replay"
+          },
+          "controls": [
+            {
+              "command_id": "draw.replay",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_draw_replay",
+              "labels": {
+                "es-CL": "Reproducción de entrada",
+                "en-US": "Ink Replay"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "design",
+      "labels": {
+        "es-CL": "Diseño",
+        "en-US": "Design"
+      },
+      "groups": [
+        {
+          "id": "doc_formatting",
+          "labels": {
+            "es-CL": "Formato del documento",
+            "en-US": "Document Formatting"
+          },
+          "controls": [
+            {
+              "command_id": "design.theme",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_design_theme",
+              "labels": {
+                "es-CL": "Temas",
+                "en-US": "Themes"
+              }
+            },
+            {
+              "command_id": "design.styleSet",
+              "kind": "style_gallery",
+              "row": "full",
+              "icon": "ic_design_styleSet",
+              "labels": {
+                "es-CL": "Conjuntos de estilos",
+                "en-US": "Style Set"
+              }
+            },
+            {
+              "command_id": "design.themeColors",
+              "kind": "dropdown",
+              "row": 0,
+              "icon": "ic_design_themeColors",
+              "labels": {
+                "es-CL": "Colores",
+                "en-US": "Colors"
+              }
+            },
+            {
+              "command_id": "design.themeFonts",
+              "kind": "dropdown",
+              "row": 1,
+              "icon": "ic_design_themeFonts",
+              "labels": {
+                "es-CL": "Fuentes",
+                "en-US": "Fonts"
+              }
+            },
+            {
+              "command_id": "design.paragraphSpacing",
+              "kind": "dropdown",
+              "row": 0,
+              "icon": "ic_design_paragraphSpacing",
+              "labels": {
+                "es-CL": "Espaciado entre párrafos",
+                "en-US": "Paragraph Spacing"
+              }
+            },
+            {
+              "command_id": "design.effects",
+              "kind": "dropdown",
+              "row": 1,
+              "icon": "ic_design_effects",
+              "labels": {
+                "es-CL": "Efectos",
+                "en-US": "Effects"
+              }
+            },
+            {
+              "command_id": "design.setDefault",
+              "kind": "small_button",
+              "row": 0,
+              "icon": "ic_design_setDefault",
+              "labels": {
+                "es-CL": "Establecer como predeterminada",
+                "en-US": "Set as Default"
+              }
+            }
+          ]
+        },
+        {
+          "id": "page_bg",
+          "labels": {
+            "es-CL": "Fondo de página",
+            "en-US": "Page Background"
+          },
+          "controls": [
+            {
+              "command_id": "design.watermark",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_design_watermark",
+              "labels": {
+                "es-CL": "Marca de agua",
+                "en-US": "Watermark"
+              }
+            },
+            {
+              "command_id": "design.pageColor",
+              "kind": "color_picker",
+              "row": "full",
+              "icon": "ic_design_pageColor",
+              "labels": {
+                "es-CL": "Color de página",
+                "en-US": "Page Color"
+              }
+            },
+            {
+              "command_id": "design.pageBorders",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_design_pageBorders",
+              "labels": {
+                "es-CL": "Bordes de página",
+                "en-US": "Page Borders"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "layout",
+      "labels": {
+        "es-CL": "Disposición",
+        "en-US": "Layout"
+      },
+      "groups": [
+        {
+          "id": "page_setup",
+          "labels": {
+            "es-CL": "Configurar página",
+            "en-US": "Page Setup"
+          },
+          "controls": [
+            {
+              "command_id": "layout.margins",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_layout_margins",
+              "labels": {
+                "es-CL": "Márgenes",
+                "en-US": "Margins"
+              }
+            },
+            {
+              "command_id": "layout.orientation",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_layout_orientation",
+              "labels": {
+                "es-CL": "Orientación",
+                "en-US": "Orientation"
+              }
+            },
+            {
+              "command_id": "layout.size",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_layout_size",
+              "labels": {
+                "es-CL": "Tamaño",
+                "en-US": "Size"
+              }
+            },
+            {
+              "command_id": "layout.columns",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_layout_columns",
+              "labels": {
+                "es-CL": "Columnas",
+                "en-US": "Columns"
+              }
+            },
+            {
+              "command_id": "layout.break",
+              "kind": "small_button",
+              "row": 0,
+              "icon": "ic_layout_break",
+              "labels": {
+                "es-CL": "Saltos",
+                "en-US": "Breaks"
+              }
+            },
+            {
+              "command_id": "layout.lineNumbers",
+              "kind": "small_button",
+              "row": 1,
+              "icon": "ic_layout_lineNumbers",
+              "labels": {
+                "es-CL": "Números de línea",
+                "en-US": "Line Numbers"
+              }
+            },
+            {
+              "command_id": "layout.hyphenation",
+              "kind": "small_button",
+              "row": 0,
+              "icon": "ic_layout_hyphenation",
+              "labels": {
+                "es-CL": "Guiones",
+                "en-US": "Hyphenation"
+              }
+            }
+          ],
+          "dialog_command_id": "layout.pageSetup"
+        },
+        {
+          "id": "layout_paragraph",
+          "labels": {
+            "es-CL": "Párrafo",
+            "en-US": "Paragraph"
+          },
+          "controls": [
+            {
+              "command_id": "para.indents",
+              "kind": "spin_box",
+              "row": 0,
+              "icon": "ic_para_indents",
+              "labels": {
+                "es-CL": "Sangría",
+                "en-US": "Indents"
+              }
+            },
+            {
+              "command_id": "para.spacing",
+              "kind": "spin_box",
+              "row": 1,
+              "icon": "ic_para_spacing",
+              "labels": {
+                "es-CL": "Espaciado",
+                "en-US": "Paragraph Spacing"
+              }
+            }
+          ],
+          "dialog_command_id": "para.dialog"
+        },
+        {
+          "id": "arrange",
+          "labels": {
+            "es-CL": "Organizar",
+            "en-US": "Arrange"
+          },
+          "controls": [
+            {
+              "command_id": "arrange.position",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_arrange_position",
+              "labels": {
+                "es-CL": "Posición",
+                "en-US": "Position"
+              }
+            },
+            {
+              "command_id": "arrange.wrap",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_arrange_wrap",
+              "labels": {
+                "es-CL": "Ajustar texto",
+                "en-US": "Wrap Text"
+              }
+            },
+            {
+              "command_id": "arrange.bringForward",
+              "kind": "small_button",
+              "row": 0,
+              "icon": "ic_arrange_bringForward",
+              "labels": {
+                "es-CL": "Traer adelante",
+                "en-US": "Bring Forward"
+              }
+            },
+            {
+              "command_id": "arrange.sendBackward",
+              "kind": "small_button",
+              "row": 1,
+              "icon": "ic_arrange_sendBackward",
+              "labels": {
+                "es-CL": "Enviar atrás",
+                "en-US": "Send Backward"
+              }
+            },
+            {
+              "command_id": "arrange.selectionPane",
+              "kind": "small_button",
+              "row": 0,
+              "icon": "ic_arrange_selectionPane",
+              "labels": {
+                "es-CL": "Panel de selección",
+                "en-US": "Selection Pane"
+              }
+            },
+            {
+              "command_id": "arrange.align",
+              "kind": "small_button",
+              "row": 1,
+              "icon": "ic_arrange_align",
+              "labels": {
+                "es-CL": "Alinear",
+                "en-US": "Align"
+              }
+            },
+            {
+              "command_id": "arrange.group",
+              "kind": "small_button",
+              "row": 0,
+              "icon": "ic_arrange_group",
+              "labels": {
+                "es-CL": "Agrupar",
+                "en-US": "Group"
+              }
+            },
+            {
+              "command_id": "arrange.rotate",
+              "kind": "small_button",
+              "row": 1,
+              "icon": "ic_arrange_rotate",
+              "labels": {
+                "es-CL": "Girar",
+                "en-US": "Rotate"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "references",
+      "labels": {
+        "es-CL": "Referencias",
+        "en-US": "References"
+      },
+      "groups": [
+        {
+          "id": "toc",
+          "labels": {
+            "es-CL": "Tabla de contenido",
+            "en-US": "Table of Contents"
+          },
+          "controls": [
+            {
+              "command_id": "references.toc",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_references_toc",
+              "labels": {
+                "es-CL": "Tabla de contenido",
+                "en-US": "Table of Contents"
+              }
+            },
+            {
+              "command_id": "references.addText",
+              "kind": "small_button",
+              "row": 0,
+              "icon": "ic_references_addText",
+              "labels": {
+                "es-CL": "Agregar texto",
+                "en-US": "Add Text"
+              }
+            },
+            {
+              "command_id": "references.updateToc",
+              "kind": "small_button",
+              "row": 1,
+              "icon": "ic_references_updateToc",
+              "labels": {
+                "es-CL": "Actualizar tabla",
+                "en-US": "Update Table"
+              }
+            }
+          ]
+        },
+        {
+          "id": "footnotes",
+          "labels": {
+            "es-CL": "Notas al pie",
+            "en-US": "Footnotes"
+          },
+          "controls": [
+            {
+              "command_id": "references.footnote",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_references_footnote",
+              "labels": {
+                "es-CL": "Insertar nota al pie",
+                "en-US": "Insert Footnote"
+              }
+            },
+            {
+              "command_id": "references.endnote",
+              "kind": "small_button",
+              "row": 0,
+              "icon": "ic_references_endnote",
+              "labels": {
+                "es-CL": "Insertar nota al final",
+                "en-US": "Insert Endnote"
+              }
+            },
+            {
+              "command_id": "references.nextFootnote",
+              "kind": "small_button",
+              "row": 1,
+              "icon": "ic_references_nextFootnote",
+              "labels": {
+                "es-CL": "Siguiente nota al pie",
+                "en-US": "Next Footnote"
+              }
+            },
+            {
+              "command_id": "references.notes",
+              "kind": "small_button",
+              "row": 0,
+              "icon": "ic_references_notes",
+              "labels": {
+                "es-CL": "Mostrar notas",
+                "en-US": "Show Notes"
+              }
+            }
+          ],
+          "dialog_command_id": "references.noteOptions"
+        },
+        {
+          "id": "research",
+          "labels": {
+            "es-CL": "Investigación",
+            "en-US": "Research"
+          },
+          "controls": [
+            {
+              "command_id": "references.researcher",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_references_researcher",
+              "labels": {
+                "es-CL": "Búsqueda inteligente",
+                "en-US": "Researcher"
+              }
+            }
+          ]
+        },
+        {
+          "id": "citations",
+          "labels": {
+            "es-CL": "Citas y bibliografía",
+            "en-US": "Citations & Bibliography"
+          },
+          "controls": [
+            {
+              "command_id": "references.citation",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_references_citation",
+              "labels": {
+                "es-CL": "Insertar cita",
+                "en-US": "Insert Citation"
+              }
+            },
+            {
+              "command_id": "references.sources",
+              "kind": "small_button",
+              "row": 0,
+              "icon": "ic_references_sources",
+              "labels": {
+                "es-CL": "Administrar fuentes",
+                "en-US": "Manage Sources"
+              }
+            },
+            {
+              "command_id": "references.citationStyle",
+              "kind": "dropdown",
+              "row": 1,
+              "icon": "ic_references_citationStyle",
+              "labels": {
+                "es-CL": "Estilo",
+                "en-US": "Style"
+              }
+            },
+            {
+              "command_id": "references.bibliography",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_references_bibliography",
+              "labels": {
+                "es-CL": "Bibliografía",
+                "en-US": "Bibliography"
+              }
+            }
+          ]
+        },
+        {
+          "id": "captions",
+          "labels": {
+            "es-CL": "Títulos",
+            "en-US": "Captions"
+          },
+          "controls": [
+            {
+              "command_id": "references.caption",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_references_caption",
+              "labels": {
+                "es-CL": "Insertar título",
+                "en-US": "Insert Caption"
+              }
+            },
+            {
+              "command_id": "references.tableOfFigures",
+              "kind": "small_button",
+              "row": 0,
+              "icon": "ic_references_tableOfFigures",
+              "labels": {
+                "es-CL": "Tabla de ilustraciones",
+                "en-US": "Insert Table of Figures"
+              }
+            },
+            {
+              "command_id": "references.updateFigures",
+              "kind": "small_button",
+              "row": 1,
+              "icon": "ic_references_updateFigures",
+              "labels": {
+                "es-CL": "Update Table",
+                "en-US": "Update Table"
+              }
+            }
+          ]
+        },
+        {
+          "id": "index",
+          "labels": {
+            "es-CL": "Índice",
+            "en-US": "Index"
+          },
+          "controls": [
+            {
+              "command_id": "references.markEntry",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_references_markEntry",
+              "labels": {
+                "es-CL": "Marcar entrada",
+                "en-US": "Mark Entry"
+              }
+            },
+            {
+              "command_id": "references.index",
+              "kind": "small_button",
+              "row": 0,
+              "icon": "ic_references_index",
+              "labels": {
+                "es-CL": "Insertar índice",
+                "en-US": "Insert Index"
+              }
+            },
+            {
+              "command_id": "references.updateIndex",
+              "kind": "small_button",
+              "row": 1,
+              "icon": "ic_references_updateIndex",
+              "labels": {
+                "es-CL": "Update Index",
+                "en-US": "Update Index"
+              }
+            }
+          ]
+        },
+        {
+          "id": "authorities",
+          "labels": {
+            "es-CL": "Tabla de autoridades",
+            "en-US": "Table of Authorities"
+          },
+          "controls": [
+            {
+              "command_id": "references.markCitation",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_references_markCitation",
+              "labels": {
+                "es-CL": "Marcar cita",
+                "en-US": "Mark Citation"
+              }
+            },
+            {
+              "command_id": "references.tableOfAuthorities",
+              "kind": "small_button",
+              "row": 0,
+              "icon": "ic_references_tableOfAuthorities",
+              "labels": {
+                "es-CL": "Tabla de autoridades",
+                "en-US": "Insert Table of Authorities"
+              }
+            },
+            {
+              "command_id": "references.updateAuthorities",
+              "kind": "small_button",
+              "row": 1,
+              "icon": "ic_references_updateAuthorities",
+              "labels": {
+                "es-CL": "Update Table",
+                "en-US": "Update Table"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mailings",
+      "labels": {
+        "es-CL": "Correspondencia",
+        "en-US": "Mailings"
+      },
+      "groups": [
+        {
+          "id": "create",
+          "labels": {
+            "es-CL": "Crear",
+            "en-US": "Create"
+          },
+          "controls": [
+            {
+              "command_id": "mailings.envelopes",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_mailings_envelopes",
+              "labels": {
+                "es-CL": "Sobres",
+                "en-US": "Envelopes"
+              }
+            },
+            {
+              "command_id": "mailings.labels",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_mailings_labels",
+              "labels": {
+                "es-CL": "Etiquetas",
+                "en-US": "Labels"
+              }
+            }
+          ]
+        },
+        {
+          "id": "start_mail_merge",
+          "labels": {
+            "es-CL": "Iniciar combinación de correspondencia",
+            "en-US": "Start Mail Merge"
+          },
+          "controls": [
+            {
+              "command_id": "mailings.start",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_mailings_start",
+              "labels": {
+                "es-CL": "Iniciar combinación",
+                "en-US": "Start Mail Merge"
+              }
+            },
+            {
+              "command_id": "mailings.recipients",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_mailings_recipients",
+              "labels": {
+                "es-CL": "Seleccionar destinatarios",
+                "en-US": "Select Recipients"
+              }
+            },
+            {
+              "command_id": "mailings.editRecipients",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_mailings_editRecipients",
+              "labels": {
+                "es-CL": "Editar lista de destinatarios",
+                "en-US": "Edit Recipient List"
+              }
+            }
+          ]
+        },
+        {
+          "id": "write_insert",
+          "labels": {
+            "es-CL": "Escribir e insertar campos",
+            "en-US": "Write & Insert Fields"
+          },
+          "controls": [
+            {
+              "command_id": "mailings.highlightFields",
+              "kind": "toggle",
+              "row": "full",
+              "icon": "ic_mailings_highlightFields",
+              "labels": {
+                "es-CL": "Resaltar campos",
+                "en-US": "Highlight Merge Fields"
+              }
+            },
+            {
+              "command_id": "mailings.addressBlock",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_mailings_addressBlock",
+              "labels": {
+                "es-CL": "Bloque de direcciones",
+                "en-US": "Address Block"
+              }
+            },
+            {
+              "command_id": "mailings.greetingLine",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_mailings_greetingLine",
+              "labels": {
+                "es-CL": "Línea de saludo",
+                "en-US": "Greeting Line"
+              }
+            },
+            {
+              "command_id": "mailings.insertField",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_mailings_insertField",
+              "labels": {
+                "es-CL": "Insertar campo combinado",
+                "en-US": "Insert Merge Field"
+              }
+            },
+            {
+              "command_id": "mailings.rules",
+              "kind": "small_button",
+              "row": 0,
+              "icon": "ic_mailings_rules",
+              "labels": {
+                "es-CL": "Reglas",
+                "en-US": "Rules"
+              }
+            },
+            {
+              "command_id": "mailings.matchFields",
+              "kind": "small_button",
+              "row": 1,
+              "icon": "ic_mailings_matchFields",
+              "labels": {
+                "es-CL": "Asignar campos",
+                "en-US": "Match Fields"
+              }
+            }
+          ]
+        },
+        {
+          "id": "preview_results",
+          "labels": {
+            "es-CL": "Vista previa de resultados",
+            "en-US": "Preview Results"
+          },
+          "controls": [
+            {
+              "command_id": "mailings.preview",
+              "kind": "toggle",
+              "row": "full",
+              "icon": "ic_mailings_preview",
+              "labels": {
+                "es-CL": "Vista previa de resultados",
+                "en-US": "Preview Results"
+              }
+            },
+            {
+              "command_id": "mailings.first",
+              "kind": "small_button",
+              "row": 0,
+              "icon": "ic_mailings_first",
+              "labels": {
+                "es-CL": "Primer registro",
+                "en-US": "First Record"
+              }
+            },
+            {
+              "command_id": "mailings.previous",
+              "kind": "small_button",
+              "row": 0,
+              "icon": "ic_mailings_previous",
+              "labels": {
+                "es-CL": "Registro anterior",
+                "en-US": "Previous Record"
+              }
+            },
+            {
+              "command_id": "mailings.goToRecord",
+              "kind": "spin_box",
+              "row": 0,
+              "icon": "ic_mailings_goToRecord",
+              "labels": {
+                "es-CL": "Ir al registro",
+                "en-US": "Go to Record"
+              }
+            },
+            {
+              "command_id": "mailings.next",
+              "kind": "small_button",
+              "row": 0,
+              "icon": "ic_mailings_next",
+              "labels": {
+                "es-CL": "Siguiente registro",
+                "en-US": "Next Record"
+              }
+            },
+            {
+              "command_id": "mailings.last",
+              "kind": "small_button",
+              "row": 0,
+              "icon": "ic_mailings_last",
+              "labels": {
+                "es-CL": "Último registro",
+                "en-US": "Last Record"
+              }
+            },
+            {
+              "command_id": "mailings.findRecipient",
+              "kind": "small_button",
+              "row": 1,
+              "icon": "ic_mailings_findRecipient",
+              "labels": {
+                "es-CL": "Buscar destinatario",
+                "en-US": "Find Recipient"
+              }
+            },
+            {
+              "command_id": "mailings.checkErrors",
+              "kind": "small_button",
+              "row": 1,
+              "icon": "ic_mailings_checkErrors",
+              "labels": {
+                "es-CL": "Comprobar errores",
+                "en-US": "Check for Errors"
+              }
+            }
+          ]
+        },
+        {
+          "id": "finish",
+          "labels": {
+            "es-CL": "Finalizar",
+            "en-US": "Finish"
+          },
+          "controls": [
+            {
+              "command_id": "mailings.finish",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_mailings_finish",
+              "labels": {
+                "es-CL": "Finalizar y combinar",
+                "en-US": "Finish & Merge"
+              },
+              "submenu": [
+                {
+                  "command_id": "mailings.printDocuments",
+                  "kind": "menu_item",
+                  "row": 0,
+                  "icon": "ic_mailings_printDocuments",
+                  "labels": {
+                    "es-CL": "Print Documents",
+                    "en-US": "Print Documents"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "review",
+      "labels": {
+        "es-CL": "Revisar",
+        "en-US": "Review"
+      },
+      "groups": [
+        {
+          "id": "proofing",
+          "labels": {
+            "es-CL": "Revisión",
+            "en-US": "Proofing"
+          },
+          "controls": [
+            {
+              "command_id": "review.spelling",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_review_spelling",
+              "labels": {
+                "es-CL": "Ortografía y gramática",
+                "en-US": "Spelling & Grammar"
+              }
+            },
+            {
+              "command_id": "review.thesaurus",
+              "kind": "small_button",
+              "row": 0,
+              "icon": "ic_review_thesaurus",
+              "labels": {
+                "es-CL": "Sinónimos",
+                "en-US": "Thesaurus"
+              }
+            },
+            {
+              "command_id": "review.wordCount",
+              "kind": "small_button",
+              "row": 1,
+              "icon": "ic_review_wordCount",
+              "labels": {
+                "es-CL": "Contar palabras",
+                "en-US": "Word Count"
+              }
+            }
+          ]
+        },
+        {
+          "id": "speech",
+          "labels": {
+            "es-CL": "Voz",
+            "en-US": "Speech"
+          },
+          "controls": [
+            {
+              "command_id": "review.readAloud",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_review_readAloud",
+              "labels": {
+                "es-CL": "Leer en voz alta",
+                "en-US": "Read Aloud"
+              },
+              "submenu": [
+                {
+                  "command_id": "readAloud.playPause",
+                  "kind": "menu_item",
+                  "row": 0,
+                  "icon": "ic_readAloud_playPause",
+                  "labels": {
+                    "es-CL": "Reproducir / Pausar",
+                    "en-US": "Play/Pause"
+                  }
+                },
+                {
+                  "command_id": "readAloud.previous",
+                  "kind": "menu_item",
+                  "row": 0,
+                  "icon": "ic_readAloud_previous",
+                  "labels": {
+                    "es-CL": "Previous Sentence",
+                    "en-US": "Previous Sentence"
+                  }
+                },
+                {
+                  "command_id": "readAloud.next",
+                  "kind": "menu_item",
+                  "row": 0,
+                  "icon": "ic_readAloud_next",
+                  "labels": {
+                    "es-CL": "Next Sentence",
+                    "en-US": "Next Sentence"
+                  }
+                },
+                {
+                  "command_id": "readAloud.stop",
+                  "kind": "menu_item",
+                  "row": 0,
+                  "icon": "ic_readAloud_stop",
+                  "labels": {
+                    "es-CL": "Stop Reading",
+                    "en-US": "Stop Reading"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "accessibility",
+          "labels": {
+            "es-CL": "Accesibilidad",
+            "en-US": "Accessibility"
+          },
+          "controls": [
+            {
+              "command_id": "file.accessibility",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_file_accessibility",
+              "labels": {
+                "es-CL": "Comprobar accesibilidad",
+                "en-US": "Check Accessibility"
+              }
+            }
+          ]
+        },
+        {
+          "id": "language",
+          "labels": {
+            "es-CL": "Idioma",
+            "en-US": "Language"
+          },
+          "controls": [
+            {
+              "command_id": "review.language",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_review_language",
+              "labels": {
+                "es-CL": "Idioma",
+                "en-US": "Language"
+              }
+            }
+          ]
+        },
+        {
+          "id": "comments",
+          "labels": {
+            "es-CL": "Comentarios",
+            "en-US": "Comments"
+          },
+          "controls": [
+            {
+              "command_id": "review.newComment",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_review_newComment",
+              "labels": {
+                "es-CL": "Nuevo comentario",
+                "en-US": "New Comment"
+              }
+            },
+            {
+              "command_id": "review.deleteComment",
+              "kind": "small_button",
+              "row": 0,
+              "icon": "ic_review_deleteComment",
+              "labels": {
+                "es-CL": "Eliminar comentario",
+                "en-US": "Delete"
+              }
+            },
+            {
+              "command_id": "review.previousComment",
+              "kind": "small_button",
+              "row": 0,
+              "icon": "ic_review_previousComment",
+              "labels": {
+                "es-CL": "Comentario anterior",
+                "en-US": "Previous"
+              }
+            },
+            {
+              "command_id": "review.nextComment",
+              "kind": "small_button",
+              "row": 0,
+              "icon": "ic_review_nextComment",
+              "labels": {
+                "es-CL": "Siguiente comentario",
+                "en-US": "Next"
+              }
+            },
+            {
+              "command_id": "review.resolveComment",
+              "kind": "small_button",
+              "row": 1,
+              "icon": "ic_review_resolveComment",
+              "labels": {
+                "es-CL": "Resolver comentario",
+                "en-US": "Resolve"
+              }
+            },
+            {
+              "command_id": "review.comments",
+              "kind": "toggle",
+              "row": 1,
+              "icon": "ic_review_comments",
+              "labels": {
+                "es-CL": "Mostrar comentarios",
+                "en-US": "Show Comments"
+              }
+            }
+          ]
+        },
+        {
+          "id": "tracking",
+          "labels": {
+            "es-CL": "Seguimiento",
+            "en-US": "Tracking"
+          },
+          "controls": [
+            {
+              "command_id": "review.trackChanges",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_review_trackChanges",
+              "labels": {
+                "es-CL": "Control de cambios",
+                "en-US": "Track Changes"
+              }
+            },
+            {
+              "command_id": "review.markup",
+              "kind": "dropdown",
+              "row": 0,
+              "icon": "ic_review_markup",
+              "labels": {
+                "es-CL": "Mostrar para revisión",
+                "en-US": "Display for Review"
+              }
+            },
+            {
+              "command_id": "review.showMarkup",
+              "kind": "dropdown",
+              "row": 1,
+              "icon": "ic_review_showMarkup",
+              "labels": {
+                "es-CL": "Mostrar revisiones",
+                "en-US": "Show Markup"
+              }
+            },
+            {
+              "command_id": "review.changes",
+              "kind": "small_button",
+              "row": 0,
+              "icon": "ic_review_changes",
+              "labels": {
+                "es-CL": "Panel de revisiones",
+                "en-US": "Reviewing Pane"
+              }
+            }
+          ],
+          "dialog_command_id": "review.trackingOptions"
+        },
+        {
+          "id": "changes",
+          "labels": {
+            "es-CL": "Cambios",
+            "en-US": "Changes"
+          },
+          "controls": [
+            {
+              "command_id": "review.accept",
+              "kind": "split_button",
+              "row": "full",
+              "icon": "ic_review_accept",
+              "labels": {
+                "es-CL": "Aceptar",
+                "en-US": "Accept"
+              },
+              "submenu": [
+                {
+                  "command_id": "review.acceptAll",
+                  "kind": "menu_item",
+                  "row": 0,
+                  "icon": "ic_review_acceptAll",
+                  "labels": {
+                    "es-CL": "Aceptar todos los cambios",
+                    "en-US": "Accept All Changes"
+                  }
+                }
+              ]
+            },
+            {
+              "command_id": "review.reject",
+              "kind": "split_button",
+              "row": "full",
+              "icon": "ic_review_reject",
+              "labels": {
+                "es-CL": "Rechazar",
+                "en-US": "Reject"
+              },
+              "submenu": [
+                {
+                  "command_id": "review.rejectAll",
+                  "kind": "menu_item",
+                  "row": 0,
+                  "icon": "ic_review_rejectAll",
+                  "labels": {
+                    "es-CL": "Rechazar todos los cambios",
+                    "en-US": "Reject All Changes"
+                  }
+                }
+              ]
+            },
+            {
+              "command_id": "review.previousChange",
+              "kind": "small_button",
+              "row": 0,
+              "icon": "ic_review_previousChange",
+              "labels": {
+                "es-CL": "Cambio anterior",
+                "en-US": "Previous Change"
+              }
+            },
+            {
+              "command_id": "review.nextChange",
+              "kind": "small_button",
+              "row": 1,
+              "icon": "ic_review_nextChange",
+              "labels": {
+                "es-CL": "Siguiente cambio",
+                "en-US": "Next Change"
+              }
+            }
+          ]
+        },
+        {
+          "id": "compare",
+          "labels": {
+            "es-CL": "Comparar",
+            "en-US": "Compare"
+          },
+          "controls": [
+            {
+              "command_id": "review.compare",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_review_compare",
+              "labels": {
+                "es-CL": "Comparar",
+                "en-US": "Compare"
+              },
+              "submenu": [
+                {
+                  "command_id": "review.combine",
+                  "kind": "menu_item",
+                  "row": 0,
+                  "icon": "ic_review_combine",
+                  "labels": {
+                    "es-CL": "Combinar",
+                    "en-US": "Combine"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "protect",
+          "labels": {
+            "es-CL": "Proteger",
+            "en-US": "Protect"
+          },
+          "controls": [
+            {
+              "command_id": "review.restrict",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_review_restrict",
+              "labels": {
+                "es-CL": "Restringir edición",
+                "en-US": "Restrict Editing"
+              }
+            }
+          ]
+        },
+        {
+          "id": "review_ink",
+          "labels": {
+            "es-CL": "Entrada de lápiz",
+            "en-US": "Ink"
+          },
+          "controls": [
+            {
+              "command_id": "review.hideInk",
+              "kind": "toggle",
+              "row": "full",
+              "icon": "ic_review_hideInk",
+              "labels": {
+                "es-CL": "Ocultar entrada de lápiz",
+                "en-US": "Hide Ink"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "view",
+      "labels": {
+        "es-CL": "Vista",
+        "en-US": "View"
+      },
+      "groups": [
+        {
+          "id": "views",
+          "labels": {
+            "es-CL": "Vistas",
+            "en-US": "Views"
+          },
+          "controls": [
+            {
+              "command_id": "view.readMode",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_view_readMode",
+              "labels": {
+                "es-CL": "Modo lectura",
+                "en-US": "Read Mode"
+              }
+            },
+            {
+              "command_id": "view.printLayout",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_view_printLayout",
+              "labels": {
+                "es-CL": "Diseño de impresión",
+                "en-US": "Print Layout"
+              }
+            },
+            {
+              "command_id": "view.webLayout",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_view_webLayout",
+              "labels": {
+                "es-CL": "Diseño web",
+                "en-US": "Web Layout"
+              }
+            },
+            {
+              "command_id": "view.outline",
+              "kind": "small_button",
+              "row": 0,
+              "icon": "ic_view_outline",
+              "labels": {
+                "es-CL": "Esquema",
+                "en-US": "Outline"
+              }
+            },
+            {
+              "command_id": "view.draft",
+              "kind": "small_button",
+              "row": 1,
+              "icon": "ic_view_draft",
+              "labels": {
+                "es-CL": "Borrador",
+                "en-US": "Draft"
+              }
+            }
+          ]
+        },
+        {
+          "id": "immersive",
+          "labels": {
+            "es-CL": "Inmersivo",
+            "en-US": "Immersive"
+          },
+          "controls": [
+            {
+              "command_id": "view.focus",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_view_focus",
+              "labels": {
+                "es-CL": "Concentración",
+                "en-US": "Focus"
+              }
+            },
+            {
+              "command_id": "view.immersive",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_view_immersive",
+              "labels": {
+                "es-CL": "Lector inmersivo",
+                "en-US": "Immersive Reader"
+              }
+            }
+          ]
+        },
+        {
+          "id": "page_movement",
+          "labels": {
+            "es-CL": "Movimiento de página",
+            "en-US": "Page Movement"
+          },
+          "controls": [
+            {
+              "command_id": "view.vertical",
+              "kind": "small_button",
+              "row": 0,
+              "icon": "ic_view_vertical",
+              "labels": {
+                "es-CL": "Vertical",
+                "en-US": "Vertical"
+              }
+            },
+            {
+              "command_id": "view.sideToSide",
+              "kind": "small_button",
+              "row": 1,
+              "icon": "ic_view_sideToSide",
+              "labels": {
+                "es-CL": "En paralelo",
+                "en-US": "Side to Side"
+              }
+            }
+          ]
+        },
+        {
+          "id": "show",
+          "labels": {
+            "es-CL": "Mostrar",
+            "en-US": "Show"
+          },
+          "controls": [
+            {
+              "command_id": "view.ruler",
+              "kind": "toggle",
+              "row": 0,
+              "icon": "ic_view_ruler",
+              "labels": {
+                "es-CL": "Regla",
+                "en-US": "Ruler"
+              }
+            },
+            {
+              "command_id": "view.gridlines",
+              "kind": "toggle",
+              "row": 1,
+              "icon": "ic_view_gridlines",
+              "labels": {
+                "es-CL": "Líneas de la cuadrícula",
+                "en-US": "Gridlines"
+              }
+            },
+            {
+              "command_id": "view.navigationPane",
+              "kind": "toggle",
+              "row": 0,
+              "icon": "ic_view_navigationPane",
+              "labels": {
+                "es-CL": "Panel de navegación",
+                "en-US": "Navigation Pane"
+              }
+            }
+          ]
+        },
+        {
+          "id": "zoom",
+          "labels": {
+            "es-CL": "Zoom",
+            "en-US": "Zoom"
+          },
+          "controls": [
+            {
+              "command_id": "view.zoom",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_view_zoom",
+              "labels": {
+                "es-CL": "Zoom",
+                "en-US": "Zoom"
+              }
+            },
+            {
+              "command_id": "view.zoom100",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_view_zoom100",
+              "labels": {
+                "es-CL": "100 %",
+                "en-US": "100%"
+              }
+            },
+            {
+              "command_id": "view.onePage",
+              "kind": "small_button",
+              "row": 0,
+              "icon": "ic_view_onePage",
+              "labels": {
+                "es-CL": "Una página",
+                "en-US": "One Page"
+              }
+            },
+            {
+              "command_id": "view.multiplePages",
+              "kind": "small_button",
+              "row": 1,
+              "icon": "ic_view_multiplePages",
+              "labels": {
+                "es-CL": "Varias páginas",
+                "en-US": "Multiple Pages"
+              }
+            },
+            {
+              "command_id": "view.pageWidth",
+              "kind": "small_button",
+              "row": 0,
+              "icon": "ic_view_pageWidth",
+              "labels": {
+                "es-CL": "Ancho de página",
+                "en-US": "Page Width"
+              }
+            }
+          ]
+        },
+        {
+          "id": "dark_mode",
+          "labels": {
+            "es-CL": "Modo oscuro",
+            "en-US": "Dark Mode"
+          },
+          "controls": [
+            {
+              "command_id": "view.darkMode",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_view_darkMode",
+              "labels": {
+                "es-CL": "Cambiar modo oscuro",
+                "en-US": "Switch Modes"
+              }
+            },
+            {
+              "command_id": "view.interfaceTheme",
+              "kind": "small_button",
+              "row": 0,
+              "icon": "ic_view_interfaceTheme",
+              "labels": {
+                "es-CL": "Tema de interfaz",
+                "en-US": "Interface Theme"
+              }
+            }
+          ]
+        },
+        {
+          "id": "window",
+          "labels": {
+            "es-CL": "Ventana",
+            "en-US": "Window"
+          },
+          "controls": [
+            {
+              "command_id": "view.newWindow",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_view_newWindow",
+              "labels": {
+                "es-CL": "Nueva ventana",
+                "en-US": "New Window"
+              }
+            },
+            {
+              "command_id": "view.arrangeAll",
+              "kind": "small_button",
+              "row": 0,
+              "icon": "ic_view_arrangeAll",
+              "labels": {
+                "es-CL": "Organizar todo",
+                "en-US": "Arrange All"
+              }
+            },
+            {
+              "command_id": "view.split",
+              "kind": "small_button",
+              "row": 1,
+              "icon": "ic_view_split",
+              "labels": {
+                "es-CL": "Dividir",
+                "en-US": "Split"
+              }
+            },
+            {
+              "command_id": "view.sideBySide",
+              "kind": "small_button",
+              "row": 0,
+              "icon": "ic_view_sideBySide",
+              "labels": {
+                "es-CL": "Ver en paralelo",
+                "en-US": "View Side by Side"
+              }
+            }
+          ]
+        },
+        {
+          "id": "macros",
+          "labels": {
+            "es-CL": "Macros",
+            "en-US": "Macros"
+          },
+          "controls": [
+            {
+              "command_id": "tools.macros",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_tools_macros",
+              "labels": {
+                "es-CL": "Macros",
+                "en-US": "Macros"
+              },
+              "submenu": [
+                {
+                  "command_id": "tools.recordMacro",
+                  "kind": "menu_item",
+                  "row": 0,
+                  "icon": "ic_tools_recordMacro",
+                  "labels": {
+                    "es-CL": "Grabar macro",
+                    "en-US": "Record Macro"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "contextual_tabs": [
+    {
+      "id": "table_design",
+      "context_trigger": "table",
+      "accent_role": "contextual_teal",
+      "labels": {
+        "es-CL": "Diseño de tabla",
+        "en-US": "Table Design"
+      },
+      "groups": [
+        {
+          "id": "table_style_options",
+          "labels": {
+            "es-CL": "Opciones de estilo de tabla",
+            "en-US": "Table Style Options"
+          },
+          "controls": [
+            {
+              "command_id": "table.look",
+              "kind": "dropdown",
+              "row": "full",
+              "icon": "ic_table_look",
+              "labels": {
+                "es-CL": "Opciones de estilo de tabla",
+                "en-US": "Table Style Options"
+              }
+            }
+          ]
+        },
+        {
+          "id": "table_styles",
+          "labels": {
+            "es-CL": "Estilos de tabla",
+            "en-US": "Table Styles"
+          },
+          "controls": [
+            {
+              "command_id": "table.style",
+              "kind": "style_gallery",
+              "row": "full",
+              "icon": "ic_table_style",
+              "labels": {
+                "es-CL": "Estilos de tabla",
+                "en-US": "Table Styles"
+              },
+              "submenu": [
+                {
+                  "command_id": "table.newStyle",
+                  "kind": "menu_item",
+                  "row": 0,
+                  "icon": "ic_table_newStyle",
+                  "labels": {
+                    "es-CL": "New Table Style",
+                    "en-US": "New Table Style"
+                  }
+                },
+                {
+                  "command_id": "table.modifyStyle",
+                  "kind": "menu_item",
+                  "row": 0,
+                  "icon": "ic_table_modifyStyle",
+                  "labels": {
+                    "es-CL": "Modify Table Style",
+                    "en-US": "Modify Table Style"
+                  }
+                },
+                {
+                  "command_id": "table.deleteStyle",
+                  "kind": "menu_item",
+                  "row": 0,
+                  "icon": "ic_table_deleteStyle",
+                  "labels": {
+                    "es-CL": "Delete Table Style",
+                    "en-US": "Delete Table Style"
+                  }
+                }
+              ]
+            },
+            {
+              "command_id": "table.shading",
+              "kind": "color_picker",
+              "row": "full",
+              "icon": "ic_table_shading",
+              "labels": {
+                "es-CL": "Sombreado",
+                "en-US": "Shading"
+              }
+            }
+          ]
+        },
+        {
+          "id": "table_borders",
+          "labels": {
+            "es-CL": "Bordes",
+            "en-US": "Borders"
+          },
+          "controls": [
+            {
+              "command_id": "table.borders",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_table_borders",
+              "labels": {
+                "es-CL": "Bordes",
+                "en-US": "Borders"
+              }
+            },
+            {
+              "command_id": "table.borderPainter",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_table_borderPainter",
+              "labels": {
+                "es-CL": "Copiar borde",
+                "en-US": "Border Painter"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "table_layout",
+      "context_trigger": "table",
+      "accent_role": "contextual_teal",
+      "labels": {
+        "es-CL": "Disposición de tabla",
+        "en-US": "Table Layout"
+      },
+      "groups": [
+        {
+          "id": "table_props",
+          "labels": {
+            "es-CL": "Tabla",
+            "en-US": "Table"
+          },
+          "controls": [
+            {
+              "command_id": "table.selectTable",
+              "kind": "dropdown",
+              "row": "full",
+              "icon": "ic_table_selectTable",
+              "labels": {
+                "es-CL": "Seleccionar tabla",
+                "en-US": "Select Table"
+              },
+              "submenu": [
+                {
+                  "command_id": "table.selectRow",
+                  "kind": "menu_item",
+                  "row": 0,
+                  "icon": "ic_table_selectRow",
+                  "labels": {
+                    "es-CL": "Seleccionar fila",
+                    "en-US": "Select Row"
+                  }
+                },
+                {
+                  "command_id": "table.selectColumn",
+                  "kind": "menu_item",
+                  "row": 0,
+                  "icon": "ic_table_selectColumn",
+                  "labels": {
+                    "es-CL": "Seleccionar columna",
+                    "en-US": "Select Column"
+                  }
+                },
+                {
+                  "command_id": "table.selectCell",
+                  "kind": "menu_item",
+                  "row": 0,
+                  "icon": "ic_table_selectCell",
+                  "labels": {
+                    "es-CL": "Seleccionar celda",
+                    "en-US": "Select Cell"
+                  }
+                }
+              ]
+            },
+            {
+              "command_id": "table.viewGridlines",
+              "kind": "toggle",
+              "row": 0,
+              "icon": "ic_table_viewGridlines",
+              "labels": {
+                "es-CL": "Ver cuadrículas",
+                "en-US": "View Gridlines"
+              }
+            },
+            {
+              "command_id": "table.properties",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_table_properties",
+              "labels": {
+                "es-CL": "Propiedades",
+                "en-US": "Properties"
+              }
+            }
+          ]
+        },
+        {
+          "id": "table_draw",
+          "labels": {
+            "es-CL": "Dibujar",
+            "en-US": "Draw"
+          },
+          "controls": [
+            {
+              "command_id": "table.draw",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_table_draw",
+              "labels": {
+                "es-CL": "Dibujar tabla",
+                "en-US": "Draw Table"
+              }
+            },
+            {
+              "command_id": "table.eraser",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_table_eraser",
+              "labels": {
+                "es-CL": "Borrador",
+                "en-US": "Eraser"
+              }
+            }
+          ]
+        },
+        {
+          "id": "rows_cols",
+          "labels": {
+            "es-CL": "Filas y columnas",
+            "en-US": "Rows & Columns"
+          },
+          "controls": [
+            {
+              "command_id": "table.deleteCells",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_table_deleteCells",
+              "labels": {
+                "es-CL": "Eliminar celdas",
+                "en-US": "Delete Cells"
+              },
+              "submenu": [
+                {
+                  "command_id": "table.deleteColumn",
+                  "kind": "menu_item",
+                  "row": 0,
+                  "icon": "ic_table_deleteColumn",
+                  "labels": {
+                    "es-CL": "Eliminar columnas",
+                    "en-US": "Delete Columns"
+                  }
+                },
+                {
+                  "command_id": "table.deleteRow",
+                  "kind": "menu_item",
+                  "row": 0,
+                  "icon": "ic_table_deleteRow",
+                  "labels": {
+                    "es-CL": "Eliminar filas",
+                    "en-US": "Delete Rows"
+                  }
+                },
+                {
+                  "command_id": "table.deleteTable",
+                  "kind": "menu_item",
+                  "row": 0,
+                  "icon": "ic_table_deleteTable",
+                  "labels": {
+                    "es-CL": "Eliminar tabla",
+                    "en-US": "Delete Table"
+                  }
+                }
+              ]
+            },
+            {
+              "command_id": "table.insertRowAbove",
+              "kind": "small_button",
+              "row": 0,
+              "icon": "ic_table_insertRowAbove",
+              "labels": {
+                "es-CL": "Insertar arriba",
+                "en-US": "Insert Above"
+              }
+            },
+            {
+              "command_id": "table.insertRowBelow",
+              "kind": "small_button",
+              "row": 1,
+              "icon": "ic_table_insertRowBelow",
+              "labels": {
+                "es-CL": "Insertar debajo",
+                "en-US": "Insert Below"
+              }
+            },
+            {
+              "command_id": "table.insertColumnLeft",
+              "kind": "small_button",
+              "row": 0,
+              "icon": "ic_table_insertColumnLeft",
+              "labels": {
+                "es-CL": "Insertar a la izquierda",
+                "en-US": "Insert Left"
+              }
+            },
+            {
+              "command_id": "table.insertColumnRight",
+              "kind": "small_button",
+              "row": 1,
+              "icon": "ic_table_insertColumnRight",
+              "labels": {
+                "es-CL": "Insertar a la derecha",
+                "en-US": "Insert Right"
+              }
+            }
+          ]
+        },
+        {
+          "id": "merge",
+          "labels": {
+            "es-CL": "Combinar",
+            "en-US": "Merge"
+          },
+          "controls": [
+            {
+              "command_id": "table.merge",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_table_merge",
+              "labels": {
+                "es-CL": "Combinar celdas",
+                "en-US": "Merge Cells"
+              }
+            },
+            {
+              "command_id": "table.split",
+              "kind": "small_button",
+              "row": 0,
+              "icon": "ic_table_split",
+              "labels": {
+                "es-CL": "Dividir celdas",
+                "en-US": "Split Cells"
+              }
+            },
+            {
+              "command_id": "table.splitTable",
+              "kind": "small_button",
+              "row": 1,
+              "icon": "ic_table_splitTable",
+              "labels": {
+                "es-CL": "Dividir tabla",
+                "en-US": "Split Table"
+              }
+            }
+          ]
+        },
+        {
+          "id": "cell_size",
+          "labels": {
+            "es-CL": "Tamaño de celda",
+            "en-US": "Cell Size"
+          },
+          "controls": [
+            {
+              "command_id": "table.autofit",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_table_autofit",
+              "labels": {
+                "es-CL": "Autoajustar",
+                "en-US": "AutoFit"
+              }
+            },
+            {
+              "command_id": "table.rowHeight",
+              "kind": "spin_box",
+              "row": 0,
+              "icon": "ic_table_rowHeight",
+              "labels": {
+                "es-CL": "Alto de fila",
+                "en-US": "Table Row Height"
+              }
+            },
+            {
+              "command_id": "table.columnWidth",
+              "kind": "spin_box",
+              "row": 1,
+              "icon": "ic_table_columnWidth",
+              "labels": {
+                "es-CL": "Ancho de columna",
+                "en-US": "Table Column Width"
+              }
+            },
+            {
+              "command_id": "table.distributeRows",
+              "kind": "small_button",
+              "row": 0,
+              "icon": "ic_table_distributeRows",
+              "labels": {
+                "es-CL": "Distribuir filas",
+                "en-US": "Distribute Rows"
+              }
+            },
+            {
+              "command_id": "table.distributeColumns",
+              "kind": "small_button",
+              "row": 1,
+              "icon": "ic_table_distributeColumns",
+              "labels": {
+                "es-CL": "Distribuir columnas",
+                "en-US": "Distribute Columns"
+              }
+            }
+          ]
+        },
+        {
+          "id": "alignment",
+          "labels": {
+            "es-CL": "Alineación",
+            "en-US": "Alignment"
+          },
+          "controls": [
+            {
+              "command_id": "table.cellAlign",
+              "kind": "dropdown",
+              "row": "full",
+              "icon": "ic_table_cellAlign",
+              "labels": {
+                "es-CL": "Alineación",
+                "en-US": "Alignment"
+              }
+            },
+            {
+              "command_id": "table.textDirection",
+              "kind": "small_button",
+              "row": 0,
+              "icon": "ic_table_textDirection",
+              "labels": {
+                "es-CL": "Dirección del texto",
+                "en-US": "Text Direction"
+              }
+            },
+            {
+              "command_id": "table.cellMargins",
+              "kind": "small_button",
+              "row": 1,
+              "icon": "ic_table_cellMargins",
+              "labels": {
+                "es-CL": "Márgenes de celda",
+                "en-US": "Cell Margins"
+              }
+            }
+          ]
+        },
+        {
+          "id": "data",
+          "labels": {
+            "es-CL": "Datos",
+            "en-US": "Data"
+          },
+          "controls": [
+            {
+              "command_id": "table.sort",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_table_sort",
+              "labels": {
+                "es-CL": "Ordenar",
+                "en-US": "Sort"
+              }
+            },
+            {
+              "command_id": "table.repeatHeader",
+              "kind": "toggle",
+              "row": 0,
+              "icon": "ic_table_repeatHeader",
+              "labels": {
+                "es-CL": "Repetir filas de título",
+                "en-US": "Repeat Header Rows"
+              }
+            },
+            {
+              "command_id": "table.toText",
+              "kind": "small_button",
+              "row": 1,
+              "icon": "ic_table_toText",
+              "labels": {
+                "es-CL": "Convertir a texto",
+                "en-US": "Convert to Text"
+              }
+            },
+            {
+              "command_id": "table.formula",
+              "kind": "small_button",
+              "row": 0,
+              "icon": "ic_table_formula",
+              "labels": {
+                "es-CL": "Fórmula",
+                "en-US": "Formula"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "picture_format",
+      "context_trigger": "picture",
+      "accent_role": "contextual_pink",
+      "labels": {
+        "es-CL": "Formato de imagen",
+        "en-US": "Picture Format"
+      },
+      "groups": [
+        {
+          "id": "adjust",
+          "labels": {
+            "es-CL": "Ajustar",
+            "en-US": "Adjust"
+          },
+          "controls": [
+            {
+              "command_id": "picture.removeBackground",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_picture_removeBackground",
+              "labels": {
+                "es-CL": "Quitar fondo",
+                "en-US": "Remove Background"
+              }
+            },
+            {
+              "command_id": "picture.corrections",
+              "kind": "small_button",
+              "row": 0,
+              "icon": "ic_picture_corrections",
+              "labels": {
+                "es-CL": "Correcciones",
+                "en-US": "Corrections"
+              }
+            },
+            {
+              "command_id": "picture.color",
+              "kind": "small_button",
+              "row": 1,
+              "icon": "ic_picture_color",
+              "labels": {
+                "es-CL": "Color",
+                "en-US": "Color"
+              }
+            },
+            {
+              "command_id": "picture.effects",
+              "kind": "small_button",
+              "row": 0,
+              "icon": "ic_picture_effects",
+              "labels": {
+                "es-CL": "Efectos artísticos",
+                "en-US": "Artistic Effects"
+              }
+            },
+            {
+              "command_id": "picture.transparency",
+              "kind": "small_button",
+              "row": 1,
+              "icon": "ic_picture_transparency",
+              "labels": {
+                "es-CL": "Transparencia",
+                "en-US": "Transparency"
+              }
+            },
+            {
+              "command_id": "picture.compress",
+              "kind": "small_button",
+              "row": 0,
+              "icon": "ic_picture_compress",
+              "labels": {
+                "es-CL": "Comprimir imágenes",
+                "en-US": "Compress Pictures"
+              }
+            },
+            {
+              "command_id": "picture.change",
+              "kind": "small_button",
+              "row": 1,
+              "icon": "ic_picture_change",
+              "labels": {
+                "es-CL": "Cambiar imagen",
+                "en-US": "Change Picture"
+              }
+            },
+            {
+              "command_id": "picture.reset",
+              "kind": "small_button",
+              "row": 0,
+              "icon": "ic_picture_reset",
+              "labels": {
+                "es-CL": "Restablecer imagen",
+                "en-US": "Reset Picture"
+              }
+            }
+          ]
+        },
+        {
+          "id": "picture_styles",
+          "labels": {
+            "es-CL": "Estilos de imagen",
+            "en-US": "Picture Styles"
+          },
+          "controls": [
+            {
+              "command_id": "picture.style",
+              "kind": "style_gallery",
+              "row": "full",
+              "icon": "ic_picture_style",
+              "labels": {
+                "es-CL": "Estilos de imagen",
+                "en-US": "Picture Styles"
+              }
+            },
+            {
+              "command_id": "picture.border",
+              "kind": "color_picker",
+              "row": 0,
+              "icon": "ic_picture_border",
+              "labels": {
+                "es-CL": "Borde de imagen",
+                "en-US": "Picture Border"
+              }
+            }
+          ]
+        },
+        {
+          "id": "pic_a11y",
+          "labels": {
+            "es-CL": "Accesibilidad",
+            "en-US": "Accessibility"
+          },
+          "controls": [
+            {
+              "command_id": "picture.altText",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_picture_altText",
+              "labels": {
+                "es-CL": "Texto alternativo",
+                "en-US": "Alt Text"
+              }
+            }
+          ]
+        },
+        {
+          "id": "pic_size",
+          "labels": {
+            "es-CL": "Tamaño",
+            "en-US": "Size"
+          },
+          "controls": [
+            {
+              "command_id": "picture.crop",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_picture_crop",
+              "labels": {
+                "es-CL": "Recortar",
+                "en-US": "Crop"
+              }
+            },
+            {
+              "command_id": "picture.size",
+              "kind": "spin_box",
+              "row": 0,
+              "icon": "ic_picture_size",
+              "labels": {
+                "es-CL": "Tamaño",
+                "en-US": "Size"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "shape_format",
+      "context_trigger": "shape",
+      "accent_role": "contextual_pink",
+      "labels": {
+        "es-CL": "Formato de forma",
+        "en-US": "Shape Format"
+      },
+      "groups": [
+        {
+          "id": "insert_shapes",
+          "labels": {
+            "es-CL": "Insertar formas",
+            "en-US": "Insert Shapes"
+          },
+          "controls": [
+            {
+              "command_id": "shape.change",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_shape_change",
+              "labels": {
+                "es-CL": "Cambiar forma",
+                "en-US": "Change Shape"
+              }
+            },
+            {
+              "command_id": "shape.connect",
+              "kind": "small_button",
+              "row": 0,
+              "icon": "ic_shape_connect",
+              "labels": {
+                "es-CL": "Connect Shapes",
+                "en-US": "Connect Shapes"
+              }
+            }
+          ]
+        },
+        {
+          "id": "shape_styles",
+          "labels": {
+            "es-CL": "Estilos de forma",
+            "en-US": "Shape Styles"
+          },
+          "controls": [
+            {
+              "command_id": "shape.fill",
+              "kind": "color_picker",
+              "row": 0,
+              "icon": "ic_shape_fill",
+              "labels": {
+                "es-CL": "Relleno de forma",
+                "en-US": "Shape Fill"
+              }
+            },
+            {
+              "command_id": "shape.outline",
+              "kind": "color_picker",
+              "row": 1,
+              "icon": "ic_shape_outline",
+              "labels": {
+                "es-CL": "Contorno de forma",
+                "en-US": "Shape Outline"
+              }
+            },
+            {
+              "command_id": "shape.effects",
+              "kind": "dropdown",
+              "row": 0,
+              "icon": "ic_shape_effects",
+              "labels": {
+                "es-CL": "Efectos de forma",
+                "en-US": "Shape Effects"
+              }
+            }
+          ],
+          "dialog_command_id": "view.formatShapePane"
+        },
+        {
+          "id": "wordart_styles",
+          "labels": {
+            "es-CL": "Estilos de WordArt",
+            "en-US": "WordArt Styles"
+          },
+          "controls": [
+            {
+              "command_id": "wordArt.style",
+              "kind": "style_gallery",
+              "row": "full",
+              "icon": "ic_wordArt_style",
+              "labels": {
+                "es-CL": "Estilos rápidos de WordArt",
+                "en-US": "WordArt Styles"
+              }
+            },
+            {
+              "command_id": "wordArt.textFill",
+              "kind": "color_picker",
+              "row": 0,
+              "icon": "ic_wordArt_textFill",
+              "labels": {
+                "es-CL": "Relleno de texto",
+                "en-US": "Text Fill"
+              }
+            },
+            {
+              "command_id": "wordArt.textOutline",
+              "kind": "color_picker",
+              "row": 1,
+              "icon": "ic_wordArt_textOutline",
+              "labels": {
+                "es-CL": "Contorno de texto",
+                "en-US": "Text Outline"
+              }
+            },
+            {
+              "command_id": "wordArt.transform",
+              "kind": "dropdown",
+              "row": 0,
+              "icon": "ic_wordArt_transform",
+              "labels": {
+                "es-CL": "Transformar",
+                "en-US": "Transform"
+              }
+            }
+          ]
+        },
+        {
+          "id": "shape_text",
+          "labels": {
+            "es-CL": "Texto",
+            "en-US": "Text"
+          },
+          "controls": [
+            {
+              "command_id": "shape.textDirection",
+              "kind": "small_button",
+              "row": 0,
+              "icon": "ic_shape_textDirection",
+              "labels": {
+                "es-CL": "Dirección del texto",
+                "en-US": "Text Direction"
+              }
+            },
+            {
+              "command_id": "shape.alignText",
+              "kind": "small_button",
+              "row": 1,
+              "icon": "ic_shape_alignText",
+              "labels": {
+                "es-CL": "Alinear texto",
+                "en-US": "Align Text"
+              }
+            },
+            {
+              "command_id": "shape.link",
+              "kind": "small_button",
+              "row": 0,
+              "icon": "ic_shape_link",
+              "labels": {
+                "es-CL": "Crear vínculo",
+                "en-US": "Create Link"
+              }
+            }
+          ]
+        },
+        {
+          "id": "shape_a11y",
+          "labels": {
+            "es-CL": "Accesibilidad",
+            "en-US": "Accessibility"
+          },
+          "controls": [
+            {
+              "command_id": "object.altText",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_object_altText",
+              "labels": {
+                "es-CL": "Texto alternativo",
+                "en-US": "Alt Text"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "equation",
+      "context_trigger": "equation",
+      "accent_role": "contextual_blue",
+      "labels": {
+        "es-CL": "Ecuación",
+        "en-US": "Equation"
+      },
+      "groups": [
+        {
+          "id": "eq_tools",
+          "labels": {
+            "es-CL": "Herramientas",
+            "en-US": "Tools"
+          },
+          "controls": [
+            {
+              "command_id": "equation.gallery",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_equation_gallery",
+              "labels": {
+                "es-CL": "Ecuación",
+                "en-US": "Equation Gallery"
+              }
+            },
+            {
+              "command_id": "equation.normalText",
+              "kind": "toggle",
+              "row": 0,
+              "icon": "ic_equation_normalText",
+              "labels": {
+                "es-CL": "Texto normal",
+                "en-US": "Normal Text"
+              }
+            },
+            {
+              "command_id": "equation.exit",
+              "kind": "small_button",
+              "row": 1,
+              "icon": "ic_equation_exit",
+              "labels": {
+                "es-CL": "Salir de ecuación",
+                "en-US": "Leave Equation"
+              }
+            }
+          ]
+        },
+        {
+          "id": "eq_conversions",
+          "labels": {
+            "es-CL": "Conversiones",
+            "en-US": "Conversions"
+          },
+          "controls": [
+            {
+              "command_id": "equation.convert",
+              "kind": "dropdown",
+              "row": "full",
+              "icon": "ic_equation_convert",
+              "labels": {
+                "es-CL": "Convertir",
+                "en-US": "Convert"
+              }
+            },
+            {
+              "command_id": "equation.inputFormat",
+              "kind": "dropdown",
+              "row": 0,
+              "icon": "ic_equation_inputFormat",
+              "labels": {
+                "es-CL": "Formato de entrada",
+                "en-US": "Input Format"
+              }
+            },
+            {
+              "command_id": "equation.display",
+              "kind": "toggle",
+              "row": 1,
+              "icon": "ic_equation_display",
+              "labels": {
+                "es-CL": "Modo presentación",
+                "en-US": "Change to Display"
+              }
+            }
+          ]
+        },
+        {
+          "id": "eq_symbols",
+          "labels": {
+            "es-CL": "Símbolos",
+            "en-US": "Symbols"
+          },
+          "controls": [
+            {
+              "command_id": "equation.insertSymbol",
+              "kind": "style_gallery",
+              "row": "full",
+              "icon": "ic_equation_insertSymbol",
+              "labels": {
+                "es-CL": "Símbolos",
+                "en-US": "Insert Symbol"
+              }
+            }
+          ]
+        },
+        {
+          "id": "eq_structures",
+          "labels": {
+            "es-CL": "Estructuras",
+            "en-US": "Structures"
+          },
+          "controls": [
+            {
+              "command_id": "equation.insertStructure",
+              "kind": "style_gallery",
+              "row": "full",
+              "icon": "ic_equation_insertStructure",
+              "labels": {
+                "es-CL": "Estructuras",
+                "en-US": "Insert Structure"
+              }
+            },
+            {
+              "command_id": "equation.justify",
+              "kind": "dropdown",
+              "row": 0,
+              "icon": "ic_equation_justify",
+              "labels": {
+                "es-CL": "Justificación",
+                "en-US": "Justification"
+              }
+            },
+            {
+              "command_id": "equation.number",
+              "kind": "small_button",
+              "row": 1,
+              "icon": "ic_equation_number",
+              "labels": {
+                "es-CL": "Numeración de ecuación",
+                "en-US": "Equation Number"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "chart_design",
+      "context_trigger": "chart",
+      "accent_role": "contextual_green",
+      "labels": {
+        "es-CL": "Diseño de gráfico",
+        "en-US": "Chart Design"
+      },
+      "groups": [
+        {
+          "id": "chart_layouts",
+          "labels": {
+            "es-CL": "Diseños de gráfico",
+            "en-US": "Chart Layouts"
+          },
+          "controls": [
+            {
+              "command_id": "chart.title",
+              "kind": "small_button",
+              "row": 0,
+              "icon": "ic_chart_title",
+              "labels": {
+                "es-CL": "Título del gráfico",
+                "en-US": "Chart Title"
+              }
+            },
+            {
+              "command_id": "chart.legend",
+              "kind": "small_button",
+              "row": 1,
+              "icon": "ic_chart_legend",
+              "labels": {
+                "es-CL": "Leyenda",
+                "en-US": "Legend"
+              }
+            },
+            {
+              "command_id": "chart.dataLabels",
+              "kind": "small_button",
+              "row": 0,
+              "icon": "ic_chart_dataLabels",
+              "labels": {
+                "es-CL": "Etiquetas de datos",
+                "en-US": "Data Labels"
+              }
+            }
+          ]
+        },
+        {
+          "id": "chart_data",
+          "labels": {
+            "es-CL": "Datos",
+            "en-US": "Data"
+          },
+          "controls": [
+            {
+              "command_id": "chart.editData",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_chart_editData",
+              "labels": {
+                "es-CL": "Modificar datos",
+                "en-US": "Edit Data"
+              }
+            }
+          ]
+        },
+        {
+          "id": "chart_type",
+          "labels": {
+            "es-CL": "Tipo",
+            "en-US": "Type"
+          },
+          "controls": [
+            {
+              "command_id": "chart.type",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_chart_type",
+              "labels": {
+                "es-CL": "Cambiar tipo de gráfico",
+                "en-US": "Change Chart Type"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "smartart_design",
+      "context_trigger": "smartArt",
+      "accent_role": "contextual_pink",
+      "labels": {
+        "es-CL": "Diseño de SmartArt",
+        "en-US": "SmartArt Design"
+      },
+      "groups": [
+        {
+          "id": "sa_create",
+          "labels": {
+            "es-CL": "Crear gráfico",
+            "en-US": "Create Graphic"
+          },
+          "controls": [
+            {
+              "command_id": "smartArt.addShape",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_smartArt_addShape",
+              "labels": {
+                "es-CL": "Agregar forma",
+                "en-US": "Add Shape"
+              }
+            },
+            {
+              "command_id": "smartArt.textPane",
+              "kind": "toggle",
+              "row": 0,
+              "icon": "ic_smartArt_textPane",
+              "labels": {
+                "es-CL": "Panel de texto",
+                "en-US": "Text Pane"
+              }
+            },
+            {
+              "command_id": "smartArt.promote",
+              "kind": "small_button",
+              "row": 1,
+              "icon": "ic_smartArt_promote",
+              "labels": {
+                "es-CL": "Promover",
+                "en-US": "Promote"
+              }
+            },
+            {
+              "command_id": "smartArt.demote",
+              "kind": "small_button",
+              "row": 0,
+              "icon": "ic_smartArt_demote",
+              "labels": {
+                "es-CL": "Disminuir nivel",
+                "en-US": "Demote"
+              }
+            }
+          ]
+        },
+        {
+          "id": "sa_layouts",
+          "labels": {
+            "es-CL": "Diseños",
+            "en-US": "Layouts"
+          },
+          "controls": [
+            {
+              "command_id": "smartArt.layout",
+              "kind": "style_gallery",
+              "row": "full",
+              "icon": "ic_smartArt_layout",
+              "labels": {
+                "es-CL": "Diseños",
+                "en-US": "Change Layout"
+              }
+            }
+          ]
+        },
+        {
+          "id": "sa_styles",
+          "labels": {
+            "es-CL": "Estilos SmartArt",
+            "en-US": "SmartArt Styles"
+          },
+          "controls": [
+            {
+              "command_id": "smartArt.colors",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_smartArt_colors",
+              "labels": {
+                "es-CL": "Cambiar colores",
+                "en-US": "Change Colors"
+              }
+            }
+          ]
+        },
+        {
+          "id": "sa_reset",
+          "labels": {
+            "es-CL": "Restablecer",
+            "en-US": "Reset"
+          },
+          "controls": [
+            {
+              "command_id": "smartArt.reset",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_smartArt_reset",
+              "labels": {
+                "es-CL": "Restablecer gráfico",
+                "en-US": "Reset Graphic"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "header_footer",
+      "context_trigger": "header_footer",
+      "accent_role": "contextual_teal",
+      "labels": {
+        "es-CL": "Encabezado y pie de página",
+        "en-US": "Header & Footer"
+      },
+      "groups": [
+        {
+          "id": "hf_nav",
+          "labels": {
+            "es-CL": "Navegación",
+            "en-US": "Navigation"
+          },
+          "controls": [
+            {
+              "command_id": "hf.previous",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_hf_previous",
+              "labels": {
+                "es-CL": "Anterior",
+                "en-US": "Previous Section"
+              }
+            },
+            {
+              "command_id": "hf.next",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_hf_next",
+              "labels": {
+                "es-CL": "Siguiente",
+                "en-US": "Next Section"
+              }
+            },
+            {
+              "command_id": "layout.linkToPrevious",
+              "kind": "toggle",
+              "row": 0,
+              "icon": "ic_layout_linkToPrevious",
+              "labels": {
+                "es-CL": "Vincular a la anterior",
+                "en-US": "Link to Previous"
+              }
+            }
+          ]
+        },
+        {
+          "id": "hf_options",
+          "labels": {
+            "es-CL": "Opciones",
+            "en-US": "Options"
+          },
+          "controls": [
+            {
+              "command_id": "layout.differentFirstPage",
+              "kind": "toggle",
+              "row": 0,
+              "icon": "ic_layout_differentFirstPage",
+              "labels": {
+                "es-CL": "Primera página diferente",
+                "en-US": "Different First Page"
+              }
+            },
+            {
+              "command_id": "layout.differentOddEven",
+              "kind": "toggle",
+              "row": 1,
+              "icon": "ic_layout_differentOddEven",
+              "labels": {
+                "es-CL": "Páginas pares e impares diferentes",
+                "en-US": "Different Odd & Even Pages"
+              }
+            }
+          ]
+        },
+        {
+          "id": "hf_position",
+          "labels": {
+            "es-CL": "Posición",
+            "en-US": "Position"
+          },
+          "controls": [
+            {
+              "command_id": "hf.position",
+              "kind": "spin_box",
+              "row": 0,
+              "icon": "ic_hf_position",
+              "labels": {
+                "es-CL": "Posición",
+                "en-US": "Header/Footer Position"
+              }
+            },
+            {
+              "command_id": "insert.closeHeader",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_insert_closeHeader",
+              "labels": {
+                "es-CL": "Cerrar encabezado y pie",
+                "en-US": "Close Header and Footer"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "outlining",
+      "context_trigger": "outline_view",
+      "accent_role": "contextual_blue",
+      "labels": {
+        "es-CL": "Esquema",
+        "en-US": "Outlining"
+      },
+      "groups": [
+        {
+          "id": "outline_tools",
+          "labels": {
+            "es-CL": "Herramientas de esquema",
+            "en-US": "Outline Tools"
+          },
+          "controls": [
+            {
+              "command_id": "outline.promoteToHeading1",
+              "kind": "small_button",
+              "row": 0,
+              "icon": "ic_outline_promoteToHeading1",
+              "labels": {
+                "es-CL": "Promote to Heading 1",
+                "en-US": "Promote to Heading 1"
+              }
+            },
+            {
+              "command_id": "outline.promote",
+              "kind": "small_button",
+              "row": 0,
+              "icon": "ic_outline_promote",
+              "labels": {
+                "es-CL": "Promover",
+                "en-US": "Promote"
+              }
+            },
+            {
+              "command_id": "outline.demote",
+              "kind": "small_button",
+              "row": 0,
+              "icon": "ic_outline_demote",
+              "labels": {
+                "es-CL": "Disminuir nivel",
+                "en-US": "Demote"
+              }
+            },
+            {
+              "command_id": "outline.moveUp",
+              "kind": "small_button",
+              "row": 1,
+              "icon": "ic_outline_moveUp",
+              "labels": {
+                "es-CL": "Subir",
+                "en-US": "Move Up"
+              }
+            },
+            {
+              "command_id": "outline.moveDown",
+              "kind": "small_button",
+              "row": 1,
+              "icon": "ic_outline_moveDown",
+              "labels": {
+                "es-CL": "Bajar",
+                "en-US": "Move Down"
+              }
+            },
+            {
+              "command_id": "outline.expand",
+              "kind": "small_button",
+              "row": 1,
+              "icon": "ic_outline_expand",
+              "labels": {
+                "es-CL": "Expandir",
+                "en-US": "Expand"
+              }
+            },
+            {
+              "command_id": "outline.collapse",
+              "kind": "small_button",
+              "row": 1,
+              "icon": "ic_outline_collapse",
+              "labels": {
+                "es-CL": "Contraer",
+                "en-US": "Collapse"
+              }
+            },
+            {
+              "command_id": "outline.showLevel",
+              "kind": "dropdown",
+              "row": 0,
+              "icon": "ic_outline_showLevel",
+              "labels": {
+                "es-CL": "Mostrar nivel",
+                "en-US": "Show Level"
+              }
+            },
+            {
+              "command_id": "outline.firstLineOnly",
+              "kind": "toggle",
+              "row": 1,
+              "icon": "ic_outline_firstLineOnly",
+              "labels": {
+                "es-CL": "Mostrar solo primera línea",
+                "en-US": "Show First Line Only"
+              }
+            },
+            {
+              "command_id": "outline.showFormatting",
+              "kind": "toggle",
+              "row": 1,
+              "icon": "ic_outline_showFormatting",
+              "labels": {
+                "es-CL": "Mostrar formato de texto",
+                "en-US": "Show Text Formatting"
+              }
+            }
+          ]
+        },
+        {
+          "id": "outline_close",
+          "labels": {
+            "es-CL": "Cerrar",
+            "en-US": "Close"
+          },
+          "controls": [
+            {
+              "command_id": "outline.close",
+              "kind": "large_button",
+              "row": "full",
+              "icon": "ic_outline_close",
+              "labels": {
+                "es-CL": "Cerrar vista Esquema",
+                "en-US": "Close Outline View"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "reading",
+      "context_trigger": "read_mode",
+      "accent_role": "contextual_blue",
+      "labels": {
+        "es-CL": "Lectura",
+        "en-US": "Reading"
+      },
+      "groups": [
+        {
+          "id": "read_layout",
+          "labels": {
+            "es-CL": "Diseño de lectura",
+            "en-US": "Reading Layout"
+          },
+          "controls": [
+            {
+              "command_id": "view.readColumnWidth",
+              "kind": "dropdown",
+              "row": 0,
+              "icon": "ic_view_readColumnWidth",
+              "labels": {
+                "es-CL": "Ancho de columna",
+                "en-US": "Reading Column Width"
+              }
+            },
+            {
+              "command_id": "view.readTextSize",
+              "kind": "dropdown",
+              "row": 0,
+              "icon": "ic_view_readTextSize",
+              "labels": {
+                "es-CL": "Tamaño de texto",
+                "en-US": "Reading Text Size"
+              }
+            },
+            {
+              "command_id": "view.readLineSpacing",
+              "kind": "dropdown",
+              "row": 1,
+              "icon": "ic_view_readLineSpacing",
+              "labels": {
+                "es-CL": "Espaciado entre líneas",
+                "en-US": "Reading Line Spacing"
+              }
+            },
+            {
+              "command_id": "view.readPageColor",
+              "kind": "color_picker",
+              "row": 1,
+              "icon": "ic_view_readPageColor",
+              "labels": {
+                "es-CL": "Color de página",
+                "en-US": "Reading Page Color"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "status_bar": {
+    "left": [
+      {
+        "command_id": "ui.pageIndicator",
+        "kind": "status_text",
+        "row": 0,
+        "icon": "ic_ui_pageIndicator",
+        "labels": {
+          "es-CL": "Página X de Y",
+          "en-US": "Page X of Y"
+        }
+      },
+      {
+        "command_id": "review.wordCount",
+        "kind": "small_button",
+        "row": 0,
+        "icon": "ic_review_wordCount",
+        "labels": {
+          "es-CL": "Contar palabras",
+          "en-US": "Word Count"
+        }
+      },
+      {
+        "command_id": "review.spelling",
+        "kind": "small_button",
+        "row": 0,
+        "icon": "ic_review_spelling",
+        "labels": {
+          "es-CL": "Ortografía y gramática",
+          "en-US": "Spelling & Grammar"
+        }
+      },
+      {
+        "command_id": "review.language",
+        "kind": "small_button",
+        "row": 0,
+        "icon": "ic_review_language",
+        "labels": {
+          "es-CL": "Idioma",
+          "en-US": "Language"
+        }
+      },
+      {
+        "command_id": "font.missing",
+        "kind": "small_button",
+        "row": 0,
+        "icon": "ic_font_missing",
+        "labels": {
+          "es-CL": "Fuentes faltantes",
+          "en-US": "Missing Fonts"
+        }
+      }
+    ],
+    "right": [
+      {
+        "command_id": "view.focus",
+        "kind": "small_button",
+        "row": 0,
+        "icon": "ic_view_focus",
+        "labels": {
+          "es-CL": "Concentración",
+          "en-US": "Focus"
+        }
+      },
+      {
+        "command_id": "view.readMode",
+        "kind": "small_button",
+        "row": 0,
+        "icon": "ic_view_readMode",
+        "labels": {
+          "es-CL": "Modo lectura",
+          "en-US": "Read Mode"
+        }
+      },
+      {
+        "command_id": "view.printLayout",
+        "kind": "small_button",
+        "row": 0,
+        "icon": "ic_view_printLayout",
+        "labels": {
+          "es-CL": "Diseño de impresión",
+          "en-US": "Print Layout"
+        }
+      },
+      {
+        "command_id": "view.webLayout",
+        "kind": "small_button",
+        "row": 0,
+        "icon": "ic_view_webLayout",
+        "labels": {
+          "es-CL": "Diseño web",
+          "en-US": "Web Layout"
+        }
+      },
+      {
+        "command_id": "view.zoomOut",
+        "kind": "small_button",
+        "row": 0,
+        "icon": "ic_view_zoomOut",
+        "labels": {
+          "es-CL": "Alejar",
+          "en-US": "Zoom Out"
+        }
+      },
+      {
+        "command_id": "view.zoom",
+        "kind": "status_slider",
+        "row": 0,
+        "icon": "ic_view_zoom",
+        "labels": {
+          "es-CL": "Zoom",
+          "en-US": "Zoom"
+        }
+      },
+      {
+        "command_id": "view.zoomIn",
+        "kind": "small_button",
+        "row": 0,
+        "icon": "ic_view_zoomIn",
+        "labels": {
+          "es-CL": "Acercar",
+          "en-US": "Zoom In"
+        }
+      }
+    ]
+  },
+  "smartphone_quick_bar": {
+    "pinned_actions": [
+      {
+        "command_id": "format.bold",
+        "kind": "toggle",
+        "row": 0,
+        "icon": "ic_format_bold",
+        "labels": {
+          "es-CL": "Negrita",
+          "en-US": "Bold"
+        }
+      },
+      {
+        "command_id": "format.italic",
+        "kind": "toggle",
+        "row": 0,
+        "icon": "ic_format_italic",
+        "labels": {
+          "es-CL": "Cursiva",
+          "en-US": "Italic"
+        }
+      },
+      {
+        "command_id": "format.underline",
+        "kind": "toggle",
+        "row": 0,
+        "icon": "ic_format_underline",
+        "labels": {
+          "es-CL": "Subrayado",
+          "en-US": "Underline"
+        }
+      },
+      {
+        "command_id": "format.color",
+        "kind": "color_picker",
+        "row": 0,
+        "icon": "ic_format_color",
+        "labels": {
+          "es-CL": "Color de fuente",
+          "en-US": "Font Color"
+        }
+      },
+      {
+        "command_id": "para.bullets",
+        "kind": "toggle",
+        "row": 0,
+        "icon": "ic_para_bullets",
+        "labels": {
+          "es-CL": "Viñetas",
+          "en-US": "Bullets"
+        }
+      },
+      {
+        "command_id": "para.alignLeft",
+        "kind": "dropdown",
+        "row": 0,
+        "icon": "ic_para_alignLeft",
+        "labels": {
+          "es-CL": "Alinear a la izquierda",
+          "en-US": "Align Left"
+        }
+      }
+    ],
+    "shell_controls": [
+      {
+        "command_id": "ui.openRibbonSheet",
+        "kind": "small_button",
+        "row": 0,
+        "icon": "ic_ui_openRibbonSheet",
+        "labels": {
+          "es-CL": "Cinta de opciones",
+          "en-US": "Ribbon"
+        }
+      },
+      {
+        "command_id": "ui.toggleReflow",
+        "kind": "toggle",
+        "row": 0,
+        "icon": "ic_ui_toggleReflow",
+        "labels": {
+          "es-CL": "Vista móvil",
+          "en-US": "Mobile View"
+        }
+      }
+    ]
+  },
+  "headless_or_keybinding_commands": [
+    {
+      "command_id": "document.inspect",
+      "category": "Agents",
+      "label": "Inspect Document"
+    },
+    {
+      "command_id": "document.layout",
+      "category": "Agents",
+      "label": "Layout Summary"
+    },
+    {
+      "command_id": "document.paragraph",
+      "category": "Agents",
+      "label": "Paragraph Details"
+    },
+    {
+      "command_id": "document.selection",
+      "category": "Agents",
+      "label": "Selection"
+    },
+    {
+      "command_id": "document.setText",
+      "category": "Agents",
+      "label": "Replace Document Text"
+    },
+    {
+      "command_id": "document.text",
+      "category": "Agents",
+      "label": "Document Text"
+    },
+    {
+      "command_id": "file.closeDocument",
+      "category": "Agents",
+      "label": "Close Document"
+    },
+    {
+      "command_id": "design.scaleFontSizes",
+      "category": "Design › Document Formatting",
+      "label": "Scale Font Sizes"
+    },
+    {
+      "command_id": "design.themes",
+      "category": "Design › Document Formatting",
+      "label": "Theme List"
+    },
+    {
+      "command_id": "draw.removePen",
+      "category": "Draw › Pens",
+      "label": "Remove Pen"
+    },
+    {
+      "command_id": "draw.stroke",
+      "category": "Draw › Pens",
+      "label": "Draw Ink"
+    },
+    {
+      "command_id": "draw.erase",
+      "category": "Draw › Tools",
+      "label": "Erase Ink"
+    },
+    {
+      "command_id": "draw.lassoColor",
+      "category": "Draw › Tools",
+      "label": "Recolor Selected Ink"
+    },
+    {
+      "command_id": "draw.lassoDelete",
+      "category": "Draw › Tools",
+      "label": "Delete Selected Ink"
+    },
+    {
+      "command_id": "draw.lassoMove",
+      "category": "Draw › Tools",
+      "label": "Move Selected Ink"
+    },
+    {
+      "command_id": "edit.insertSpike",
+      "category": "Editing",
+      "label": "Insert Spike"
+    },
+    {
+      "command_id": "edit.spike",
+      "category": "Editing",
+      "label": "Spike"
+    },
+    {
+      "command_id": "text.backTab",
+      "category": "Editing",
+      "label": "Shift+Tab"
+    },
+    {
+      "command_id": "text.backspace",
+      "category": "Editing",
+      "label": "Backspace"
+    },
+    {
+      "command_id": "text.delete",
+      "category": "Editing",
+      "label": "Delete"
+    },
+    {
+      "command_id": "text.deleteSentenceBack",
+      "category": "Editing",
+      "label": "Delete Previous Sentence"
+    },
+    {
+      "command_id": "text.deleteWordBack",
+      "category": "Editing",
+      "label": "Delete Previous Word"
+    },
+    {
+      "command_id": "text.deleteWordForward",
+      "category": "Editing",
+      "label": "Delete Next Word"
+    },
+    {
+      "command_id": "text.insert",
+      "category": "Editing",
+      "label": "Type Text"
+    },
+    {
+      "command_id": "text.insertTab",
+      "category": "Editing",
+      "label": "Tab Character"
+    },
+    {
+      "command_id": "text.lineBreak",
+      "category": "Editing",
+      "label": "Line Break"
+    },
+    {
+      "command_id": "text.newParagraph",
+      "category": "Editing",
+      "label": "New Paragraph"
+    },
+    {
+      "command_id": "text.tab",
+      "category": "Editing",
+      "label": "Tab"
+    },
+    {
+      "command_id": "text.toggleUnicode",
+      "category": "Editing",
+      "label": "Toggle Unicode Character"
+    },
+    {
+      "command_id": "text.typeCode",
+      "category": "Editing",
+      "label": "Type Character Code"
+    },
+    {
+      "command_id": "select.column",
+      "category": "Editing › Selection",
+      "label": "Column Selection"
+    },
+    {
+      "command_id": "select.extend",
+      "category": "Editing › Selection",
+      "label": "Extend Selection"
+    },
+    {
+      "command_id": "equation.backspace",
+      "category": "Equation",
+      "label": "Delete Back in Equation"
+    },
+    {
+      "command_id": "equation.delete",
+      "category": "Equation",
+      "label": "Delete in Equation"
+    },
+    {
+      "command_id": "equation.deleteSurrounding",
+      "category": "Equation",
+      "label": "Delete Around Caret in Equation"
+    },
+    {
+      "command_id": "equation.edit",
+      "category": "Equation",
+      "label": "Edit Equation"
+    },
+    {
+      "command_id": "equation.enter",
+      "category": "Equation",
+      "label": "Enter in Equation"
+    },
+    {
+      "command_id": "equation.get",
+      "category": "Equation",
+      "label": "Equation Info"
+    },
+    {
+      "command_id": "equation.move",
+      "category": "Equation",
+      "label": "Move in Equation"
+    },
+    {
+      "command_id": "equation.set",
+      "category": "Equation",
+      "label": "Set Equation"
+    },
+    {
+      "command_id": "equation.structure",
+      "category": "Equation",
+      "label": "Change Structure"
+    },
+    {
+      "command_id": "equation.structureActions",
+      "category": "Equation",
+      "label": "Structure Actions"
+    },
+    {
+      "command_id": "equation.type",
+      "category": "Equation",
+      "label": "Type in Equation"
+    },
+    {
+      "command_id": "text.overtype",
+      "category": "File › Options › Advanced",
+      "label": "Overtype"
+    },
+    {
+      "command_id": "view.numeral",
+      "category": "File › Options › Advanced",
+      "label": "Numerals"
+    },
+    {
+      "command_id": "proof.installPack",
+      "category": "File › Options › Language",
+      "label": "Install Language Pack"
+    },
+    {
+      "command_id": "proof.removePack",
+      "category": "File › Options › Language",
+      "label": "Remove Language Pack"
+    },
+    {
+      "command_id": "file.privacy",
+      "category": "File › Options › Save",
+      "label": "Privacy Settings"
+    },
+    {
+      "command_id": "file.privacyOptions",
+      "category": "File › Options › Save",
+      "label": "Privacy Options"
+    },
+    {
+      "command_id": "insert.removeEmptyHeaders",
+      "category": "Header & Footer",
+      "label": "Close Header and Footer"
+    },
+    {
+      "command_id": "edit.copyFormat",
+      "category": "Home › Clipboard",
+      "label": "Copy Formatting"
+    },
+    {
+      "command_id": "edit.pasteFormat",
+      "category": "Home › Clipboard",
+      "label": "Paste Formatting"
+    },
+    {
+      "command_id": "edit.clearClipboard",
+      "category": "Home › Clipboard › Clipboard Pane",
+      "label": "Clear All"
+    },
+    {
+      "command_id": "edit.clipboardItems",
+      "category": "Home › Clipboard › Clipboard Pane",
+      "label": "Clipboard Items"
+    },
+    {
+      "command_id": "edit.deleteClipboardItem",
+      "category": "Home › Clipboard › Clipboard Pane",
+      "label": "Delete Clipboard Item"
+    },
+    {
+      "command_id": "edit.pasteAllClipboard",
+      "category": "Home › Clipboard › Clipboard Pane",
+      "label": "Paste All"
+    },
+    {
+      "command_id": "edit.pasteClipboardItem",
+      "category": "Home › Clipboard › Clipboard Pane",
+      "label": "Paste Clipboard Item"
+    },
+    {
+      "command_id": "edit.findReplace",
+      "category": "Home › Editing",
+      "label": "Find and Replace"
+    },
+    {
+      "command_id": "edit.findNext",
+      "category": "Home › Editing › Find",
+      "label": "Find Next"
+    },
+    {
+      "command_id": "edit.findPrevious",
+      "category": "Home › Editing › Find",
+      "label": "Find Previous"
+    },
+    {
+      "command_id": "edit.replaceAll",
+      "category": "Home › Editing › Replace",
+      "label": "Replace All"
+    },
+    {
+      "command_id": "select.addObject",
+      "category": "Home › Editing › Select",
+      "label": "Add Object to Selection"
+    },
+    {
+      "command_id": "font.list",
+      "category": "Home › Font",
+      "label": "Added Fonts"
+    },
+    {
+      "command_id": "font.remove",
+      "category": "Home › Font",
+      "label": "Remove Added Font"
+    },
+    {
+      "command_id": "format.border",
+      "category": "Home › Font",
+      "label": "Character Border"
+    },
+    {
+      "command_id": "format.enclose",
+      "category": "Home › Font",
+      "label": "Enclose Characters"
+    },
+    {
+      "command_id": "format.growFont1",
+      "category": "Home › Font",
+      "label": "Grow Font 1 Point"
+    },
+    {
+      "command_id": "format.phonetic",
+      "category": "Home › Font",
+      "label": "Phonetic Guide"
+    },
+    {
+      "command_id": "format.resetChar",
+      "category": "Home › Font",
+      "label": "Reset Character Formatting"
+    },
+    {
+      "command_id": "format.shading",
+      "category": "Home › Font",
+      "label": "Character Shading"
+    },
+    {
+      "command_id": "format.shrinkFont1",
+      "category": "Home › Font",
+      "label": "Shrink Font 1 Point"
+    },
+    {
+      "command_id": "format.state",
+      "category": "Home › Font",
+      "label": "Formatting at Selection"
+    },
+    {
+      "command_id": "format.allCaps",
+      "category": "Home › Font › Font",
+      "label": "All Caps"
+    },
+    {
+      "command_id": "format.doubleStrikethrough",
+      "category": "Home › Font › Font",
+      "label": "Double Strikethrough"
+    },
+    {
+      "command_id": "format.emboss",
+      "category": "Home › Font › Font",
+      "label": "Emboss"
+    },
+    {
+      "command_id": "format.emphasisMark",
+      "category": "Home › Font › Font",
+      "label": "Emphasis Mark"
+    },
+    {
+      "command_id": "format.engrave",
+      "category": "Home › Font › Font",
+      "label": "Engrave"
+    },
+    {
+      "command_id": "format.hidden",
+      "category": "Home › Font › Font",
+      "label": "Hidden"
+    },
+    {
+      "command_id": "format.set",
+      "category": "Home › Font › Font",
+      "label": "Set Character Formatting"
+    },
+    {
+      "command_id": "format.smallCaps",
+      "category": "Home › Font › Font",
+      "label": "Small Caps"
+    },
+    {
+      "command_id": "format.position",
+      "category": "Home › Font › Font › Advanced",
+      "label": "Character Position"
+    },
+    {
+      "command_id": "format.scale",
+      "category": "Home › Font › Font › Advanced",
+      "label": "Character Scale"
+    },
+    {
+      "command_id": "format.spacing",
+      "category": "Home › Font › Font › Advanced",
+      "label": "Character Spacing"
+    },
+    {
+      "command_id": "para.align",
+      "category": "Home › Paragraph",
+      "label": "Alignment"
+    },
+    {
+      "command_id": "para.demote",
+      "category": "Home › Paragraph",
+      "label": "Demote"
+    },
+    {
+      "command_id": "para.distribute",
+      "category": "Home › Paragraph",
+      "label": "Distributed"
+    },
+    {
+      "command_id": "para.ltr",
+      "category": "Home › Paragraph",
+      "label": "Left-to-Right Text Direction"
+    },
+    {
+      "command_id": "para.moveDown",
+      "category": "Home › Paragraph",
+      "label": "Move Paragraph Down"
+    },
+    {
+      "command_id": "para.moveUp",
+      "category": "Home › Paragraph",
+      "label": "Move Paragraph Up"
+    },
+    {
+      "command_id": "para.promote",
+      "category": "Home › Paragraph",
+      "label": "Promote"
+    },
+    {
+      "command_id": "para.reset",
+      "category": "Home › Paragraph",
+      "label": "Reset Paragraph Formatting"
+    },
+    {
+      "command_id": "para.rtl",
+      "category": "Home › Paragraph",
+      "label": "Right-to-Left Text Direction"
+    },
+    {
+      "command_id": "para.asianTypography",
+      "category": "Home › Paragraph › Asian Typography",
+      "label": "Asian Typography"
+    },
+    {
+      "command_id": "para.keepLines",
+      "category": "Home › Paragraph › Line and Page Breaks",
+      "label": "Keep Lines Together"
+    },
+    {
+      "command_id": "para.keepNext",
+      "category": "Home › Paragraph › Line and Page Breaks",
+      "label": "Keep with Next"
+    },
+    {
+      "command_id": "para.pageBreakBefore",
+      "category": "Home › Paragraph › Line and Page Breaks",
+      "label": "Page Break Before"
+    },
+    {
+      "command_id": "para.widowControl",
+      "category": "Home › Paragraph › Line and Page Breaks",
+      "label": "Widow/Orphan Control"
+    },
+    {
+      "command_id": "list.get",
+      "category": "Home › Paragraph › Multilevel List",
+      "label": "List Definition"
+    },
+    {
+      "command_id": "para.hangingIndent",
+      "category": "Home › Paragraph › Paragraph",
+      "label": "Hanging Indent"
+    },
+    {
+      "command_id": "para.outlineLevel",
+      "category": "Home › Paragraph › Paragraph",
+      "label": "Outline Level"
+    },
+    {
+      "command_id": "para.removeHanging",
+      "category": "Home › Paragraph › Paragraph",
+      "label": "Reduce Hanging Indent"
+    },
+    {
+      "command_id": "para.set",
+      "category": "Home › Paragraph › Paragraph",
+      "label": "Set Paragraph Formatting"
+    },
+    {
+      "command_id": "para.tabs",
+      "category": "Home › Paragraph › Paragraph",
+      "label": "Tabs"
+    },
+    {
+      "command_id": "para.blankBetween",
+      "category": "Home › Paragraph › Paragraph Tools",
+      "label": "Insert Blank Paragraphs Between"
+    },
+    {
+      "command_id": "para.convertBreaks",
+      "category": "Home › Paragraph › Paragraph Tools",
+      "label": "Convert Line Breaks to Paragraphs"
+    },
+    {
+      "command_id": "para.indentToSpaces",
+      "category": "Home › Paragraph › Paragraph Tools",
+      "label": "Convert Indents to Spaces"
+    },
+    {
+      "command_id": "para.removeBlank",
+      "category": "Home › Paragraph › Paragraph Tools",
+      "label": "Delete Blank Paragraphs"
+    },
+    {
+      "command_id": "para.removeExtraSpaces",
+      "category": "Home › Paragraph › Paragraph Tools",
+      "label": "Remove Extra Spaces"
+    },
+    {
+      "command_id": "para.removeLineBreaks",
+      "category": "Home › Paragraph › Paragraph Tools",
+      "label": "Remove Line Breaks"
+    },
+    {
+      "command_id": "para.separateParagraphs",
+      "category": "Home › Paragraph › Paragraph Tools",
+      "label": "Separate Paragraphs"
+    },
+    {
+      "command_id": "para.spacesToIndent",
+      "category": "Home › Paragraph › Paragraph Tools",
+      "label": "Convert Spaces to Indentation"
+    },
+    {
+      "command_id": "para.trimLeadingSpaces",
+      "category": "Home › Paragraph › Paragraph Tools",
+      "label": "Remove Leading Spaces"
+    },
+    {
+      "command_id": "format.charStyle",
+      "category": "Home › Styles",
+      "label": "Apply Character Style"
+    },
+    {
+      "command_id": "para.style",
+      "category": "Home › Styles",
+      "label": "Apply Style"
+    },
+    {
+      "command_id": "styles.addToGallery",
+      "category": "Home › Styles",
+      "label": "Add to Style Gallery"
+    },
+    {
+      "command_id": "styles.apply",
+      "category": "Home › Styles",
+      "label": "Apply Styles"
+    },
+    {
+      "command_id": "styles.delete",
+      "category": "Home › Styles",
+      "label": "Delete Style"
+    },
+    {
+      "command_id": "styles.setVisibility",
+      "category": "Home › Styles",
+      "label": "Show or Hide Style"
+    },
+    {
+      "command_id": "styles.updateToMatch",
+      "category": "Home › Styles",
+      "label": "Update Style to Match Selection"
+    },
+    {
+      "command_id": "view.stylesPane",
+      "category": "Home › Styles",
+      "label": "Styles Pane"
+    },
+    {
+      "command_id": "view.stylesPaneDock",
+      "category": "Home › Styles",
+      "label": "Styles Pane Position"
+    },
+    {
+      "command_id": "styles.inspect",
+      "category": "Home › Styles › Style Inspector",
+      "label": "Inspect Styles at Selection"
+    },
+    {
+      "command_id": "styles.inspectorClear",
+      "category": "Home › Styles › Style Inspector",
+      "label": "Clear Formatting Level"
+    },
+    {
+      "command_id": "insert.createFooter",
+      "category": "Insert › Header & Footer",
+      "label": "Footer"
+    },
+    {
+      "command_id": "insert.createHeader",
+      "category": "Insert › Header & Footer",
+      "label": "Header"
+    },
+    {
+      "command_id": "insert.deleteBookmark",
+      "category": "Insert › Links",
+      "label": "Delete Bookmark"
+    },
+    {
+      "command_id": "link.targets",
+      "category": "Insert › Links",
+      "label": "Link"
+    },
+    {
+      "command_id": "text.pageBreak",
+      "category": "Insert › Pages",
+      "label": "Page Break"
+    },
+    {
+      "command_id": "text.ellipsis",
+      "category": "Insert › Symbols",
+      "label": "Ellipsis"
+    },
+    {
+      "command_id": "text.nbHyphen",
+      "category": "Insert › Symbols",
+      "label": "Nonbreaking Hyphen"
+    },
+    {
+      "command_id": "text.optionalHyphen",
+      "category": "Insert › Symbols",
+      "label": "Optional Hyphen"
+    },
+    {
+      "command_id": "fields.lock",
+      "category": "Insert › Text › Quick Parts",
+      "label": "Lock Fields"
+    },
+    {
+      "command_id": "fields.next",
+      "category": "Insert › Text › Quick Parts",
+      "label": "Next Field"
+    },
+    {
+      "command_id": "fields.previous",
+      "category": "Insert › Text › Quick Parts",
+      "label": "Previous Field"
+    },
+    {
+      "command_id": "fields.selected",
+      "category": "Insert › Text › Quick Parts",
+      "label": "Selected Fields"
+    },
+    {
+      "command_id": "fields.setCode",
+      "category": "Insert › Text › Quick Parts",
+      "label": "Edit Field Code"
+    },
+    {
+      "command_id": "fields.toggleCode",
+      "category": "Insert › Text › Quick Parts",
+      "label": "Toggle Field Codes"
+    },
+    {
+      "command_id": "fields.unlink",
+      "category": "Insert › Text › Quick Parts",
+      "label": "Unlink Fields"
+    },
+    {
+      "command_id": "fields.unlock",
+      "category": "Insert › Text › Quick Parts",
+      "label": "Unlock Fields"
+    },
+    {
+      "command_id": "insert.dateField",
+      "category": "Insert › Text › Quick Parts",
+      "label": "Insert Date Field"
+    },
+    {
+      "command_id": "insert.pageField",
+      "category": "Insert › Text › Quick Parts",
+      "label": "Insert Page Field"
+    },
+    {
+      "command_id": "insert.timeField",
+      "category": "Insert › Text › Quick Parts",
+      "label": "Insert Time Field"
+    },
+    {
+      "command_id": "arrange.bounds",
+      "category": "Layout › Arrange",
+      "label": "Move or Resize"
+    },
+    {
+      "command_id": "arrange.copyTo",
+      "category": "Layout › Arrange",
+      "label": "Copy to"
+    },
+    {
+      "command_id": "arrange.nudge",
+      "category": "Layout › Arrange",
+      "label": "Nudge"
+    },
+    {
+      "command_id": "arrange.rotation",
+      "category": "Layout › Arrange",
+      "label": "Rotation"
+    },
+    {
+      "command_id": "arrange.ungroup",
+      "category": "Layout › Arrange",
+      "label": "Ungroup"
+    },
+    {
+      "command_id": "arrange.wrapText",
+      "category": "Layout › Arrange",
+      "label": "Wrap Text Sides"
+    },
+    {
+      "command_id": "arrange.moveWithText",
+      "category": "Layout › Arrange › Wrap Text",
+      "label": "Move with Text"
+    },
+    {
+      "command_id": "text.columnBreak",
+      "category": "Layout › Breaks",
+      "label": "Column Break"
+    },
+    {
+      "command_id": "layout.section",
+      "category": "Layout › Page Setup",
+      "label": "Section Properties"
+    },
+    {
+      "command_id": "layout.sectionRtl",
+      "category": "Layout › Page Setup",
+      "label": "Right-to-Left Section"
+    },
+    {
+      "command_id": "layout.textDirection",
+      "category": "Layout › Page Setup",
+      "label": "Text Direction"
+    },
+    {
+      "command_id": "layout.documentGrid",
+      "category": "Layout › Page Setup › Document Grid",
+      "label": "Document Grid"
+    },
+    {
+      "command_id": "layout.manualHyphenation",
+      "category": "Layout › Page Setup › Hyphenation",
+      "label": "Manual Hyphenation"
+    },
+    {
+      "command_id": "layout.verticalAlign",
+      "category": "Layout › Page Setup › Layout",
+      "label": "Vertical Alignment"
+    },
+    {
+      "command_id": "mailings.filterRecipients",
+      "category": "Mailings › Start Mail Merge › Edit Recipient List",
+      "label": "Filter Recipients"
+    },
+    {
+      "command_id": "mailings.sortRecipients",
+      "category": "Mailings › Start Mail Merge › Edit Recipient List",
+      "label": "Sort Recipients"
+    },
+    {
+      "command_id": "caret.docEnd",
+      "category": "Navigation",
+      "label": "Document End"
+    },
+    {
+      "command_id": "caret.docStart",
+      "category": "Navigation",
+      "label": "Document Start"
+    },
+    {
+      "command_id": "caret.down",
+      "category": "Navigation",
+      "label": "Down"
+    },
+    {
+      "command_id": "caret.end",
+      "category": "Navigation",
+      "label": "Line End"
+    },
+    {
+      "command_id": "caret.home",
+      "category": "Navigation",
+      "label": "Line Start"
+    },
+    {
+      "command_id": "caret.left",
+      "category": "Navigation",
+      "label": "Left"
+    },
+    {
+      "command_id": "caret.pageDown",
+      "category": "Navigation",
+      "label": "Page Down"
+    },
+    {
+      "command_id": "caret.pageUp",
+      "category": "Navigation",
+      "label": "Page Up"
+    },
+    {
+      "command_id": "caret.paraDown",
+      "category": "Navigation",
+      "label": "Paragraph Down"
+    },
+    {
+      "command_id": "caret.paraUp",
+      "category": "Navigation",
+      "label": "Paragraph Up"
+    },
+    {
+      "command_id": "caret.right",
+      "category": "Navigation",
+      "label": "Right"
+    },
+    {
+      "command_id": "caret.set",
+      "category": "Navigation",
+      "label": "Set Caret"
+    },
+    {
+      "command_id": "caret.up",
+      "category": "Navigation",
+      "label": "Up"
+    },
+    {
+      "command_id": "caret.wordLeft",
+      "category": "Navigation",
+      "label": "Word Left"
+    },
+    {
+      "command_id": "caret.wordRight",
+      "category": "Navigation",
+      "label": "Word Right"
+    },
+    {
+      "command_id": "edit.goBack",
+      "category": "Navigation",
+      "label": "Go Back"
+    },
+    {
+      "command_id": "select.collapse",
+      "category": "Navigation",
+      "label": "Collapse Selection"
+    },
+    {
+      "command_id": "select.dragUnit",
+      "category": "Navigation",
+      "label": "Extend Selection by Units"
+    },
+    {
+      "command_id": "select.line",
+      "category": "Navigation",
+      "label": "Select Line"
+    },
+    {
+      "command_id": "select.paragraph",
+      "category": "Navigation",
+      "label": "Select Paragraph"
+    },
+    {
+      "command_id": "select.range",
+      "category": "Navigation",
+      "label": "Select Range"
+    },
+    {
+      "command_id": "select.sentence",
+      "category": "Navigation",
+      "label": "Select Sentence"
+    },
+    {
+      "command_id": "select.text",
+      "category": "Navigation",
+      "label": "Select Text"
+    },
+    {
+      "command_id": "select.word",
+      "category": "Navigation",
+      "label": "Select Word"
+    },
+    {
+      "command_id": "outline.state",
+      "category": "Outlining",
+      "label": "Outline State"
+    },
+    {
+      "command_id": "outline.demoteToBody",
+      "category": "Outlining › Outline Tools",
+      "label": "Demote to Body Text"
+    },
+    {
+      "command_id": "outline.level",
+      "category": "Outlining › Outline Tools",
+      "label": "Outline Level"
+    },
+    {
+      "command_id": "outline.selectSubtree",
+      "category": "Outlining › Outline Tools",
+      "label": "Select Heading and Content"
+    },
+    {
+      "command_id": "outline.showAll",
+      "category": "Outlining › Outline Tools",
+      "label": "Show All Levels"
+    },
+    {
+      "command_id": "outline.showLevel1",
+      "category": "Outlining › Outline Tools",
+      "label": "Show Level 1"
+    },
+    {
+      "command_id": "outline.showLevel2",
+      "category": "Outlining › Outline Tools",
+      "label": "Show Level 2"
+    },
+    {
+      "command_id": "outline.showLevel3",
+      "category": "Outlining › Outline Tools",
+      "label": "Show Level 3"
+    },
+    {
+      "command_id": "outline.showLevel4",
+      "category": "Outlining › Outline Tools",
+      "label": "Show Level 4"
+    },
+    {
+      "command_id": "outline.showLevel5",
+      "category": "Outlining › Outline Tools",
+      "label": "Show Level 5"
+    },
+    {
+      "command_id": "outline.showLevel6",
+      "category": "Outlining › Outline Tools",
+      "label": "Show Level 6"
+    },
+    {
+      "command_id": "outline.showLevel7",
+      "category": "Outlining › Outline Tools",
+      "label": "Show Level 7"
+    },
+    {
+      "command_id": "outline.showLevel8",
+      "category": "Outlining › Outline Tools",
+      "label": "Show Level 8"
+    },
+    {
+      "command_id": "outline.showLevel9",
+      "category": "Outlining › Outline Tools",
+      "label": "Show Level 9"
+    },
+    {
+      "command_id": "outline.toggle",
+      "category": "Outlining › Outline Tools",
+      "label": "Expand or Collapse Heading"
+    },
+    {
+      "command_id": "picture.iconColor",
+      "category": "Picture Format › Adjust",
+      "label": "Icon Color"
+    },
+    {
+      "command_id": "references.updateFields",
+      "category": "References",
+      "label": "Update Field"
+    },
+    {
+      "command_id": "references.convertNotes",
+      "category": "References › Footnotes",
+      "label": "Convert Notes"
+    },
+    {
+      "command_id": "references.removeToc",
+      "category": "References › Table of Contents",
+      "label": "Remove Table of Contents"
+    },
+    {
+      "command_id": "view.accessibilityPane",
+      "category": "Review › Accessibility",
+      "label": "Accessibility Pane"
+    },
+    {
+      "command_id": "view.altTextPane",
+      "category": "Review › Accessibility",
+      "label": "Alt Text Pane"
+    },
+    {
+      "command_id": "review.editComment",
+      "category": "Review › Comments",
+      "label": "Edit Comment"
+    },
+    {
+      "command_id": "review.reply",
+      "category": "Review › Comments",
+      "label": "Reply"
+    },
+    {
+      "command_id": "review.addToDictionary",
+      "category": "Review › Proofing",
+      "label": "Add to Dictionary"
+    },
+    {
+      "command_id": "review.applySuggestion",
+      "category": "Review › Proofing",
+      "label": "Change"
+    },
+    {
+      "command_id": "review.ignoreAll",
+      "category": "Review › Proofing",
+      "label": "Ignore All"
+    },
+    {
+      "command_id": "review.issues",
+      "category": "Review › Proofing",
+      "label": "Proofing Issues"
+    },
+    {
+      "command_id": "review.suggestions",
+      "category": "Review › Proofing",
+      "label": "Spelling Suggestions"
+    },
+    {
+      "command_id": "readAloud.skipCitations",
+      "category": "Review › Speech",
+      "label": "Skip Citations and Bibliography"
+    },
+    {
+      "command_id": "readAloud.speed",
+      "category": "Review › Speech",
+      "label": "Reading Speed"
+    },
+    {
+      "command_id": "readAloud.status",
+      "category": "Review › Speech",
+      "label": "Read Aloud Status"
+    },
+    {
+      "command_id": "canvas.expand",
+      "category": "Shape Format › Drawing Canvas",
+      "label": "Expand"
+    },
+    {
+      "command_id": "canvas.fit",
+      "category": "Shape Format › Drawing Canvas",
+      "label": "Fit"
+    },
+    {
+      "command_id": "canvas.member",
+      "category": "Shape Format › Drawing Canvas",
+      "label": "Canvas Member"
+    },
+    {
+      "command_id": "canvas.scale",
+      "category": "Shape Format › Drawing Canvas",
+      "label": "Scale Drawing"
+    },
+    {
+      "command_id": "select.member",
+      "category": "Shape Format › Drawing Canvas",
+      "label": "Select Canvas Member"
+    },
+    {
+      "command_id": "shape.breakLink",
+      "category": "Shape Format › Text",
+      "label": "Break Link"
+    },
+    {
+      "command_id": "smartArt.items",
+      "category": "SmartArt Design › Create Graphic",
+      "label": "Edit Items"
+    },
+    {
+      "command_id": "smartArt.itemColor",
+      "category": "SmartArt Design › SmartArt Styles",
+      "label": "Item Color"
+    },
+    {
+      "command_id": "table.fitColumn",
+      "category": "Table Layout › Cell Size",
+      "label": "AutoFit Column by Double-Clicking"
+    },
+    {
+      "command_id": "table.resizeDrag",
+      "category": "Table Layout › Cell Size",
+      "label": "Resize Table by Dragging"
+    },
+    {
+      "command_id": "table.insertAt",
+      "category": "Table Layout › Rows & Columns",
+      "label": "Insert Row or Column by Clicking"
+    },
+    {
+      "command_id": "table.moveDrag",
+      "category": "Table Layout › Table",
+      "label": "Move Table by Dragging"
+    },
+    {
+      "command_id": "table.rtl",
+      "category": "Table Layout › Table",
+      "label": "Right-to-Left Table"
+    },
+    {
+      "command_id": "table.altText",
+      "category": "Table Layout › Table › Properties",
+      "label": "Alt Text"
+    },
+    {
+      "command_id": "table.selectAt",
+      "category": "Table Layout › Table › Select",
+      "label": "Select Table Cells by Clicking"
+    },
+    {
+      "command_id": "view.state",
+      "category": "View",
+      "label": "View State"
+    },
+    {
+      "command_id": "view.paperColor",
+      "category": "View › Display",
+      "label": "Screen Paper Color"
+    },
+    {
+      "command_id": "view.fullScreenView",
+      "category": "View › Immersive",
+      "label": "Full Screen View"
+    },
+    {
+      "command_id": "view.fieldCodes",
+      "category": "View › Show",
+      "label": "Field Codes"
+    },
+    {
+      "command_id": "view.hideWhiteSpace",
+      "category": "View › Show",
+      "label": "Hide White Space"
+    },
+    {
+      "command_id": "tools.templates",
+      "category": "View › Templates",
+      "label": "Templates and Add-ins"
+    },
+    {
+      "command_id": "styles.copyFrom",
+      "category": "View › Templates › Organizer",
+      "label": "Copy Styles"
+    },
+    {
+      "command_id": "styles.organizer",
+      "category": "View › Templates › Organizer",
+      "label": "Organizer"
+    },
+    {
+      "command_id": "styles.rename",
+      "category": "View › Templates › Organizer",
+      "label": "Rename Style"
+    },
+    {
+      "command_id": "view.fullScreen",
+      "category": "View › Window",
+      "label": "Full Screen"
+    },
+    {
+      "command_id": "view.switchWindows",
+      "category": "View › Window",
+      "label": "Switch Windows"
+    },
+    {
+      "command_id": "view.syncScroll",
+      "category": "View › Window",
+      "label": "Synchronous Scrolling"
+    },
+    {
+      "command_id": "caret.pastCitation",
+      "category": "Zotero › Citations",
+      "label": "Move Past Citation"
+    }
+  ]
+}

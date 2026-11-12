@@ -1,6 +1,6 @@
 [workspace]
 resolver = "3"
-members = ["crates/word-mobile-ffi"]
+members = ["crates/word-mobile-ffi", "xtask"]
 
 [workspace.package]
 version = "0.1.0"
@@ -10,6 +10,7 @@ rust-version = "1.95"
 
 [workspace.dependencies]
 wordcraft-geom = { git = "https://github.com/storytold/wordcraft.git", rev = "6bf96e65e43d4e0acb568567fe22a7accd42c29b" }
+wordcraft-fonts = { git = "https://github.com/storytold/wordcraft.git", rev = "6bf96e65e43d4e0acb568567fe22a7accd42c29b" }
 wordcraft-doc = { git = "https://github.com/storytold/wordcraft.git", rev = "6bf96e65e43d4e0acb568567fe22a7accd42c29b" }
 wordcraft-layout = { git = "https://github.com/storytold/wordcraft.git", rev = "6bf96e65e43d4e0acb568567fe22a7accd42c29b" }
 wordcraft-render = { git = "https://github.com/storytold/wordcraft.git", rev = "6bf96e65e43d4e0acb568567fe22a7accd42c29b" }

@@ -1,0 +1,15 @@
+{
+  "images": [
+    {
+      "filename": "ic_layout_linkToPrevious.svg",
+      "idiom": "universal"
+    }
+  ],
+  "info": {
+    "author": "ofiofi-cleanroom",
+    "version": 1
+  },
+  "properties": {
+    "preserves-vector-representation": true
+  }
+}

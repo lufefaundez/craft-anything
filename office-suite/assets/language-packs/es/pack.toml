@@ -1,0 +1,5 @@
+locale = "es"
+name = "Español (Chile / Latinoamérica / España)"
+licence = "MPL-1.1"
+class = "Embeddable"
+source = "https://github.com/wooorm/dictionaries (LibreOffice / RLA-ES v2.8)"

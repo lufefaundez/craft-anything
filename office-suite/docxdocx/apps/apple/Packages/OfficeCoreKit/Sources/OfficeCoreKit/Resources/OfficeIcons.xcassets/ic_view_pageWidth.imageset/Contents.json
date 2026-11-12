@@ -1,0 +1,15 @@
+{
+  "images": [
+    {
+      "filename": "ic_view_pageWidth.svg",
+      "idiom": "universal"
+    }
+  ],
+  "info": {
+    "author": "ofiofi-cleanroom",
+    "version": 1
+  },
+  "properties": {
+    "preserves-vector-representation": true
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "images": [
+    {
+      "filename": "ic_outline_showFormatting.svg",
+      "idiom": "universal"
+    }
+  ],
+  "info": {
+    "author": "ofiofi-cleanroom",
+    "version": 1
+  },
+  "properties": {
+    "preserves-vector-representation": true
+  }
+}

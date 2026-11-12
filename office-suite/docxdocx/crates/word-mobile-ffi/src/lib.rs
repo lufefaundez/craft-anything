@@ -13,15 +13,48 @@
     clippy::unreachable
 )]
 
+use std::path::PathBuf;
+
 use kurbo::Affine;
 use parking_lot::Mutex;
 use serde_json::{Value, json};
 use wordcraft_doc::StoryRef;
-use wordcraft_engine::{Selection, Session, blank_document, io};
+use wordcraft_engine::{Selection, Session, blank_document, io, proof};
+use wordcraft_fonts::FontDb;
 use wordcraft_geom::Region;
 use wordcraft_render::{RenderOptions, render_region};
 
 uniffi::setup_scaffolding!();
+
+/// Registers mobile-bundled open metric fonts (`fonts_dir`) and optional language packs
+/// (`packs_dir`, e.g., `es` for Chilean/Latin American Spanish) with the core engine.
+/// Returns the number of loaded user font faces plus installed language packs.
+#[uniffi::export]
+pub fn init_mobile_assets(fonts_dir: String, packs_dir: Option<String>) -> Result<u32, MobileFfiError> {
+    let mut loaded_count = 0u32;
+    let trimmed_fonts = fonts_dir.trim();
+    if !trimmed_fonts.is_empty() {
+        let fpath = PathBuf::from(trimmed_fonts);
+        if !fpath.is_dir() {
+            return Err(MobileFfiError::IoFailed {
+                detail: format!("fonts_dir is not a directory: {trimmed_fonts}"),
+            });
+        }
+        let (fonts, _errs) = FontDb::global().load_user_fonts(&fpath);
+        loaded_count = loaded_count.saturating_add(u32::try_from(fonts.len()).unwrap_or(u32::MAX));
+    }
+    if let Some(pdir) = packs_dir.filter(|s| !s.trim().is_empty()) {
+        let ppath = PathBuf::from(pdir.trim());
+        if !ppath.is_dir() {
+            return Err(MobileFfiError::IoFailed {
+                detail: format!("packs_dir is not a directory: {}", ppath.display()),
+            });
+        }
+        proof::packs::set_packs_dir(Some(ppath));
+        loaded_count = loaded_count.saturating_add(u32::try_from(proof::packs::installed().len()).unwrap_or(u32::MAX));
+    }
+    Ok(loaded_count)
+}
 
 /// Maximum tile dimension accepted across FFI to prevent OOM on hostile inputs.
 const MAX_TILE_SIDE: u32 = 4096;
@@ -31,12 +64,12 @@ const MAX_DELETE_SURROUNDING: u32 = 128;
 /// Error returned across the FFI boundary without panicking.
 #[derive(Debug, thiserror::Error, uniffi::Error)]
 pub enum MobileFfiError {
-    #[error("invalid JSON parameters: {message}")]
-    InvalidJson { message: String },
-    #[error("document I/O failed: {message}")]
-    IoFailed { message: String },
-    #[error("command failed: {message}")]
-    CommandFailed { message: String },
+    #[error("invalid JSON parameters: {detail}")]
+    InvalidJson { detail: String },
+    #[error("document I/O failed: {detail}")]
+    IoFailed { detail: String },
+    #[error("command failed: {detail}")]
+    CommandFailed { detail: String },
     #[error("invalid page index {index} (page count: {count})")]
     InvalidPage { index: u32, count: u32 },
     #[error("invalid tile dimensions {width}x{height} at scale {scale}")]
@@ -118,7 +151,7 @@ impl MobileDocumentSession {
     #[uniffi::constructor]
     pub fn open_bytes(file_name: String, bytes: Vec<u8>, password: Option<String>) -> Result<Self, MobileFfiError> {
         let (doc, _encrypted) =
-            io::open_bytes_with(&file_name, &bytes, password.as_deref()).map_err(|message| MobileFfiError::IoFailed { message })?;
+            io::open_bytes_with(&file_name, &bytes, password.as_deref()).map_err(|detail| MobileFfiError::IoFailed { detail })?;
         let mut session = Session::new(doc);
         session.file_name = Some(file_name);
         Ok(Self { inner: Mutex::new(session) })
@@ -129,7 +162,7 @@ impl MobileDocumentSession {
     pub fn open_path(path: String, password: Option<String>) -> Result<Self, MobileFfiError> {
         let fs_path = std::path::Path::new(&path);
         let (doc, _encrypted) =
-            io::open_path_with(fs_path, password.as_deref()).map_err(|message| MobileFfiError::IoFailed { message })?;
+            io::open_path_with(fs_path, password.as_deref()).map_err(|detail| MobileFfiError::IoFailed { detail })?;
         let mut session = Session::new(doc);
         session.path = Some(fs_path.to_path_buf());
         if let Some(name) = fs_path.file_name().and_then(|n| n.to_str()) {
@@ -141,13 +174,13 @@ impl MobileDocumentSession {
     /// Saves the active document as `.docx` bytes.
     pub fn save_docx_bytes(&self) -> Result<Vec<u8>, MobileFfiError> {
         let s = self.inner.lock();
-        io::save_bytes("document.docx", &s.doc).map_err(|message| MobileFfiError::IoFailed { message })
+        io::save_bytes("document.docx", &s.doc).map_err(|detail| MobileFfiError::IoFailed { detail })
     }
 
     /// Exports the active document to PDF bytes via `wordcraft_pdf`.
     pub fn export_pdf_bytes(&self) -> Result<Vec<u8>, MobileFfiError> {
         let s = self.inner.lock();
-        wordcraft_pdf::export(&s.doc, &Default::default()).map_err(|e| MobileFfiError::IoFailed { message: e.to_string() })
+        wordcraft_pdf::export(&s.doc, &Default::default()).map_err(|e| MobileFfiError::IoFailed { detail: e.to_string() })
     }
 
     pub fn is_dirty(&self) -> bool {
@@ -208,10 +241,10 @@ impl MobileDocumentSession {
         let params: Value = if params_json.trim().is_empty() {
             Value::Object(Default::default())
         } else {
-            serde_json::from_str(&params_json).map_err(|e| MobileFfiError::InvalidJson { message: e.to_string() })?
+            serde_json::from_str(&params_json).map_err(|e| MobileFfiError::InvalidJson { detail: e.to_string() })?
         };
         let mut s = self.inner.lock();
-        let result = s.run(&cmd_id, &params).map_err(|e| MobileFfiError::CommandFailed { message: e.to_string() })?;
+        let result = s.run(&cmd_id, &params).map_err(|e| MobileFfiError::CommandFailed { detail: e.to_string() })?;
         Ok(build_outcome(&mut s, &result))
     }
 
@@ -277,7 +310,7 @@ impl MobileDocumentSession {
         }
         let result = s
             .run_ime("text.insert", &json!({ "text": text }))
-            .map_err(|e| MobileFfiError::CommandFailed { message: e.to_string() })?;
+            .map_err(|e| MobileFfiError::CommandFailed { detail: e.to_string() })?;
         Ok(build_outcome(&mut s, &result))
     }
 
@@ -290,12 +323,12 @@ impl MobileDocumentSession {
         for _ in 0..b {
             last = s
                 .run_ime("text.backspace", &json!({}))
-                .map_err(|e| MobileFfiError::CommandFailed { message: e.to_string() })?;
+                .map_err(|e| MobileFfiError::CommandFailed { detail: e.to_string() })?;
         }
         for _ in 0..a {
             last = s
                 .run_ime("text.delete", &json!({}))
-                .map_err(|e| MobileFfiError::CommandFailed { message: e.to_string() })?;
+                .map_err(|e| MobileFfiError::CommandFailed { detail: e.to_string() })?;
         }
         Ok(build_outcome(&mut s, &last))
     }
@@ -545,5 +578,43 @@ mod tests {
                 })
                 .is_err()
         );
+    }
+
+    #[test]
+    fn test_metric_font_substitution_calibri_aptos() {
+        assert!(wordcraft_fonts::word::metric_compatible("Calibri", "Carlito"));
+        assert!(wordcraft_fonts::word::metric_compatible("Cambria", "Caladea"));
+        assert!(wordcraft_fonts::word::metric_compatible("Arial", "Liberation Sans"));
+        assert!(wordcraft_fonts::word::metric_compatible("Times New Roman", "Liberation Serif"));
+
+        let assets_root = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("../../../assets");
+        let fonts_dir = assets_root.join("fonts");
+        let packs_dir = assets_root.join("language-packs");
+        let loaded = init_mobile_assets(
+            fonts_dir.to_string_lossy().into_owned(),
+            Some(packs_dir.to_string_lossy().into_owned()),
+        );
+        assert!(loaded.is_ok(), "init_mobile_assets failed: {loaded:?}");
+
+        let packs = proof::packs::installed();
+        assert!(packs.iter().any(|p| p.locale == "es"), "expected es language pack installed");
+        assert!(proof::packs::load_errors().is_empty(), "unexpected pack errors: {:?}", proof::packs::load_errors());
+
+        // Create blank document in es-CL, switch font to Calibri and Aptos, type accented Spanish, render tile.
+        let session = MobileDocumentSession::new_blank("es-CL".to_string());
+        assert!(session.execute_command("format.font".to_string(), r#"{"name":"Calibri"}"#.to_string()).is_ok());
+        assert!(session.execute_command("text.insert".to_string(), r#"{"text":"Prueba métrica Calibri y Aptos"}"#.to_string()).is_ok());
+        assert!(session.execute_command("select.all".to_string(), "{}".to_string()).is_ok());
+        assert!(session.execute_command("format.font".to_string(), r#"{"name":"Aptos"}"#.to_string()).is_ok());
+        let tile = session.render_tile(TileRequest {
+            page_index: 0,
+            dpi_scale: 1.0,
+            tile_x_px: 0,
+            tile_y_px: 0,
+            tile_w_px: 256,
+            tile_h_px: 256,
+            dark_page: false,
+        });
+        assert!(tile.as_ref().is_ok_and(|b| b.len() == 256 * 256 * 4));
     }
 }
