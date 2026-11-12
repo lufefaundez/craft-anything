@@ -10,7 +10,7 @@
   "updated": "2026-11-12",
   "target_reference": "Microsoft Word for Mac 16.115 (es-CL)",
   "tasks": [
-    {"id": "W-001", "phase": "F0", "title": "Instalar Rust y targets cruzados Android/iOS/visionOS", "status": "todo", "depends_on": [], "context_files": ["office-suite/AGENTS.md"], "verify_cmd": "rustc --version && cargo ndk --version"},
+    {"id": "W-001", "phase": "F0", "title": "Instalar Rust y targets cruzados Android/iOS/visionOS", "status": "done", "completed_at": "2026-11-12", "verification_note": "rustc 1.100.0, cargo-ndk 4.1.2, uniffi-bindgen 0.32.2, Android NDK 30.0.16248370, and 8 targets (android, ios, ios-sim, visionos, visionos-sim, darwin) verified", "depends_on": [], "context_files": ["office-suite/AGENTS.md"], "verify_cmd": "rustc --version && cargo ndk --version"},
     {"id": "W-002", "phase": "F0", "title": "Configurar núcleo Rust wordcraft L0-L5", "status": "todo", "depends_on": ["W-001"], "context_files": ["office-suite/PLAN-MAESTRO.md"], "verify_cmd": "cargo test -p wordcraft-doc -p wordcraft-docx -p wordcraft-layout -p wordcraft-engine"},
     {"id": "W-003", "phase": "F0", "title": "Verificar compilación cruzada sin egui/winit", "status": "todo", "depends_on": ["W-002"], "context_files": ["office-suite/PLAN-MAESTRO.md"], "verify_cmd": "cargo check -p wordcraft-engine -p wordcraft-render --target aarch64-linux-android"},
     {"id": "W-004", "phase": "F1", "title": "Scaffold crates/mobile-ffi con UniFFI", "status": "todo", "depends_on": ["W-003"], "context_files": ["office-suite/ROADMAP-WORD.md"], "verify_cmd": "cargo test -p word-mobile-ffi"},
