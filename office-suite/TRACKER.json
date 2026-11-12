@@ -1,6 +1,12 @@
 {
-  "project": "Office Suite Mobile & Spatial (Word First)",
-  "working_name": "NexoSuite (provisional — pending user pick)",
+  "project": "OfiOfi Suite (DocxDocx / XlsxXlsx / PptxPptx) — Mobile & Spatial",
+  "suite_name": "OfiOfi",
+  "apps": {
+    "word": "DocxDocx",
+    "excel": "XlsxXlsx",
+    "powerpoint": "PptxPptx"
+  },
+  "bundle_prefix": "app.ofiofi",
   "updated": "2026-11-12",
   "target_reference": "Microsoft Word for Mac 16.115 (es-CL)",
   "tasks": [

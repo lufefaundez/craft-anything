@@ -1,8 +1,8 @@
-# Plan Maestro — Suite Ofimática Móvil y Espacial (Clean-Room + Rust Core)
+# Plan Maestro — Suite OfiOfi (`DocxDocx` · `XlsxXlsx` · `PptxPptx`)
 
 ## 1. Objetivo
 
-Construir una suite ofimática gratuita, de código abierto (`MIT OR Apache-2.0`), completa (sin recortes funcionales) y visualmente familiar a **Microsoft Office 16.115**, optimizada para:
+Construir la suite ofimática **`OfiOfi`**, gratuita en su núcleo completo de edición (sin recortes funcionales), comercialmente sostenible y visualmente familiar a **Microsoft Office 16.115**, optimizada para:
 - **Android Smartphones** (`Compact < 600dp`)
 - **Android Tablets & Foldables** (`Medium / Expanded >= 600dp`)
 - **iPhone** (`iOS`)
@@ -10,9 +10,9 @@ Construir una suite ofimática gratuita, de código abierto (`MIT OR Apache-2.0`
 - **Apple Vision Pro** (`visionOS`, ventanas espaciales + `Ornaments`)
 
 Orden de ejecución:
-1. **Ola 1 (Prioridad actual):** **Word** (`.docx`, `.doc`, `.odt`, `.rtf`, `.txt`, exportación `.pdf`)
-2. **Ola 2:** **Excel** (`.xlsx`, `.xls`, `.ods`, `.csv`)
-3. **Ola 3:** **PowerPoint** (`.pptx`, `.odp`, exportación `.pdf`)
+1. **Ola 1 (Prioridad actual):** **`DocxDocx`** — Word (`.docx`, `.doc`, `.odt`, `.rtf`, `.txt`, exportación `.pdf`)
+2. **Ola 2:** **`XlsxXlsx`** — Excel (`.xlsx`, `.xls`, `.ods`, `.csv`)
+3. **Ola 3:** **`PptxPptx`** — PowerPoint (`.pptx`, `.odp`, exportación `.pdf`)
 
 ## 2. Rol de `craft-anything` vs `wordcraft` / `gridcraft` / `deckcraft`
 
@@ -52,6 +52,7 @@ Orden de ejecución:
 
 ## 4. Fuentes y Activos Legales (Clean-Room)
 
-- **Íconos:** Catálogo SVG propio exportado a Android Vector Drawable y Apple Asset Catalog. Siluetas y colores semánticos equivalentes a Office sin copiar binarios de Microsoft.
+- **Licencias y monetización:** Los repositorios núcleo (`storytold/wordcraft`, `gridcraft`, `deckcraft`, `craft-libs`) usan licencia permisiva **`MIT OR Apache-2.0`**, lo que habilita distribución comercial en tiendas y monetización ética (p. ej. suscripción **OfiOfi Pro** para IA integrada, nube, OCR y plantillas premium, manteniendo 100 % gratis el editor local), conservando los avisos `NOTICE`/`ATTRIBUTION.md` y excluyendo diccionarios GPL de los binarios embebidos.
+- **Íconos:** Catálogo SVG propio exportado a Android Vector Drawable y Apple Asset Catalog. Siluetas y colores semánticos equivalentes a Office sin copiar binarios de Microsoft ni activos de marca de ArtCraft.
 - **Tipografías de documentos:** Sustituciones métricas libres desde `storytold/craft-fonts` (`Carlito` ↔ Calibri, `Caladea` ↔ Cambria, `Liberation` ↔ Arial/Times/Courier, `STIX Two Math` ↔ Cambria Math, mapeo métrico libre para `Aptos`) + uso prioritario de fuentes embebidas en `.docx` o instaladas en el OS.
 - **Diccionarios:** `craft-proof` con soporte incorporado para español (`es-419`, `es-ES`, `es-MX`, `es-UY`) e inglés.
