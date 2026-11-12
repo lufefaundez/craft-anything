@@ -87,8 +87,8 @@ Diseñado para ejecución incremental por **Gemini 3.8 Flash** (1 tarea = 1 turn
 - **Acción:** `WindowWidthSizeClass.Expanded` renderiza la tarjeta Ribbon flotante blanca + QAT + barra de estado idéntica a Word 16.115; `Compact` renderiza barra rápida sobre teclado + Bottom Sheet completo con las 9 pestañas y búsqueda de comandos.
 - **Verificación (`verify_cmd`):** `./gradlew :app:testDebugUnitTest --tests "*AdaptiveShellTest*"`
 
-### `[W-017]` Backstage Archivo + Storage Access Framework (SAF)
-- **Acción:** Pantalla Inicio, plantillas (Blanco, Carta, Oficio Chile, Informe), abrir/guardar `.docx`, `.doc`, `.odt`, `.rtf`, exportar `.pdf` vía Android SAF.
+### `[W-017]` Backstage Archivo + Storage Access Framework (SAF) + Google Drive / WebDAV
+- **Acción:** Pantalla Inicio, plantillas (Blanco, Carta, Oficio Chile, Informe), abrir/guardar `.docx`, `.doc`, `.odt`, `.rtf`, exportar `.pdf` vía Android SAF (Google Drive / archivos locales) más conector **WebDAV** integrado elegido por el usuario (sin nube propietaria).
 - **Verificación (`verify_cmd`):** `./gradlew :app:testDebugUnitTest --tests "*DocumentStorageTest*"`
 
 ---
@@ -123,8 +123,8 @@ Diseñado para ejecución incremental por **Gemini 3.8 Flash** (1 tarea = 1 turn
 - **Acción:** `UIScrollView` a 120 Hz con tiles Rust y protocolo `UITextInput` completo (autocorrección iOS, dictado, teclados externos).
 - **Verificación (`verify_cmd`):** `xcodebuild test -scheme OfficeWord-iOS -destination 'platform=iOS Simulator,name=iPhone 16 Pro'`
 
-### `[W-024]` Shell iPad (Full Ribbon + Apple Pencil) e iPhone (Bottom Sheet Completo) + Files/AirPrint
-- **Acción:** Ribbon idéntico en iPad + `PencilKit` para pestaña Dibujar; Bottom Sheet de 9 pestañas en iPhone; `UIDocument` para iCloud Drive/Files y AirPrint.
+### `[W-024]` Shell iPad (Full Ribbon + Apple Pencil) e iPhone (Bottom Sheet Completo) + iCloud / Google Drive / WebDAV / AirPrint
+- **Acción:** Ribbon idéntico en iPad + `PencilKit` para pestaña Dibujar; Bottom Sheet de 9 pestañas en iPhone; `UIDocument` para **iCloud Drive / Files / Google Drive**, conector **WebDAV** propio y AirPrint.
 - **Verificación (`verify_cmd`):** `xcodebuild test -scheme OfficeWord-iOS -destination 'platform=iPad Pro 13-inch (M4)'`
 
 ---

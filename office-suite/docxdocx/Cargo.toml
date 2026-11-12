@@ -1,0 +1,26 @@
+[workspace]
+resolver = "3"
+members = ["crates/word-mobile-ffi"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+license = "MIT OR Apache-2.0"
+rust-version = "1.95"
+
+[workspace.dependencies]
+wordcraft-geom = { git = "https://github.com/storytold/wordcraft.git", rev = "6bf96e65e43d4e0acb568567fe22a7accd42c29b" }
+wordcraft-doc = { git = "https://github.com/storytold/wordcraft.git", rev = "6bf96e65e43d4e0acb568567fe22a7accd42c29b" }
+wordcraft-layout = { git = "https://github.com/storytold/wordcraft.git", rev = "6bf96e65e43d4e0acb568567fe22a7accd42c29b" }
+wordcraft-render = { git = "https://github.com/storytold/wordcraft.git", rev = "6bf96e65e43d4e0acb568567fe22a7accd42c29b" }
+wordcraft-pdf = { git = "https://github.com/storytold/wordcraft.git", rev = "6bf96e65e43d4e0acb568567fe22a7accd42c29b" }
+wordcraft-engine = { git = "https://github.com/storytold/wordcraft.git", rev = "6bf96e65e43d4e0acb568567fe22a7accd42c29b" }
+
+uniffi = { version = "0.32", features = ["cli"] }
+serde_json = { version = "1", features = ["float_roundtrip"] }
+thiserror = "2"
+kurbo = { version = "0.13", features = ["serde"] }
+parking_lot = "0.12"
+
+[patch.crates-io]
+krilla = { git = "https://github.com/storytold/craft-libs", rev = "6e03f65bf45181db77ba6229716e6624db9eb25b" }
