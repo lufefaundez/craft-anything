@@ -110,7 +110,9 @@ fn main() -> ExitCode {
         };
 
         let non_white_px = rgba
-            .chunks_exact(4)
+            .as_chunks::<4>()
+            .0
+            .iter()
             .filter(|px| px[0] < 245 || px[1] < 245 || px[2] < 245)
             .count();
 

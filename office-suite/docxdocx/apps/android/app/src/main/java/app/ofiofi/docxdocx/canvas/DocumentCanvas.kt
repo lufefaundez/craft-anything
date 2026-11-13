@@ -36,14 +36,25 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.input.pointer.PointerEventType
+import androidx.compose.ui.input.pointer.PointerType
+import androidx.compose.ui.input.pointer.isCtrlPressed
+import androidx.compose.ui.input.pointer.isMetaPressed
+import androidx.compose.ui.input.pointer.isPrimaryPressed
+import androidx.compose.ui.input.pointer.isSecondaryPressed
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.HorizontalDivider
 import app.ofiofi.docxdocx.input.SelectionOverlay
+import app.ofiofi.docxdocx.ui.canvas.RulerViewportMetrics
 import app.ofiofi.docxdocx.ui.theme.OfficeTokens
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
@@ -70,6 +81,7 @@ fun DocumentCanvas(
     onTapPage: (PageHitPt, tapCount: Int) -> Unit,
     onSelectionUpdated: (SelectionGeometry) -> Unit = {},
     onQuickCommand: (commandId: String) -> Unit = {},
+    onViewportMetricsChanged: (RulerViewportMetrics) -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
     val surfaces = if (isDark) OfficeTokens.DarkSurfaces else OfficeTokens.LightSurfaces
@@ -142,6 +154,33 @@ fun DocumentCanvas(
         scrollX = scrollX.coerceIn(0f, maxScrollX)
         scrollY = scrollY.coerceIn(0f, maxScrollY)
 
+        val firstVisiblePage = placedPages.firstOrNull {
+            it.bottomPx >= scrollY && it.topPx <= scrollY + viewportH
+        } ?: placedPages.firstOrNull()
+        LaunchedEffect(
+            firstVisiblePage?.leftPx,
+            firstVisiblePage?.widthPx,
+            firstVisiblePage?.topPx,
+            firstVisiblePage?.heightPx,
+            scrollX,
+            scrollY,
+            scalePxPerPt,
+        ) {
+            firstVisiblePage?.let { fp ->
+                onViewportMetricsChanged(
+                    RulerViewportMetrics(
+                        pageLeftPx = fp.leftPx - scrollX,
+                        pageWidthPx = fp.widthPx.toFloat(),
+                        pageTopPx = fp.topPx - scrollY,
+                        pageHeightPx = fp.heightPx.toFloat(),
+                        scalePxPerPt = scalePxPerPt,
+                    ),
+                )
+            }
+        }
+
+        var contextMenuAnchorPx by remember { mutableStateOf<Offset?>(null) }
+
         val visibleTiles = remember(placedPages, scrollX, scrollY, viewportW, viewportH, layoutMode) {
             DocumentCanvasMath.computeVisibleTiles(
                 placedPages = placedPages,
@@ -156,9 +195,44 @@ fun DocumentCanvas(
         Canvas(
             modifier = Modifier
                 .fillMaxSize()
+                .pointerInput(placedPages, scalePxPerPt, maxScrollX, maxScrollY, scrollX, scrollY) {
+                    awaitPointerEventScope {
+                        while (true) {
+                            val event = awaitPointerEvent()
+                            if (event.type == PointerEventType.Scroll) {
+                                val delta = event.changes.firstOrNull()?.scrollDelta ?: Offset.Zero
+                                if (event.keyboardModifiers.isCtrlPressed || event.keyboardModifiers.isMetaPressed) {
+                                    val factor = if (delta.y < 0f) 1.08f else 0.92f
+                                    onZoomChange(DocumentCanvasMath.clampZoom(clampedZoom * factor))
+                                } else {
+                                    scrollX = (scrollX + delta.x * 56f).coerceIn(0f, maxScrollX)
+                                    scrollY = (scrollY + delta.y * 56f).coerceIn(0f, maxScrollY)
+                                }
+                                event.changes.forEach { it.consume() }
+                            } else if (event.type == PointerEventType.Press && event.buttons.isSecondaryPressed) {
+                                val pos = event.changes.firstOrNull()?.position
+                                if (pos != null) {
+                                    DocumentCanvasMath.hitTestPagePt(
+                                        placedPages = placedPages,
+                                        tapXPx = pos.x,
+                                        tapYPx = pos.y,
+                                        scrollX = scrollX,
+                                        scrollY = scrollY,
+                                        scalePxPerPt = scalePxPerPt,
+                                    )?.let { hit ->
+                                        onTapPage(hit, 1)
+                                    }
+                                    contextMenuAnchorPx = pos
+                                }
+                                event.changes.forEach { it.consume() }
+                            }
+                        }
+                    }
+                }
                 .pointerInput(placedPages, scalePxPerPt) {
                     detectTapGestures(
                         onTap = { pos ->
+                            contextMenuAnchorPx = null
                             val now = System.currentTimeMillis()
                             val nearPrev = (pos - lastTapPos).getDistance() < 42f
                             consecutiveTaps = if (now - lastTapTimeMs < 380L && nearPrev) {
@@ -182,19 +256,68 @@ fun DocumentCanvas(
                         },
                     )
                 }
-                .pointerInput(maxScrollX, maxScrollY) {
+                .pointerInput(maxScrollX, maxScrollY, placedPages, scalePxPerPt) {
                     awaitEachGesture {
-                        awaitFirstDown(requireUnconsumed = false)
+                        val down = awaitFirstDown(requireUnconsumed = false)
+                        val isMouseDragSelect = down.type == PointerType.Mouse
+                        var mouseDragStarted = false
                         do {
                             val event = awaitPointerEvent()
-                            val zoomChange = event.calculateZoom()
-                            val pan = event.calculatePan()
-                            if (abs(zoomChange - 1f) > 0.005f) {
-                                onZoomChange(DocumentCanvasMath.clampZoom(clampedZoom * zoomChange))
-                            }
-                            if (pan != Offset.Zero) {
-                                scrollX = (scrollX - pan.x).coerceIn(0f, maxScrollX)
-                                scrollY = (scrollY - pan.y).coerceIn(0f, maxScrollY)
+                            val firstChange = event.changes.firstOrNull()
+                            if (isMouseDragSelect && event.buttons.isPrimaryPressed && firstChange != null && !event.buttons.isSecondaryPressed) {
+                                val dist = (firstChange.position - down.position).getDistance()
+                                if (dist > 6f || mouseDragStarted) {
+                                    if (!mouseDragStarted) {
+                                        mouseDragStarted = true
+                                        DocumentCanvasMath.hitTestPagePt(
+                                            placedPages = placedPages,
+                                            tapXPx = down.position.x,
+                                            tapYPx = down.position.y,
+                                            scrollX = scrollX,
+                                            scrollY = scrollY,
+                                            scalePxPerPt = scalePxPerPt,
+                                        )?.let { hit ->
+                                            runCatching {
+                                                val updated = session.dragSelectionHandle(
+                                                    isAnchor = true,
+                                                    pageIndex = hit.pageIndex.toUInt(),
+                                                    xPt = hit.xPt,
+                                                    yPt = hit.yPt,
+                                                )
+                                                onSelectionUpdated(updated)
+                                            }
+                                        }
+                                    }
+                                    DocumentCanvasMath.hitTestPagePt(
+                                        placedPages = placedPages,
+                                        tapXPx = firstChange.position.x,
+                                        tapYPx = firstChange.position.y,
+                                        scrollX = scrollX,
+                                        scrollY = scrollY,
+                                        scalePxPerPt = scalePxPerPt,
+                                    )?.let { hit ->
+                                        runCatching {
+                                            val updated = session.dragSelectionHandle(
+                                                isAnchor = false,
+                                                pageIndex = hit.pageIndex.toUInt(),
+                                                xPt = hit.xPt,
+                                                yPt = hit.yPt,
+                                            )
+                                            onSelectionUpdated(updated)
+                                        }
+                                    }
+                                    firstChange.consume()
+                                }
+                            } else {
+                                val zoomChange = event.calculateZoom()
+                                val pan = event.calculatePan()
+                                if (abs(zoomChange - 1f) > 0.005f) {
+                                    onZoomChange(DocumentCanvasMath.clampZoom(clampedZoom * zoomChange))
+                                }
+                                if (pan != Offset.Zero) {
+                                    scrollX = (scrollX - pan.x).coerceIn(0f, maxScrollX)
+                                    scrollY = (scrollY - pan.y).coerceIn(0f, maxScrollY)
+                                }
                             }
                         } while (event.changes.any { it.pressed })
                     }
@@ -311,6 +434,36 @@ fun DocumentCanvas(
             onQuickCommand = onQuickCommand,
             modifier = Modifier.fillMaxSize(),
         )
+
+        // Mouse secondary-click desktop context menu (Samsung DeX / Android Desktop / Chromebook)
+        contextMenuAnchorPx?.let { anchorPx ->
+            val offsetDp = with(density) { DpOffset(anchorPx.x.toDp(), anchorPx.y.toDp()) }
+            DropdownMenu(
+                expanded = true,
+                offset = offsetDp,
+                onDismissRequest = { contextMenuAnchorPx = null },
+            ) {
+                val items = listOf(
+                    "Cortar" to "edit.cut",
+                    "Copiar" to "edit.copy",
+                    "Pegar" to "edit.paste",
+                    "Nuevo comentario..." to "review.newComment",
+                    "Fuente..." to "format.fontDialog",
+                    "Párrafo..." to "para.dialog",
+                    "Imprimir..." to "file.print",
+                )
+                items.forEachIndexed { idx, (label, cmd) ->
+                    if (idx == 3 || idx == 6) HorizontalDivider()
+                    DropdownMenuItem(
+                        text = { Text(label, fontSize = 13.sp) },
+                        onClick = {
+                            contextMenuAnchorPx = null
+                            onQuickCommand(cmd)
+                        },
+                    )
+                }
+            }
+        }
 
         // Floating Zoom + Mobile Reflow / Print Layout switcher pill (bottom-end)
         Surface(

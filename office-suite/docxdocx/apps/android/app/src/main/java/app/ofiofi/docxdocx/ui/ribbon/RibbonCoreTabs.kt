@@ -8,12 +8,17 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.HorizontalDivider
@@ -28,6 +33,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -194,6 +201,7 @@ fun RibbonInteractiveControl(
     surfaces: OfficeTokens.SurfacePalette,
     accent: Color,
     checkedBg: Color,
+    availableFonts: List<String> = RibbonCorePresets.fonts,
     onExecuteCommand: (commandId: String, paramsJson: String) -> Unit,
     iconContent: @Composable (iconName: String, contentDescription: String, sizeDp: Int) -> Unit,
     fallbackButton: @Composable () -> Unit,
@@ -201,6 +209,7 @@ fun RibbonInteractiveControl(
     when {
         control.kind == "font_picker" -> FontPickerChip(
             currentFont = formatSummary.font,
+            fonts = availableFonts,
             surfaces = surfaces,
             accent = accent,
             onSelectFont = { font ->
@@ -257,20 +266,29 @@ fun RibbonInteractiveControl(
 @Composable
 private fun FontPickerChip(
     currentFont: String,
+    fonts: List<String>,
     surfaces: OfficeTokens.SurfacePalette,
     accent: Color,
     onSelectFont: (String) -> Unit,
 ) {
     var expanded by remember { mutableStateOf(false) }
+    var searchQuery by remember { mutableStateOf("") }
+    val filteredFonts = remember(fonts, searchQuery) {
+        val q = searchQuery.trim()
+        if (q.isEmpty()) fonts else fonts.filter { it.contains(q, ignoreCase = true) }
+    }
     Box {
         Row(
             modifier = Modifier
-                .width(126.dp)
+                .width(136.dp)
                 .height(26.dp)
                 .clip(RoundedCornerShape(OfficeTokens.Radii.button))
                 .background(surfaces.canvas)
                 .border(1.dp, surfaces.ribbonBorder, RoundedCornerShape(OfficeTokens.Radii.button))
-                .clickable { expanded = true }
+                .clickable {
+                    searchQuery = ""
+                    expanded = true
+                }
                 .padding(horizontal = 8.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -285,23 +303,59 @@ private fun FontPickerChip(
             )
             Text("▾", color = surfaces.textDim, fontSize = 10.sp)
         }
-        DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
-            RibbonCorePresets.fonts.forEach { fontName ->
-                val isCurrent = fontName.equals(currentFont, ignoreCase = true)
-                DropdownMenuItem(
-                    text = {
+        DropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false },
+            modifier = Modifier.width(240.dp),
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 8.dp, vertical = 4.dp)
+                    .background(surfaces.canvas, RoundedCornerShape(6.dp))
+                    .border(1.dp, surfaces.ribbonBorder, RoundedCornerShape(6.dp))
+                    .padding(horizontal = 8.dp, vertical = 6.dp),
+            ) {
+                if (searchQuery.isEmpty()) {
+                    Text("Buscar entre ${fonts.size} fuentes...", color = surfaces.textDim, fontSize = 11.sp)
+                }
+                BasicTextField(
+                    value = searchQuery,
+                    onValueChange = { searchQuery = it },
+                    singleLine = true,
+                    textStyle = TextStyle(color = surfaces.text, fontSize = 12.sp),
+                    cursorBrush = SolidColor(accent),
+                    modifier = Modifier.fillMaxWidth(),
+                )
+            }
+            LazyColumn(
+                modifier = Modifier
+                    .width(236.dp)
+                    .heightIn(max = 320.dp),
+            ) {
+                items(filteredFonts, key = { it }) { fontName ->
+                    val isCurrent = fontName.equals(currentFont, ignoreCase = true)
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable {
+                                expanded = false
+                                onSelectFont(fontName)
+                            }
+                            .background(if (isCurrent) accent.copy(alpha = 0.12f) else Color.Transparent)
+                            .padding(horizontal = 12.dp, vertical = 7.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
                         Text(
                             text = fontName,
                             fontSize = 13.sp,
                             fontWeight = if (isCurrent) FontWeight.SemiBold else FontWeight.Normal,
                             color = if (isCurrent) accent else surfaces.text,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
                         )
-                    },
-                    onClick = {
-                        expanded = false
-                        onSelectFont(fontName)
-                    },
-                )
+                    }
+                }
             }
         }
     }

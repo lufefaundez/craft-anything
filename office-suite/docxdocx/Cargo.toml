@@ -9,13 +9,13 @@ license = "MIT OR Apache-2.0"
 rust-version = "1.95"
 
 [workspace.dependencies]
-wordcraft-geom = { git = "https://github.com/storytold/wordcraft.git", rev = "6bf96e65e43d4e0acb568567fe22a7accd42c29b" }
-wordcraft-fonts = { git = "https://github.com/storytold/wordcraft.git", rev = "6bf96e65e43d4e0acb568567fe22a7accd42c29b" }
-wordcraft-doc = { git = "https://github.com/storytold/wordcraft.git", rev = "6bf96e65e43d4e0acb568567fe22a7accd42c29b" }
-wordcraft-layout = { git = "https://github.com/storytold/wordcraft.git", rev = "6bf96e65e43d4e0acb568567fe22a7accd42c29b" }
-wordcraft-render = { git = "https://github.com/storytold/wordcraft.git", rev = "6bf96e65e43d4e0acb568567fe22a7accd42c29b" }
-wordcraft-pdf = { git = "https://github.com/storytold/wordcraft.git", rev = "6bf96e65e43d4e0acb568567fe22a7accd42c29b" }
-wordcraft-engine = { git = "https://github.com/storytold/wordcraft.git", rev = "6bf96e65e43d4e0acb568567fe22a7accd42c29b" }
+wordcraft-geom = { git = "https://github.com/lufefaundez/docxdocx.git", rev = "8ab5a4d6581607baf60d8177ddc8c911a1e8fe5e" }
+wordcraft-fonts = { git = "https://github.com/lufefaundez/docxdocx.git", rev = "8ab5a4d6581607baf60d8177ddc8c911a1e8fe5e" }
+wordcraft-doc = { git = "https://github.com/lufefaundez/docxdocx.git", rev = "8ab5a4d6581607baf60d8177ddc8c911a1e8fe5e" }
+wordcraft-layout = { git = "https://github.com/lufefaundez/docxdocx.git", rev = "8ab5a4d6581607baf60d8177ddc8c911a1e8fe5e" }
+wordcraft-render = { git = "https://github.com/lufefaundez/docxdocx.git", rev = "8ab5a4d6581607baf60d8177ddc8c911a1e8fe5e" }
+wordcraft-pdf = { git = "https://github.com/lufefaundez/docxdocx.git", rev = "8ab5a4d6581607baf60d8177ddc8c911a1e8fe5e" }
+wordcraft-engine = { git = "https://github.com/lufefaundez/docxdocx.git", rev = "8ab5a4d6581607baf60d8177ddc8c911a1e8fe5e" }
 
 uniffi = { version = "0.32", features = ["cli"] }
 serde_json = { version = "1", features = ["float_roundtrip"] }

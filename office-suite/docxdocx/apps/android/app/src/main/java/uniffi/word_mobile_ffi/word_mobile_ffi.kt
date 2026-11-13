@@ -677,6 +677,8 @@ internal object IntegrityCheckingUniffiLib {
     internal fun ensureInitialized() = Unit
     external fun uniffi_word_mobile_ffi_checksum_func_init_mobile_assets(
     ): Int
+    external fun uniffi_word_mobile_ffi_checksum_func_load_and_list_system_fonts(
+    ): Int
     external fun uniffi_word_mobile_ffi_checksum_method_mobiledocumentsession_double_tap_at(
     ): Int
     external fun uniffi_word_mobile_ffi_checksum_method_mobiledocumentsession_drag_selection_handle(
@@ -684,6 +686,8 @@ internal object IntegrityCheckingUniffiLib {
     external fun uniffi_word_mobile_ffi_checksum_method_mobiledocumentsession_execute_command(
     ): Int
     external fun uniffi_word_mobile_ffi_checksum_method_mobiledocumentsession_export_pdf_bytes(
+    ): Int
+    external fun uniffi_word_mobile_ffi_checksum_method_mobiledocumentsession_get_ruler_metrics(
     ): Int
     external fun uniffi_word_mobile_ffi_checksum_method_mobiledocumentsession_get_selection_geometry(
     ): Int
@@ -751,6 +755,8 @@ internal object UniffiLib {
     ): RustBuffer.ByValue
     external fun uniffi_word_mobile_ffi_fn_method_mobiledocumentsession_export_pdf_bytes(`ptr`: Long,uniffi_out_err: UniffiRustCallStatus, 
     ): RustBuffer.ByValue
+    external fun uniffi_word_mobile_ffi_fn_method_mobiledocumentsession_get_ruler_metrics(`ptr`: Long,`pageIndex`: Int,uniffi_out_err: UniffiRustCallStatus, 
+    ): RustBuffer.ByValue
     external fun uniffi_word_mobile_ffi_fn_method_mobiledocumentsession_get_selection_geometry(`ptr`: Long,uniffi_out_err: UniffiRustCallStatus, 
     ): RustBuffer.ByValue
     external fun uniffi_word_mobile_ffi_fn_method_mobiledocumentsession_ime_commit_text(`ptr`: Long,`text`: RustBuffer.ByValue,`joinWithPrevious`: Byte,uniffi_out_err: UniffiRustCallStatus, 
@@ -775,6 +781,8 @@ internal object UniffiLib {
     ): Long
     external fun uniffi_word_mobile_ffi_fn_func_init_mobile_assets(`fontsDir`: RustBuffer.ByValue,`packsDir`: RustBuffer.ByValue,uniffi_out_err: UniffiRustCallStatus, 
     ): Int
+    external fun uniffi_word_mobile_ffi_fn_func_load_and_list_system_fonts(uniffi_out_err: UniffiRustCallStatus, 
+    ): RustBuffer.ByValue
     external fun ffi_word_mobile_ffi_rustbuffer_alloc(`size`: Long,uniffi_out_err: UniffiRustCallStatus, 
     ): RustBuffer.ByValue
     external fun ffi_word_mobile_ffi_rustbuffer_from_bytes(`bytes`: ForeignBytes.ByValue,uniffi_out_err: UniffiRustCallStatus, 
@@ -897,6 +905,9 @@ private fun uniffiCheckApiChecksums(lib: IntegrityCheckingUniffiLib) {
     if ((lib.uniffi_word_mobile_ffi_checksum_func_init_mobile_assets() and 0xFFFF) != 13077) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
+    if ((lib.uniffi_word_mobile_ffi_checksum_func_load_and_list_system_fonts() and 0xFFFF) != 21165) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
     if ((lib.uniffi_word_mobile_ffi_checksum_method_mobiledocumentsession_double_tap_at() and 0xFFFF) != 60118) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
@@ -907,6 +918,9 @@ private fun uniffiCheckApiChecksums(lib: IntegrityCheckingUniffiLib) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
     if ((lib.uniffi_word_mobile_ffi_checksum_method_mobiledocumentsession_export_pdf_bytes() and 0xFFFF) != 49217) {
+        throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
+    }
+    if ((lib.uniffi_word_mobile_ffi_checksum_method_mobiledocumentsession_get_ruler_metrics() and 0xFFFF) != 36895) {
         throw RuntimeException("UniFFI API checksum mismatch: try cleaning and rebuilding your project")
     }
     if ((lib.uniffi_word_mobile_ffi_checksum_method_mobiledocumentsession_get_selection_geometry() and 0xFFFF) != 30546) {
@@ -1399,6 +1413,11 @@ public interface MobileDocumentSessionInterface {
     fun `exportPdfBytes`(): kotlin.ByteArray
     
     /**
+     * Returns exact page dimensions, section margins, and active paragraph indents in points.
+     */
+    fun `getRulerMetrics`(`pageIndex`: kotlin.UInt): RulerMetrics
+    
+    /**
      * Returns the current caret and selection highlight rectangles without mutating state.
      */
     fun `getSelectionGeometry`(): SelectionGeometry
@@ -1620,6 +1639,24 @@ open class MobileDocumentSession: Disposable, AutoCloseable, MobileDocumentSessi
     UniffiLib.uniffi_word_mobile_ffi_fn_method_mobiledocumentsession_export_pdf_bytes(
         it,
         _status)
+}
+    }
+    )
+    }
+    
+
+    
+    /**
+     * Returns exact page dimensions, section margins, and active paragraph indents in points.
+     */
+    @Throws(MobileFfiException::class)override fun `getRulerMetrics`(`pageIndex`: kotlin.UInt): RulerMetrics {
+            return FfiConverterTypeRulerMetrics.lift(
+    callWithHandle {
+    uniffiRustCallWithError(MobileFfiException) { _status ->
+    UniffiLib.uniffi_word_mobile_ffi_fn_method_mobiledocumentsession_get_ruler_metrics(
+        it,
+        
+        FfiConverterUInt.lower(`pageIndex`),_status)
 }
     }
     )
@@ -2114,6 +2151,82 @@ public object FfiConverterTypePageSizePt: FfiConverterRustBuffer<PageSizePt> {
 
 
 
+/**
+ * Page dimensions, section margins, and paragraph indents in points (`1 cm = 28.3465 pt`).
+ */
+data class RulerMetrics (
+    var `widthPt`: kotlin.Float
+    , 
+    var `heightPt`: kotlin.Float
+    , 
+    var `marginTopPt`: kotlin.Float
+    , 
+    var `marginBottomPt`: kotlin.Float
+    , 
+    var `marginLeftPt`: kotlin.Float
+    , 
+    var `marginRightPt`: kotlin.Float
+    , 
+    var `paraLeftPt`: kotlin.Float
+    , 
+    var `paraRightPt`: kotlin.Float
+    , 
+    var `paraFirstLinePt`: kotlin.Float
+    
+){
+    
+
+    
+
+    
+    companion object
+}
+
+/**
+ * @suppress
+ */
+public object FfiConverterTypeRulerMetrics: FfiConverterRustBuffer<RulerMetrics> {
+    override fun read(buf: ByteBuffer): RulerMetrics {
+        return RulerMetrics(
+            FfiConverterFloat.read(buf),
+            FfiConverterFloat.read(buf),
+            FfiConverterFloat.read(buf),
+            FfiConverterFloat.read(buf),
+            FfiConverterFloat.read(buf),
+            FfiConverterFloat.read(buf),
+            FfiConverterFloat.read(buf),
+            FfiConverterFloat.read(buf),
+            FfiConverterFloat.read(buf),
+        )
+    }
+
+    override fun allocationSize(value: RulerMetrics) = (
+            FfiConverterFloat.allocationSize(value.`widthPt`) +
+            FfiConverterFloat.allocationSize(value.`heightPt`) +
+            FfiConverterFloat.allocationSize(value.`marginTopPt`) +
+            FfiConverterFloat.allocationSize(value.`marginBottomPt`) +
+            FfiConverterFloat.allocationSize(value.`marginLeftPt`) +
+            FfiConverterFloat.allocationSize(value.`marginRightPt`) +
+            FfiConverterFloat.allocationSize(value.`paraLeftPt`) +
+            FfiConverterFloat.allocationSize(value.`paraRightPt`) +
+            FfiConverterFloat.allocationSize(value.`paraFirstLinePt`)
+    )
+
+    override fun write(value: RulerMetrics, buf: ByteBuffer) {
+            FfiConverterFloat.write(value.`widthPt`, buf)
+            FfiConverterFloat.write(value.`heightPt`, buf)
+            FfiConverterFloat.write(value.`marginTopPt`, buf)
+            FfiConverterFloat.write(value.`marginBottomPt`, buf)
+            FfiConverterFloat.write(value.`marginLeftPt`, buf)
+            FfiConverterFloat.write(value.`marginRightPt`, buf)
+            FfiConverterFloat.write(value.`paraLeftPt`, buf)
+            FfiConverterFloat.write(value.`paraRightPt`, buf)
+            FfiConverterFloat.write(value.`paraFirstLinePt`, buf)
+    }
+}
+
+
+
 data class SelectionGeometry (
     var `caret`: CaretRect?
     , 
@@ -2452,6 +2565,34 @@ public object FfiConverterOptionalTypeCaretRect: FfiConverterRustBuffer<CaretRec
 /**
  * @suppress
  */
+public object FfiConverterSequenceString: FfiConverterRustBuffer<List<kotlin.String>> {
+    override fun read(buf: ByteBuffer): List<kotlin.String> {
+        val len = buf.getInt()
+        return List<kotlin.String>(len) {
+            FfiConverterString.read(buf)
+        }
+    }
+
+    override fun allocationSize(value: List<kotlin.String>): ULong {
+        val sizeForLength = 4UL
+        val sizeForItems = value.map { FfiConverterString.allocationSize(it) }.sum()
+        return sizeForLength + sizeForItems
+    }
+
+    override fun write(value: List<kotlin.String>, buf: ByteBuffer) {
+        buf.putInt(value.size)
+        value.iterator().forEach {
+            FfiConverterString.write(it, buf)
+        }
+    }
+}
+
+
+
+
+/**
+ * @suppress
+ */
 public object FfiConverterSequenceTypePageSelectionRect: FfiConverterRustBuffer<List<PageSelectionRect>> {
     override fun read(buf: ByteBuffer): List<PageSelectionRect> {
         val len = buf.getInt()
@@ -2486,6 +2627,20 @@ public object FfiConverterSequenceTypePageSelectionRect: FfiConverterRustBuffer<
         
         FfiConverterString.lower(`fontsDir`),
         FfiConverterOptionalString.lower(`packsDir`),_status)
+}
+    )
+    }
+    
+
+        /**
+         * Loads all OS-installed system font families into the engine database and returns
+         * the sorted list of available family names (bundled + system + user-added).
+         */ fun `loadAndListSystemFonts`(): List<kotlin.String> {
+            return FfiConverterSequenceString.lift(
+    uniffiRustCall() { _status ->
+    UniffiLib.uniffi_word_mobile_ffi_fn_func_load_and_list_system_fonts(
+    
+        _status)
 }
     )
     }

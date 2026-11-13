@@ -57,3 +57,14 @@ func webDavAndTemplates() throws {
     #expect(AppleInkTool.from(commandId: "draw.pen") == .pen)
     #expect(OfficeRibbonPresets.paperSizes.contains(where: { $0.id == "oficio_cl" }))
 }
+
+@Test("System fonts merge and ruler metrics bridge expose desktop-grade data")
+func systemFontsAndRulerMetrics() throws {
+    let session = try DocxCoreBridge.makeBlankSession(locale: "es-CL")
+    let ruler = try session.getRulerMetrics(pageIndex: 0)
+    #expect(ruler.widthPt > 200)
+    #expect(ruler.heightPt > 300)
+    let fonts = DocxCoreBridge.loadAllSystemFonts()
+    #expect(fonts.count >= DocxCoreBridge.preferredWordFonts.count)
+    #expect(fonts.allSatisfy { !$0.hasPrefix(".") })
+}

@@ -72,11 +72,18 @@ fun DocxAdaptiveChrome(
     activeToggleIds: Set<String>,
     activeContexts: Set<String>,
     formatSummary: RibbonFormatSummary = RibbonFormatSummary.Default,
+    availableFonts: List<String> = RibbonCorePresets.fonts,
+    shellMode: ShellMode = if (formFactor == ShellFormFactor.TABLET_EXPANDED_RIBBON) ShellMode.TABLET else ShellMode.PHONE,
+    isDexHardware: Boolean = false,
+    commentCount: Int = 0,
+    showCommentsPane: Boolean = false,
     canUndo: Boolean,
     canRedo: Boolean,
     isDark: Boolean,
     onExecuteCommand: (commandId: String, paramsJson: String) -> Unit,
     onOpenBackstage: () -> Unit,
+    onToggleCommentsPane: () -> Unit = {},
+    onToggleDesktopMode: () -> Unit = {},
     canvasContent: @Composable (Modifier) -> Unit,
     statusBarContent: @Composable () -> Unit,
 ) {
@@ -93,21 +100,28 @@ fun DocxAdaptiveChrome(
 
     var showPhoneSheet by remember { mutableStateOf(false) }
     var searchQuery by remember { mutableStateOf("") }
+    val expandedChrome = formFactor == ShellFormFactor.TABLET_EXPANDED_RIBBON || shellMode != ShellMode.PHONE
 
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(surfaces.canvas),
     ) {
-        if (formFactor == ShellFormFactor.TABLET_EXPANDED_RIBBON) {
+        if (expandedChrome) {
             TabletTitleAndQatBar(
                 documentTitle = documentTitle,
                 qatControls = catalog.qat,
+                shellMode = shellMode,
+                isDexHardware = isDexHardware,
+                commentCount = commentCount,
+                showCommentsPane = showCommentsPane,
                 canUndo = canUndo,
                 canRedo = canRedo,
                 surfaces = surfaces,
                 accent = accent,
                 onOpenBackstage = onOpenBackstage,
+                onToggleCommentsPane = onToggleCommentsPane,
+                onToggleDesktopMode = onToggleDesktopMode,
                 onExecuteCommand = onExecuteCommand,
             )
             RibbonTabStripBar(
@@ -124,6 +138,7 @@ fun DocxAdaptiveChrome(
                     tab = currentTab,
                     activeToggleIds = activeToggleIds,
                     formatSummary = formatSummary,
+                    availableFonts = availableFonts,
                     surfaces = surfaces,
                     accent = accent,
                     checkedBg = checkedBg,
@@ -148,6 +163,7 @@ fun DocxAdaptiveChrome(
                 onUndo = { onExecuteCommand("edit.undo", "{}") },
                 onRedo = { onExecuteCommand("edit.redo", "{}") },
                 onOpenSearchRibbon = { showPhoneSheet = true },
+                onToggleDesktopMode = onToggleDesktopMode,
             )
             canvasContent(
                 Modifier
@@ -168,7 +184,7 @@ fun DocxAdaptiveChrome(
         }
     }
 
-    if (formFactor == ShellFormFactor.PHONE_COMPACT_SHEET && showPhoneSheet) {
+    if (!expandedChrome && showPhoneSheet) {
         val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
         ModalBottomSheet(
             onDismissRequest = { showPhoneSheet = false },
@@ -186,6 +202,7 @@ fun DocxAdaptiveChrome(
                 searchQuery = searchQuery,
                 activeToggleIds = activeToggleIds,
                 formatSummary = formatSummary,
+                availableFonts = availableFonts,
                 surfaces = surfaces,
                 accent = accent,
                 checkedBg = checkedBg,
@@ -207,11 +224,17 @@ fun DocxAdaptiveChrome(
 private fun TabletTitleAndQatBar(
     documentTitle: String,
     qatControls: List<RibbonControlSpec>,
+    shellMode: ShellMode,
+    isDexHardware: Boolean,
+    commentCount: Int,
+    showCommentsPane: Boolean,
     canUndo: Boolean,
     canRedo: Boolean,
     surfaces: OfficeTokens.SurfacePalette,
     accent: Color,
     onOpenBackstage: () -> Unit,
+    onToggleCommentsPane: () -> Unit,
+    onToggleDesktopMode: () -> Unit,
     onExecuteCommand: (String, String) -> Unit,
 ) {
     Row(
@@ -226,6 +249,7 @@ private fun TabletTitleAndQatBar(
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(6.dp),
+            modifier = Modifier.weight(1f, fill = false),
         ) {
             Text(
                 text = "DocxDocx",
@@ -264,10 +288,67 @@ private fun TabletTitleAndQatBar(
                 overflow = TextOverflow.Ellipsis,
             )
         }
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(6.dp),
+        ) {
+            TitleActionChip(
+                label = "Buscar",
+                active = false,
+                surfaces = surfaces,
+                accent = accent,
+                onClick = { onExecuteCommand("edit.find", "{}") },
+            )
+            TitleActionChip(
+                label = if (commentCount > 0) "Comentarios ($commentCount)" else "Comentarios",
+                active = showCommentsPane,
+                surfaces = surfaces,
+                accent = accent,
+                onClick = onToggleCommentsPane,
+            )
+            TitleActionChip(
+                label = "Imprimir",
+                active = false,
+                surfaces = surfaces,
+                accent = accent,
+                onClick = { onExecuteCommand("file.print", "{}") },
+            )
+            TitleActionChip(
+                label = when {
+                    shellMode == ShellMode.DESKTOP && isDexHardware -> "DeX / PC ✓"
+                    shellMode == ShellMode.DESKTOP -> "Escritorio ✓"
+                    else -> "Modo PC"
+                },
+                active = shellMode == ShellMode.DESKTOP,
+                surfaces = surfaces,
+                accent = accent,
+                onClick = onToggleDesktopMode,
+            )
+        }
+    }
+}
+
+@Composable
+private fun TitleActionChip(
+    label: String,
+    active: Boolean,
+    surfaces: OfficeTokens.SurfacePalette,
+    accent: Color,
+    onClick: () -> Unit,
+) {
+    Surface(
+        modifier = Modifier
+            .clip(RoundedCornerShape(OfficeTokens.Radii.pill))
+            .clickable { onClick() },
+        color = if (active) accent.copy(alpha = 0.16f) else surfaces.panel,
+        shape = RoundedCornerShape(OfficeTokens.Radii.pill),
+    ) {
         Text(
-            text = "OfiOfi Free • Local / Drive / WebDAV",
-            color = surfaces.textDim,
+            text = label,
+            color = if (active) accent else surfaces.textDim,
             fontSize = 11.sp,
+            fontWeight = if (active) FontWeight.SemiBold else FontWeight.Medium,
+            modifier = Modifier.padding(horizontal = 9.dp, vertical = 4.dp),
         )
     }
 }
@@ -359,6 +440,7 @@ private fun TabletFloatingRibbonCard(
     tab: RibbonTabSpec,
     activeToggleIds: Set<String>,
     formatSummary: RibbonFormatSummary,
+    availableFonts: List<String>,
     surfaces: OfficeTokens.SurfacePalette,
     accent: Color,
     checkedBg: Color,
@@ -403,6 +485,7 @@ private fun TabletFloatingRibbonCard(
                                         tall = true,
                                         checked = activeToggleIds.contains(slot.control.commandId),
                                         formatSummary = formatSummary,
+                                        availableFonts = availableFonts,
                                         surfaces = surfaces,
                                         accent = accent,
                                         checkedBg = checkedBg,
@@ -419,6 +502,7 @@ private fun TabletFloatingRibbonCard(
                                             tall = false,
                                             checked = activeToggleIds.contains(slot.top.commandId),
                                             formatSummary = formatSummary,
+                                            availableFonts = availableFonts,
                                             surfaces = surfaces,
                                             accent = accent,
                                             checkedBg = checkedBg,
@@ -430,6 +514,7 @@ private fun TabletFloatingRibbonCard(
                                                 tall = false,
                                                 checked = activeToggleIds.contains(slot.bottom.commandId),
                                                 formatSummary = formatSummary,
+                                                availableFonts = availableFonts,
                                                 surfaces = surfaces,
                                                 accent = accent,
                                                 checkedBg = checkedBg,
@@ -482,6 +567,7 @@ private fun RibbonControlWithSubmenu(
     tall: Boolean,
     checked: Boolean,
     formatSummary: RibbonFormatSummary,
+    availableFonts: List<String>,
     surfaces: OfficeTokens.SurfacePalette,
     accent: Color,
     checkedBg: Color,
@@ -493,6 +579,7 @@ private fun RibbonControlWithSubmenu(
         surfaces = surfaces,
         accent = accent,
         checkedBg = checkedBg,
+        availableFonts = availableFonts,
         onExecuteCommand = onExecuteCommand,
         iconContent = { iconName, contentDescription, sizeDp ->
             ControlVectorIcon(iconName = iconName, contentDescription = contentDescription, sizeDp = sizeDp)
@@ -605,6 +692,7 @@ private fun SmartphoneTopHeader(
     onUndo: () -> Unit,
     onRedo: () -> Unit,
     onOpenSearchRibbon: () -> Unit,
+    onToggleDesktopMode: () -> Unit,
 ) {
     Row(
         modifier = Modifier
@@ -669,6 +757,13 @@ private fun SmartphoneTopHeader(
                 modifier = Modifier
                     .clickable { onOpenSearchRibbon() }
                     .padding(horizontal = 6.dp, vertical = 4.dp),
+            )
+            TitleActionChip(
+                label = "PC",
+                active = false,
+                surfaces = surfaces,
+                accent = accent,
+                onClick = onToggleDesktopMode,
             )
         }
     }
@@ -742,6 +837,7 @@ private fun PhoneRibbonSheetContent(
     searchQuery: String,
     activeToggleIds: Set<String>,
     formatSummary: RibbonFormatSummary,
+    availableFonts: List<String>,
     surfaces: OfficeTokens.SurfacePalette,
     accent: Color,
     checkedBg: Color,
@@ -915,6 +1011,7 @@ private fun PhoneRibbonSheetContent(
                                             surfaces = surfaces,
                                             accent = accent,
                                             checkedBg = checkedBg,
+                                            availableFonts = availableFonts,
                                             onExecuteCommand = onExecuteCommand,
                                             iconContent = { iconName, desc, sz ->
                                                 ControlVectorIcon(iconName = iconName, contentDescription = desc, sizeDp = sz)

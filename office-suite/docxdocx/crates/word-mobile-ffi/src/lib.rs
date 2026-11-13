@@ -61,6 +61,29 @@ const MAX_TILE_SIDE: u32 = 4096;
 /// Maximum IME delete-surrounding steps per call.
 const MAX_DELETE_SURROUNDING: u32 = 128;
 
+/// Loads all OS-installed system font families into the engine database and returns
+/// the sorted list of available family names (bundled + system + user-added).
+#[uniffi::export]
+pub fn load_and_list_system_fonts() -> Vec<String> {
+    let db = FontDb::global();
+    let _ = db.load_system_fonts();
+    db.families()
+}
+
+/// Page dimensions, section margins, and paragraph indents in points (`1 cm = 28.3465 pt`).
+#[derive(Clone, Debug, PartialEq, uniffi::Record)]
+pub struct RulerMetrics {
+    pub width_pt: f32,
+    pub height_pt: f32,
+    pub margin_top_pt: f32,
+    pub margin_bottom_pt: f32,
+    pub margin_left_pt: f32,
+    pub margin_right_pt: f32,
+    pub para_left_pt: f32,
+    pub para_right_pt: f32,
+    pub para_first_line_pt: f32,
+}
+
 /// Error returned across the FFI boundary without panicking.
 #[derive(Debug, thiserror::Error, uniffi::Error)]
 pub enum MobileFfiError {
@@ -337,6 +360,35 @@ impl MobileDocumentSession {
     pub fn get_selection_geometry(&self) -> SelectionGeometry {
         let mut s = self.inner.lock();
         compute_selection_geometry(&mut s)
+    }
+
+    /// Returns exact page dimensions, section margins, and active paragraph indents in points.
+    pub fn get_ruler_metrics(&self, page_index: u32) -> Result<RulerMetrics, MobileFfiError> {
+        let mut s = self.inner.lock();
+        let (width_pt, height_pt) = {
+            let lay = s.layout();
+            let count = u32::try_from(lay.pages.len()).unwrap_or(u32::MAX);
+            let page = lay.pages.get(page_index as usize).ok_or(MobileFfiError::InvalidPage { index: page_index, count })?;
+            (page.w, page.h)
+        };
+        let sec_idx = match s.sel.focus.story {
+            StoryRef::Body => s.doc.section_index_of(s.sel.focus.path.0.first().copied().unwrap_or(0) as usize),
+            _ => 0,
+        };
+        let sect = s.doc.sections().get(sec_idx).map(|(_, x)| (*x).clone()).unwrap_or_default();
+        let p_props = s.doc.para_at(&s.sel.focus).map(|p| p.props.clone()).unwrap_or_default();
+        let rp = s.doc.styles.resolve_para(&p_props);
+        Ok(RulerMetrics {
+            width_pt,
+            height_pt,
+            margin_top_pt: sect.margin_top,
+            margin_bottom_pt: sect.margin_bottom,
+            margin_left_pt: sect.margin_left,
+            margin_right_pt: sect.margin_right,
+            para_left_pt: rp.indent_left,
+            para_right_pt: rp.indent_right,
+            para_first_line_pt: rp.indent_first,
+        })
     }
 }
 
@@ -616,5 +668,38 @@ mod tests {
             dark_page: false,
         });
         assert!(tile.as_ref().is_ok_and(|b| b.len() == 256 * 256 * 4));
+    }
+
+    #[test]
+    fn test_ruler_metrics_and_system_fonts() {
+        let fonts = load_and_list_system_fonts();
+        assert!(!fonts.is_empty(), "expected bundled or system fonts");
+
+        let session = MobileDocumentSession::new_blank("es-CL".to_string());
+        let initial = session.get_ruler_metrics(0);
+        assert!(initial.as_ref().is_ok_and(|m| m.width_pt > 500.0 && m.height_pt > 600.0));
+
+        let margin_cmd = session.execute_command(
+            "layout.margins".to_string(),
+            r#"{"top":56.69,"bottom":56.69,"left":70.87,"right":42.52}"#.to_string(),
+        );
+        assert!(margin_cmd.is_ok(), "layout.margins failed: {margin_cmd:?}");
+
+        let indent_cmd = session.execute_command(
+            "para.indents".to_string(),
+            r#"{"left":28.35,"right":14.17,"firstLine":14.17}"#.to_string(),
+        );
+        assert!(indent_cmd.is_ok(), "para.indents failed: {indent_cmd:?}");
+
+        let updated = session.get_ruler_metrics(0);
+        assert!(updated.as_ref().is_ok_and(|m| {
+            (m.margin_top_pt - 56.69).abs() < 0.25
+                && (m.margin_bottom_pt - 56.69).abs() < 0.25
+                && (m.margin_left_pt - 70.87).abs() < 0.25
+                && (m.margin_right_pt - 42.52).abs() < 0.25
+                && (m.para_left_pt - 28.35).abs() < 0.25
+                && (m.para_right_pt - 14.17).abs() < 0.25
+                && (m.para_first_line_pt - 14.17).abs() < 0.25
+        }));
     }
 }

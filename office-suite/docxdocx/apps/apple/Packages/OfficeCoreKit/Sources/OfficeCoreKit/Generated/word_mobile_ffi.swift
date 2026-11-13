@@ -628,6 +628,11 @@ public protocol MobileDocumentSessionProtocol: AnyObject, Sendable {
     func exportPdfBytes() throws  -> Data
     
     /**
+     * Returns exact page dimensions, section margins, and active paragraph indents in points.
+     */
+    func getRulerMetrics(pageIndex: UInt32) throws  -> RulerMetrics
+    
+    /**
      * Returns the current caret and selection highlight rectangles without mutating state.
      */
     func getSelectionGeometry()  -> SelectionGeometry
@@ -820,6 +825,19 @@ open func exportPdfBytes()throws  -> Data  {
         uniffiCallStatus in
     uniffi_word_mobile_ffi_fn_method_mobiledocumentsession_export_pdf_bytes(
             self.uniffiCloneHandle(),uniffiCallStatus
+    )
+})
+}
+    
+    /**
+     * Returns exact page dimensions, section margins, and active paragraph indents in points.
+     */
+open func getRulerMetrics(pageIndex: UInt32)throws  -> RulerMetrics  {
+    return try  FfiConverterTypeRulerMetrics_lift(try rustCallWithError(FfiConverterTypeMobileFfiError_lift) {
+        uniffiCallStatus in
+    uniffi_word_mobile_ffi_fn_method_mobiledocumentsession_get_ruler_metrics(
+            self.uniffiCloneHandle(),
+        FfiConverterUInt32.lower(pageIndex),uniffiCallStatus
     )
 })
 }
@@ -1272,6 +1290,91 @@ public func FfiConverterTypePageSizePt_lower(_ value: PageSizePt) -> RustBuffer 
 }
 
 
+/**
+ * Page dimensions, section margins, and paragraph indents in points (`1 cm = 28.3465 pt`).
+ */
+public struct RulerMetrics: Equatable, Hashable {
+    public var widthPt: Float
+    public var heightPt: Float
+    public var marginTopPt: Float
+    public var marginBottomPt: Float
+    public var marginLeftPt: Float
+    public var marginRightPt: Float
+    public var paraLeftPt: Float
+    public var paraRightPt: Float
+    public var paraFirstLinePt: Float
+
+    // Default memberwise initializers are never public by default, so we
+    // declare one manually.
+    public init(widthPt: Float, heightPt: Float, marginTopPt: Float, marginBottomPt: Float, marginLeftPt: Float, marginRightPt: Float, paraLeftPt: Float, paraRightPt: Float, paraFirstLinePt: Float) {
+        self.widthPt = widthPt
+        self.heightPt = heightPt
+        self.marginTopPt = marginTopPt
+        self.marginBottomPt = marginBottomPt
+        self.marginLeftPt = marginLeftPt
+        self.marginRightPt = marginRightPt
+        self.paraLeftPt = paraLeftPt
+        self.paraRightPt = paraRightPt
+        self.paraFirstLinePt = paraFirstLinePt
+    }
+
+    
+
+    
+}
+
+#if compiler(>=6)
+extension RulerMetrics: Sendable {}
+#endif
+
+#if swift(>=5.8)
+@_documentation(visibility: private)
+#endif
+public struct FfiConverterTypeRulerMetrics: FfiConverterRustBuffer {
+    public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> RulerMetrics {
+        return
+            try RulerMetrics(
+                widthPt: FfiConverterFloat.read(from: &buf), 
+                heightPt: FfiConverterFloat.read(from: &buf), 
+                marginTopPt: FfiConverterFloat.read(from: &buf), 
+                marginBottomPt: FfiConverterFloat.read(from: &buf), 
+                marginLeftPt: FfiConverterFloat.read(from: &buf), 
+                marginRightPt: FfiConverterFloat.read(from: &buf), 
+                paraLeftPt: FfiConverterFloat.read(from: &buf), 
+                paraRightPt: FfiConverterFloat.read(from: &buf), 
+                paraFirstLinePt: FfiConverterFloat.read(from: &buf)
+        )
+    }
+
+    public static func write(_ value: RulerMetrics, into buf: inout [UInt8]) {
+        FfiConverterFloat.write(value.widthPt, into: &buf)
+        FfiConverterFloat.write(value.heightPt, into: &buf)
+        FfiConverterFloat.write(value.marginTopPt, into: &buf)
+        FfiConverterFloat.write(value.marginBottomPt, into: &buf)
+        FfiConverterFloat.write(value.marginLeftPt, into: &buf)
+        FfiConverterFloat.write(value.marginRightPt, into: &buf)
+        FfiConverterFloat.write(value.paraLeftPt, into: &buf)
+        FfiConverterFloat.write(value.paraRightPt, into: &buf)
+        FfiConverterFloat.write(value.paraFirstLinePt, into: &buf)
+    }
+}
+
+
+#if swift(>=5.8)
+@_documentation(visibility: private)
+#endif
+public func FfiConverterTypeRulerMetrics_lift(_ buf: RustBuffer) throws -> RulerMetrics {
+    return try FfiConverterTypeRulerMetrics.lift(buf)
+}
+
+#if swift(>=5.8)
+@_documentation(visibility: private)
+#endif
+public func FfiConverterTypeRulerMetrics_lower(_ value: RulerMetrics) -> RustBuffer {
+    return FfiConverterTypeRulerMetrics.lower(value)
+}
+
+
 public struct SelectionGeometry: Equatable, Hashable {
     public var caret: CaretRect?
     public var selectionRects: [PageSelectionRect]
@@ -1578,6 +1681,31 @@ fileprivate struct FfiConverterOptionTypeCaretRect: FfiConverterRustBuffer {
 #if swift(>=5.8)
 @_documentation(visibility: private)
 #endif
+fileprivate struct FfiConverterSequenceString: FfiConverterRustBuffer {
+    typealias SwiftType = [String]
+
+    public static func write(_ value: [String], into buf: inout [UInt8]) {
+        let len = Int32(value.count)
+        writeInt(&buf, len)
+        for item in value {
+            FfiConverterString.write(item, into: &buf)
+        }
+    }
+
+    public static func read(from buf: inout (data: Data, offset: Data.Index)) throws -> [String] {
+        let len: Int32 = try readInt(&buf)
+        var seq = [String]()
+        seq.reserveCapacity(Int(len))
+        for _ in 0 ..< len {
+            seq.append(try FfiConverterString.read(from: &buf))
+        }
+        return seq
+    }
+}
+
+#if swift(>=5.8)
+@_documentation(visibility: private)
+#endif
 fileprivate struct FfiConverterSequenceTypePageSelectionRect: FfiConverterRustBuffer {
     typealias SwiftType = [PageSelectionRect]
 
@@ -1613,6 +1741,17 @@ public func initMobileAssets(fontsDir: String, packsDir: String?)throws  -> UInt
     )
 })
 }
+/**
+ * Loads all OS-installed system font families into the engine database and returns
+ * the sorted list of available family names (bundled + system + user-added).
+ */
+public func loadAndListSystemFonts() -> [String]  {
+    return try!  FfiConverterSequenceString.lift(try! rustCall() {
+        uniffiCallStatus in
+    uniffi_word_mobile_ffi_fn_func_load_and_list_system_fonts(uniffiCallStatus
+    )
+})
+}
 
 private enum InitializationResult {
     case ok
@@ -1632,6 +1771,9 @@ private let initializationResult: InitializationResult = {
     if (uniffi_word_mobile_ffi_checksum_func_init_mobile_assets() != 13077) {
         return InitializationResult.apiChecksumMismatch
     }
+    if (uniffi_word_mobile_ffi_checksum_func_load_and_list_system_fonts() != 21165) {
+        return InitializationResult.apiChecksumMismatch
+    }
     if (uniffi_word_mobile_ffi_checksum_method_mobiledocumentsession_double_tap_at() != 60118) {
         return InitializationResult.apiChecksumMismatch
     }
@@ -1642,6 +1784,9 @@ private let initializationResult: InitializationResult = {
         return InitializationResult.apiChecksumMismatch
     }
     if (uniffi_word_mobile_ffi_checksum_method_mobiledocumentsession_export_pdf_bytes() != 49217) {
+        return InitializationResult.apiChecksumMismatch
+    }
+    if (uniffi_word_mobile_ffi_checksum_method_mobiledocumentsession_get_ruler_metrics() != 36895) {
         return InitializationResult.apiChecksumMismatch
     }
     if (uniffi_word_mobile_ffi_checksum_method_mobiledocumentsession_get_selection_geometry() != 30546) {

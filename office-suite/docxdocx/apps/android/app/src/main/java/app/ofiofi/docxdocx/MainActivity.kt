@@ -1,6 +1,8 @@
 package app.ofiofi.docxdocx
 
+import android.content.Context
 import android.content.Intent
+import android.hardware.input.InputManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.OpenableColumns
@@ -23,6 +25,7 @@ import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSiz
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
@@ -32,6 +35,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.key.onPreviewKeyEvent
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -49,6 +53,8 @@ import app.ofiofi.docxdocx.storage.SafDocumentHelper
 import app.ofiofi.docxdocx.storage.StorageProviderKind
 import app.ofiofi.docxdocx.ui.backstage.BackstageArchivoOverlay
 import app.ofiofi.docxdocx.ui.canvas.HorizontalPageRuler
+import app.ofiofi.docxdocx.ui.canvas.RulerMath
+import app.ofiofi.docxdocx.ui.canvas.RulerViewportMetrics
 import app.ofiofi.docxdocx.ui.canvas.VerticalPageRuler
 import app.ofiofi.docxdocx.ui.dialogs.OfficeDialogRouter
 import app.ofiofi.docxdocx.ui.dialogs.OfficeModalDialogHost
@@ -62,11 +68,19 @@ import app.ofiofi.docxdocx.ui.ribbon.FindReplaceOverlayBar
 import app.ofiofi.docxdocx.ui.ribbon.QuickNoteComposerBar
 import app.ofiofi.docxdocx.ui.ribbon.RibbonAdvancedPresets
 import app.ofiofi.docxdocx.ui.shell.AdaptiveShellModel
+import app.ofiofi.docxdocx.ui.shell.CommentsSidePane
+import app.ofiofi.docxdocx.ui.shell.DesktopEnvironmentDetector
+import app.ofiofi.docxdocx.ui.shell.DesktopModePreference
+import app.ofiofi.docxdocx.ui.shell.DocCommentItem
+import app.ofiofi.docxdocx.ui.shell.DocCommentParser
 import app.ofiofi.docxdocx.ui.shell.DocxAdaptiveChrome
+import app.ofiofi.docxdocx.ui.shell.DocxFontCatalog
 import app.ofiofi.docxdocx.ui.shell.RibbonFormatSummary
+import app.ofiofi.docxdocx.ui.shell.ShellMode
 import app.ofiofi.docxdocx.ui.theme.OfficeTokens
 import uniffi.word_mobile_ffi.CommandOutcome
 import uniffi.word_mobile_ffi.MobileDocumentSession
+import uniffi.word_mobile_ffi.RulerMetrics
 import kotlin.math.roundToInt
 
 class MainActivity : ComponentActivity() {
@@ -123,10 +137,35 @@ fun DocxWorkspaceScreen(
     isDark: Boolean,
 ) {
     val context = LocalContext.current
+    val configuration = LocalConfiguration.current
     val surfaces = if (isDark) OfficeTokens.DarkSurfaces else OfficeTokens.LightSurfaces
     val accent = if (isDark) OfficeTokens.AppAccents.Word.accentDark else OfficeTokens.AppAccents.Word.accentLight
-    val formFactor = remember(isExpandedWidth) { AdaptiveShellModel.resolveFormFactor(isExpandedWidth) }
     val recentStore = remember(context) { RecentDocumentStore(context) }
+    val availableFonts = remember { DocxFontCatalog.loadAllFonts() }
+
+    var inputDeviceGeneration by remember { mutableIntStateOf(0) }
+    DisposableEffect(context) {
+        val inputManager = context.getSystemService(Context.INPUT_SERVICE) as? InputManager
+        val listener = object : InputManager.InputDeviceListener {
+            override fun onInputDeviceAdded(deviceId: Int) { inputDeviceGeneration += 1 }
+            override fun onInputDeviceRemoved(deviceId: Int) { inputDeviceGeneration += 1 }
+            override fun onInputDeviceChanged(deviceId: Int) { inputDeviceGeneration += 1 }
+        }
+        inputManager?.registerInputDeviceListener(listener, null)
+        onDispose { inputManager?.unregisterInputDeviceListener(listener) }
+    }
+
+    var desktopPreference by remember { mutableStateOf(DesktopModePreference.AUTO) }
+    val envSignals = remember(configuration, inputDeviceGeneration, desktopPreference) {
+        DesktopEnvironmentDetector.inspect(
+            context = context,
+            windowWidthDp = configuration.screenWidthDp,
+            preference = desktopPreference,
+        )
+    }
+    val shellMode = remember(envSignals) { DesktopEnvironmentDetector.resolveShellMode(envSignals) }
+    val isDesktopOrTablet = isExpandedWidth || shellMode != ShellMode.PHONE
+    val formFactor = remember(isDesktopOrTablet) { AdaptiveShellModel.resolveFormFactor(isDesktopOrTablet) }
 
     var activeSession by remember { mutableStateOf(initialSession) }
     var documentTitle by remember { mutableStateOf(initialTitle) }
@@ -136,12 +175,16 @@ fun DocxWorkspaceScreen(
     var zoom by remember { mutableFloatStateOf(1.0f) }
     var layoutMode by remember { mutableStateOf(DocumentLayoutMode.PRINT_LAYOUT) }
     var selectionGeometry by remember { mutableStateOf(activeSession.getSelectionGeometry()) }
+    var viewportMetrics by remember { mutableStateOf(RulerViewportMetrics()) }
     var canUndo by remember { mutableStateOf(false) }
     var canRedo by remember { mutableStateOf(false) }
     var activeToggleIds by remember { mutableStateOf(emptySet<String>()) }
     var activeContexts by remember { mutableStateOf(emptySet<String>()) }
     var formatSummary by remember { mutableStateOf(RibbonFormatSummary.Default) }
-    var showRuler by remember(isExpandedWidth) { mutableStateOf(isExpandedWidth) }
+    var showRuler by remember(shellMode, isDesktopOrTablet) {
+        mutableStateOf(shellMode == ShellMode.DESKTOP || isDesktopOrTablet)
+    }
+    var showCommentsPane by remember { mutableStateOf(false) }
     var activeToolPanel by remember { mutableStateOf<AdvancedToolPanel?>(null) }
     var activeModalDialog by remember { mutableStateOf<OfficeModalDialogKind?>(null) }
     var activeInkTool by remember { mutableStateOf(InkToolKind.NONE) }
@@ -151,6 +194,30 @@ fun DocxWorkspaceScreen(
         mutableStateOf("Página 1 de ${activeSession.pageCount()}  •  ${activeSession.wordCount()} palabras")
     }
     var showBackstage by remember { mutableStateOf(false) }
+
+    val currentPageIdx = selectionGeometry.caret?.pageIndex ?: 0u
+    val rulerMetrics: RulerMetrics = remember(activeSession, docRevision, currentPageIdx) {
+        runCatching { activeSession.getRulerMetrics(currentPageIdx) }
+            .getOrElse {
+                RulerMetrics(
+                    widthPt = 612f,
+                    heightPt = 792f,
+                    marginTopPt = 72f,
+                    marginBottomPt = 72f,
+                    marginLeftPt = 72f,
+                    marginRightPt = 72f,
+                    paraLeftPt = 0f,
+                    paraRightPt = 0f,
+                    paraFirstLinePt = 0f,
+                )
+            }
+    }
+    val commentsList: List<DocCommentItem> = remember(activeSession, docRevision) {
+        runCatching {
+            val outcome = activeSession.executeCommand("review.comments", "{}")
+            DocCommentParser.parseList(outcome.resultJson)
+        }.getOrDefault(emptyList())
+    }
 
     val applyOutcome: (CommandOutcome) -> Unit = { outcome ->
         selectionGeometry = outcome.selection
@@ -198,6 +265,14 @@ fun DocxWorkspaceScreen(
             commandId == "file.print" -> DocxPrintDocumentAdapter.launchPrintJob(context, documentTitle, activeSession)
             commandId == "view.ruler" -> showRuler = !showRuler
             commandId == "view.zoom100" -> zoom = 1.0f
+            commandId == "view.comments" || commandId == "review.showComments" -> showCommentsPane = !showCommentsPane
+            commandId == "review.newComment" && paramsJson == "{}" -> {
+                if (shellMode != ShellMode.PHONE) {
+                    showCommentsPane = true
+                } else {
+                    activeToolPanel = AdvancedToolPanel.NEW_COMMENT
+                }
+            }
             inkTool != null -> {
                 activeInkTool = if (activeInkTool == inkTool && inkTool != InkToolKind.NONE) InkToolKind.NONE else inkTool
             }
@@ -225,6 +300,7 @@ fun DocxWorkspaceScreen(
     val effectiveToggleIds = buildSet {
         addAll(activeToggleIds)
         if (showRuler) add("view.ruler")
+        if (showCommentsPane) add("review.showComments")
         when (activeInkTool) {
             InkToolKind.PEN -> add("draw.pen")
             InkToolKind.PENCIL -> add("draw.pencil")
@@ -255,11 +331,23 @@ fun DocxWorkspaceScreen(
             activeToggleIds = effectiveToggleIds,
             activeContexts = activeContexts,
             formatSummary = formatSummary,
+            availableFonts = availableFonts,
+            shellMode = shellMode,
+            isDexHardware = envSignals.isSamsungDex,
+            commentCount = commentsList.count { it.parent == null },
+            showCommentsPane = showCommentsPane,
             canUndo = canUndo,
             canRedo = canRedo,
             isDark = isDark,
             onExecuteCommand = dispatchCommand,
             onOpenBackstage = { showBackstage = true },
+            onToggleCommentsPane = { showCommentsPane = !showCommentsPane },
+            onToggleDesktopMode = {
+                desktopPreference = when (shellMode) {
+                    ShellMode.DESKTOP -> DesktopModePreference.FORCE_MOBILE
+                    ShellMode.TABLET, ShellMode.PHONE -> DesktopModePreference.FORCE_DESKTOP
+                }
+            },
             canvasContent = { canvasModifier ->
                 Column(modifier = canvasModifier) {
                     when (activeToolPanel) {
@@ -312,13 +400,30 @@ fun DocxWorkspaceScreen(
                     }
                     if (showRuler) {
                         HorizontalPageRuler(
+                            rulerMetrics = rulerMetrics,
+                            viewportMetrics = viewportMetrics,
                             zoom = zoom,
                             surfaces = surfaces,
+                            accent = accent,
+                            onCommitMargins = { leftPt, rightPt ->
+                                dispatchCommand("layout.margins", RulerMath.buildMarginsPayload(leftPt = leftPt, rightPt = rightPt))
+                            },
+                            onCommitIndents = { leftPt, rightPt, firstLinePt ->
+                                dispatchCommand("para.indents", RulerMath.buildIndentsPayload(leftPt, rightPt, firstLinePt))
+                            },
                         )
                     }
                     Row(modifier = Modifier.weight(1f).fillMaxWidth()) {
-                        if (showRuler && isExpandedWidth) {
-                            VerticalPageRuler(surfaces = surfaces)
+                        if (showRuler && isDesktopOrTablet) {
+                            VerticalPageRuler(
+                                rulerMetrics = rulerMetrics,
+                                viewportMetrics = viewportMetrics,
+                                surfaces = surfaces,
+                                accent = accent,
+                                onCommitMargins = { topPt, bottomPt ->
+                                    dispatchCommand("layout.margins", RulerMath.buildMarginsPayload(topPt = topPt, bottomPt = bottomPt))
+                                },
+                            )
                         }
                         Box(modifier = Modifier.weight(1f).fillMaxHeight()) {
                             WordInputHost(
@@ -365,6 +470,9 @@ fun DocxWorkspaceScreen(
                                 onQuickCommand = { cmdId ->
                                     dispatchCommand(cmdId, "{}")
                                 },
+                                onViewportMetricsChanged = { updatedMetrics ->
+                                    viewportMetrics = updatedMetrics
+                                },
                                 modifier = Modifier.fillMaxSize(),
                             )
                             StylusInkOverlay(
@@ -377,6 +485,15 @@ fun DocxWorkspaceScreen(
                                     inkStrokes = inkStrokes.filterNot { InkEngineBridge.hitTestStroke(it, x, y) }
                                 },
                                 modifier = Modifier.fillMaxSize(),
+                            )
+                        }
+                        if (showCommentsPane) {
+                            CommentsSidePane(
+                                comments = commentsList,
+                                surfaces = surfaces,
+                                accent = accent,
+                                onExecuteCommand = dispatchCommand,
+                                onDismiss = { showCommentsPane = false },
                             )
                         }
                     }
@@ -406,7 +523,7 @@ fun DocxWorkspaceScreen(
                 pageCount = activeSession.pageCount(),
                 wordCount = activeSession.wordCount(),
                 isDark = isDark,
-                isCompactWidth = !isExpandedWidth,
+                isCompactWidth = !isDesktopOrTablet,
                 onDismiss = { showBackstage = false },
                 onNewFromTemplate = { template ->
                     val next = SafDocumentHelper.createSessionFromTemplate(template, "es-CL")

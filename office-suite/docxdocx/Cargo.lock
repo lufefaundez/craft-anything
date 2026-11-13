@@ -2647,7 +2647,7 @@ dependencies = [
 [[package]]
 name = "wordcraft-doc"
 version = "0.18.1"
-source = "git+https://github.com/storytold/wordcraft.git?rev=6bf96e65e43d4e0acb568567fe22a7accd42c29b#6bf96e65e43d4e0acb568567fe22a7accd42c29b"
+source = "git+https://github.com/lufefaundez/docxdocx.git?rev=8ab5a4d6581607baf60d8177ddc8c911a1e8fe5e#8ab5a4d6581607baf60d8177ddc8c911a1e8fe5e"
 dependencies = [
  "base64 0.23.1",
  "log",
@@ -2661,7 +2661,7 @@ dependencies = [
 [[package]]
 name = "wordcraft-docbin"
 version = "0.18.1"
-source = "git+https://github.com/storytold/wordcraft.git?rev=6bf96e65e43d4e0acb568567fe22a7accd42c29b#6bf96e65e43d4e0acb568567fe22a7accd42c29b"
+source = "git+https://github.com/lufefaundez/docxdocx.git?rev=8ab5a4d6581607baf60d8177ddc8c911a1e8fe5e#8ab5a4d6581607baf60d8177ddc8c911a1e8fe5e"
 dependencies = [
  "cfb",
  "chrono",
@@ -2677,7 +2677,7 @@ dependencies = [
 [[package]]
 name = "wordcraft-docx"
 version = "0.18.1"
-source = "git+https://github.com/storytold/wordcraft.git?rev=6bf96e65e43d4e0acb568567fe22a7accd42c29b#6bf96e65e43d4e0acb568567fe22a7accd42c29b"
+source = "git+https://github.com/lufefaundez/docxdocx.git?rev=8ab5a4d6581607baf60d8177ddc8c911a1e8fe5e#8ab5a4d6581607baf60d8177ddc8c911a1e8fe5e"
 dependencies = [
  "aes",
  "base64 0.23.1",
@@ -2687,6 +2687,7 @@ dependencies = [
  "hmac",
  "log",
  "quick-xml",
+ "serde_json",
  "sha1",
  "sha2 0.11.1",
  "thiserror",
@@ -2700,7 +2701,7 @@ dependencies = [
 [[package]]
 name = "wordcraft-engine"
 version = "0.18.1"
-source = "git+https://github.com/storytold/wordcraft.git?rev=6bf96e65e43d4e0acb568567fe22a7accd42c29b#6bf96e65e43d4e0acb568567fe22a7accd42c29b"
+source = "git+https://github.com/lufefaundez/docxdocx.git?rev=8ab5a4d6581607baf60d8177ddc8c911a1e8fe5e#8ab5a4d6581607baf60d8177ddc8c911a1e8fe5e"
 dependencies = [
  "chrono",
  "craft-font-catalog",
@@ -2732,7 +2733,7 @@ dependencies = [
 [[package]]
 name = "wordcraft-fonts"
 version = "0.18.1"
-source = "git+https://github.com/storytold/wordcraft.git?rev=6bf96e65e43d4e0acb568567fe22a7accd42c29b#6bf96e65e43d4e0acb568567fe22a7accd42c29b"
+source = "git+https://github.com/lufefaundez/docxdocx.git?rev=8ab5a4d6581607baf60d8177ddc8c911a1e8fe5e#8ab5a4d6581607baf60d8177ddc8c911a1e8fe5e"
 dependencies = [
  "brotli-decompressor 5.0.3",
  "harfrust",
@@ -2747,7 +2748,7 @@ dependencies = [
 [[package]]
 name = "wordcraft-formats"
 version = "0.18.1"
-source = "git+https://github.com/storytold/wordcraft.git?rev=6bf96e65e43d4e0acb568567fe22a7accd42c29b#6bf96e65e43d4e0acb568567fe22a7accd42c29b"
+source = "git+https://github.com/lufefaundez/docxdocx.git?rev=8ab5a4d6581607baf60d8177ddc8c911a1e8fe5e#8ab5a4d6581607baf60d8177ddc8c911a1e8fe5e"
 dependencies = [
  "aes",
  "base64 0.23.1",
@@ -2774,7 +2775,7 @@ dependencies = [
 [[package]]
 name = "wordcraft-geom"
 version = "0.18.1"
-source = "git+https://github.com/storytold/wordcraft.git?rev=6bf96e65e43d4e0acb568567fe22a7accd42c29b#6bf96e65e43d4e0acb568567fe22a7accd42c29b"
+source = "git+https://github.com/lufefaundez/docxdocx.git?rev=8ab5a4d6581607baf60d8177ddc8c911a1e8fe5e#8ab5a4d6581607baf60d8177ddc8c911a1e8fe5e"
 dependencies = [
  "image",
  "serde",
@@ -2783,7 +2784,7 @@ dependencies = [
 [[package]]
 name = "wordcraft-layout"
 version = "0.18.1"
-source = "git+https://github.com/storytold/wordcraft.git?rev=6bf96e65e43d4e0acb568567fe22a7accd42c29b#6bf96e65e43d4e0acb568567fe22a7accd42c29b"
+source = "git+https://github.com/lufefaundez/docxdocx.git?rev=8ab5a4d6581607baf60d8177ddc8c911a1e8fe5e#8ab5a4d6581607baf60d8177ddc8c911a1e8fe5e"
 dependencies = [
  "craft-proof",
  "image",
@@ -2804,7 +2805,7 @@ dependencies = [
 [[package]]
 name = "wordcraft-metafile"
 version = "0.18.1"
-source = "git+https://github.com/storytold/wordcraft.git?rev=6bf96e65e43d4e0acb568567fe22a7accd42c29b#6bf96e65e43d4e0acb568567fe22a7accd42c29b"
+source = "git+https://github.com/lufefaundez/docxdocx.git?rev=8ab5a4d6581607baf60d8177ddc8c911a1e8fe5e#8ab5a4d6581607baf60d8177ddc8c911a1e8fe5e"
 dependencies = [
  "kurbo",
  "thiserror",
@@ -2813,7 +2814,7 @@ dependencies = [
 [[package]]
 name = "wordcraft-pdf"
 version = "0.18.1"
-source = "git+https://github.com/storytold/wordcraft.git?rev=6bf96e65e43d4e0acb568567fe22a7accd42c29b#6bf96e65e43d4e0acb568567fe22a7accd42c29b"
+source = "git+https://github.com/lufefaundez/docxdocx.git?rev=8ab5a4d6581607baf60d8177ddc8c911a1e8fe5e#8ab5a4d6581607baf60d8177ddc8c911a1e8fe5e"
 dependencies = [
  "chrono",
  "craft-pdf",
@@ -2832,7 +2833,7 @@ dependencies = [
 [[package]]
 name = "wordcraft-render"
 version = "0.18.1"
-source = "git+https://github.com/storytold/wordcraft.git?rev=6bf96e65e43d4e0acb568567fe22a7accd42c29b#6bf96e65e43d4e0acb568567fe22a7accd42c29b"
+source = "git+https://github.com/lufefaundez/docxdocx.git?rev=8ab5a4d6581607baf60d8177ddc8c911a1e8fe5e#8ab5a4d6581607baf60d8177ddc8c911a1e8fe5e"
 dependencies = [
  "image",
  "log",

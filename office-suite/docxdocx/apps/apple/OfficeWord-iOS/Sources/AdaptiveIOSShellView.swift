@@ -467,7 +467,7 @@ struct IOSRibbonControlView: View {
         switch control.kind {
         case "font_picker":
             Menu {
-                ForEach(OfficeRibbonPresets.fonts, id: \.self) { f in
+                ForEach(DocxCoreBridge.loadAllSystemFonts(), id: \.self) { f in
                     Button(f) { store.executeCommand("format.font", paramsJson: #"{"name":"\#(f)"}"#) }
                 }
             } label: {
@@ -665,7 +665,7 @@ struct IOSModalDialogSheet: View {
                             get: { store.activeFontName },
                             set: { store.executeCommand("format.font", paramsJson: #"{"name":"\#($0)"}"#) }
                         )) {
-                            ForEach(OfficeRibbonPresets.fonts, id: \.self) { f in Text(f).tag(f) }
+                            ForEach(DocxCoreBridge.loadAllSystemFonts(), id: \.self) { f in Text(f).tag(f) }
                         }
                         Button("Negrita") { store.executeCommand("format.bold") }
                         Button("Cursiva") { store.executeCommand("format.italic") }
