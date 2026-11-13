@@ -12,6 +12,8 @@ apps/apple/Packages/OfficeCoreKit/Sources/OfficeCoreKit/Resources/ribbon-schema.
 apps/apple/.build/
 apps/apple/build/
 apps/apple/DocxDocxMac/.build/
+apps/apple/DocxDocx.xcodeproj/xcuserdata/
+apps/apple/DerivedData/
 *.app/
 *.so
 *.dylib

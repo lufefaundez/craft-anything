@@ -51,4 +51,9 @@ func webDavAndTemplates() throws {
     #expect(entries.count == 1)
     #expect(entries[0].displayName == "Carta.docx")
     #expect(DocTemplateId.oficioChile.seedParagraphs.contains(where: { $0.contains("OFICIO ORDINARIO") }))
+
+    let ticks = OfficeRulerMath.buildTicks(totalPoints: 612.0, marginStartPt: 72.0)
+    #expect(!ticks.isEmpty)
+    #expect(AppleInkTool.from(commandId: "draw.pen") == .pen)
+    #expect(OfficeRibbonPresets.paperSizes.contains(where: { $0.id == "oficio_cl" }))
 }

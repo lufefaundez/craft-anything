@@ -460,6 +460,8 @@ private struct MacRibbonSlotControl: View {
                 .clipShape(RoundedRectangle(cornerRadius: 4))
             }
             .menuStyle(.borderlessButton)
+            .menuIndicator(.hidden)
+            .fixedSize()
             .help("Fuente")
 
         case "size_picker":
@@ -484,6 +486,8 @@ private struct MacRibbonSlotControl: View {
                 .clipShape(RoundedRectangle(cornerRadius: 4))
             }
             .menuStyle(.borderlessButton)
+            .menuIndicator(.hidden)
+            .fixedSize()
             .help("Tamaño de fuente")
 
         case "style_gallery":
@@ -604,6 +608,8 @@ private struct MacRibbonSlotControl: View {
                     standardButtonLabel(checked: false)
                 }
                 .menuStyle(.borderlessButton)
+                .menuIndicator(.hidden)
+                .fixedSize()
                 .help("Tamaño de papel (Carta / Oficio Chile / A4)")
             } else if control.commandId == "layout.orientation" {
                 Menu {
@@ -617,6 +623,8 @@ private struct MacRibbonSlotControl: View {
                     standardButtonLabel(checked: false)
                 }
                 .menuStyle(.borderlessButton)
+                .menuIndicator(.hidden)
+                .fixedSize()
                 .help("Orientación de página")
             } else if !control.submenu.isEmpty {
                 Menu {
@@ -629,6 +637,8 @@ private struct MacRibbonSlotControl: View {
                     standardButtonLabel(checked: model.activeToggleIds.contains(control.commandId))
                 }
                 .menuStyle(.borderlessButton)
+                .menuIndicator(.hidden)
+                .fixedSize()
                 .help(control.labelEsCl)
             } else {
                 Button {

@@ -1,5 +1,10 @@
 import Foundation
 import SwiftUI
+#if canImport(UIKit)
+import UIKit
+#elseif canImport(AppKit)
+import AppKit
+#endif
 
 public struct RibbonControlSpec: Identifiable, Hashable, Sendable {
     public var id: String { "\(commandId)::\(labelEsCl)" }
@@ -283,7 +288,23 @@ public enum AdaptiveRibbonHelper {
     }
 
     public static func officeIconImage(named iconName: String) -> Image {
+        #if canImport(UIKit)
+        if UIImage(named: iconName, in: .module, compatibleWith: nil) != nil {
+            return Image(iconName, bundle: .module)
+        }
         let lower = iconName.lowercased()
-        return Image(lower, bundle: .module)
+        if UIImage(named: lower, in: .module, compatibleWith: nil) != nil {
+            return Image(lower, bundle: .module)
+        }
+        #elseif canImport(AppKit)
+        if Bundle.module.image(forResource: iconName) != nil {
+            return Image(iconName, bundle: .module)
+        }
+        let lower = iconName.lowercased()
+        if Bundle.module.image(forResource: lower) != nil {
+            return Image(lower, bundle: .module)
+        }
+        #endif
+        return Image(iconName, bundle: .module)
     }
 }

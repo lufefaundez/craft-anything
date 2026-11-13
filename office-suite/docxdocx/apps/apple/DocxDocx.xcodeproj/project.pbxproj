@@ -1,0 +1,626 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		001AF546FCC17BE4C5462921 /* OfficeCoreKit in Frameworks */ = {isa = PBXBuildFile; productRef = D8576EDFED5D2B6475A30345 /* OfficeCoreKit */; };
+		3BB1AFFE071460D24980FA93 /* UniformTypeIdentifiers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04DFD3FAF3084B68D7FE1ED4 /* UniformTypeIdentifiers.framework */; };
+		58D61CBA1D52F59C1E6D22CE /* IOSBackstageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA867CA214B32208B1339CC5 /* IOSBackstageView.swift */; };
+		62FF8A609F4C538FF5B33A59 /* IOSDocumentCanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4866FA451F170C7B358B753D /* IOSDocumentCanvasView.swift */; };
+		75F17BFC4CAA3280D3A024D2 /* OfficeCoreKit in Frameworks */ = {isa = PBXBuildFile; productRef = D6C966805207208513CCEF01 /* OfficeCoreKit */; };
+		8D34A1D71646BA14B3A6C081 /* OfficeWordIOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49EF980BB74B012CD7C0F0B0 /* OfficeWordIOSApp.swift */; };
+		95B9E71A5630271D36289D3A /* OfficeWordIOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2E82A0CA64BA57DD22828E5 /* OfficeWordIOSTests.swift */; };
+		A845CA152008F4AC632B6F37 /* OfficeWordVisionApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C40D021822EFED2BDF3741 /* OfficeWordVisionApp.swift */; };
+		AC77056BD5CF9DA181BF5D94 /* IOSDocxStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48427F6C2E9E0801BC706C02 /* IOSDocxStore.swift */; };
+		B74557A8E11D9030B885DA2E /* OfficeCoreKit in Frameworks */ = {isa = PBXBuildFile; productRef = FE37D0EABF259ADB15B1C3E8 /* OfficeCoreKit */; };
+		D4B4B961E4240B8E0BE5A878 /* PencilKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE0DFC651D861659DC3E5091 /* PencilKit.framework */; };
+		ED015912FDB1DC42B25DF96D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BE0B2A173E69E4EC17E67E3 /* UIKit.framework */; };
+		ED09C151AC638E73D562581A /* AdaptiveIOSShellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721C3291219E9BE2DF4FD381 /* AdaptiveIOSShellView.swift */; };
+		EFFAC87DB64CCD6313B2BC92 /* UniformTypeIdentifiers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04DFD3FAF3084B68D7FE1ED4 /* UniformTypeIdentifiers.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		9DE5A983BA586B0E9533AAF4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B29DDD8315F2A05116D0020F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FCDE03898B90969B90B596AE;
+			remoteInfo = "OfficeWord-iOS";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		02C40D021822EFED2BDF3741 /* OfficeWordVisionApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfficeWordVisionApp.swift; sourceTree = "<group>"; };
+		04DFD3FAF3084B68D7FE1ED4 /* UniformTypeIdentifiers.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UniformTypeIdentifiers.framework; path = System/Library/Frameworks/UniformTypeIdentifiers.framework; sourceTree = SDKROOT; };
+		0EC51266C12891AF3D2AD58E /* OfficeWord-iOSTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = "OfficeWord-iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		48427F6C2E9E0801BC706C02 /* IOSDocxStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOSDocxStore.swift; sourceTree = "<group>"; };
+		4866FA451F170C7B358B753D /* IOSDocumentCanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOSDocumentCanvasView.swift; sourceTree = "<group>"; };
+		49EF980BB74B012CD7C0F0B0 /* OfficeWordIOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfficeWordIOSApp.swift; sourceTree = "<group>"; };
+		721C3291219E9BE2DF4FD381 /* AdaptiveIOSShellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdaptiveIOSShellView.swift; sourceTree = "<group>"; };
+		9BE0B2A173E69E4EC17E67E3 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		ACD67BC73DA26D74DA5A424A /* OfficeCoreKit */ = {isa = PBXFileReference; lastKnownFileType = folder; name = OfficeCoreKit; path = Packages/OfficeCoreKit; sourceTree = SOURCE_ROOT; };
+		AED7165C6F75B987A83A5E26 /* OfficeWord-visionOS.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = "OfficeWord-visionOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BA867CA214B32208B1339CC5 /* IOSBackstageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOSBackstageView.swift; sourceTree = "<group>"; };
+		D2E82A0CA64BA57DD22828E5 /* OfficeWordIOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfficeWordIOSTests.swift; sourceTree = "<group>"; };
+		EE0DFC651D861659DC3E5091 /* PencilKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PencilKit.framework; path = System/Library/Frameworks/PencilKit.framework; sourceTree = SDKROOT; };
+		FD653638AD740D17953BA7A6 /* OfficeWord-iOS.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = "OfficeWord-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		427F418003A941964DBED9B3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				75F17BFC4CAA3280D3A024D2 /* OfficeCoreKit in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AF1F86E99269A9EC94F4279D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				001AF546FCC17BE4C5462921 /* OfficeCoreKit in Frameworks */,
+				3BB1AFFE071460D24980FA93 /* UniformTypeIdentifiers.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BE20659F6E8317CB7095CC51 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B74557A8E11D9030B885DA2E /* OfficeCoreKit in Frameworks */,
+				D4B4B961E4240B8E0BE5A878 /* PencilKit.framework in Frameworks */,
+				EFFAC87DB64CCD6313B2BC92 /* UniformTypeIdentifiers.framework in Frameworks */,
+				ED015912FDB1DC42B25DF96D /* UIKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0FE9F87C876758C6E03763A8 /* OfficeWord-iOS */ = {
+			isa = PBXGroup;
+			children = (
+				BAC39FBA3753805D5D454407 /* Sources */,
+			);
+			path = "OfficeWord-iOS";
+			sourceTree = "<group>";
+		};
+		4D3E48C2CC1230BF7A35C7FB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FD653638AD740D17953BA7A6 /* OfficeWord-iOS.app */,
+				0EC51266C12891AF3D2AD58E /* OfficeWord-iOSTests.xctest */,
+				AED7165C6F75B987A83A5E26 /* OfficeWord-visionOS.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		55309D714AD0AFA79F09811E = {
+			isa = PBXGroup;
+			children = (
+				0FE9F87C876758C6E03763A8 /* OfficeWord-iOS */,
+				C3557F0A33B7226563BA3C95 /* OfficeWord-iOSTests */,
+				69AB2CCBBE43C60796154BF9 /* OfficeWord-visionOS */,
+				73B7EBC7AC2F45AC6746D755 /* Packages */,
+				CE05D6BC17B4B0F56804129D /* Frameworks */,
+				4D3E48C2CC1230BF7A35C7FB /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		69AB2CCBBE43C60796154BF9 /* OfficeWord-visionOS */ = {
+			isa = PBXGroup;
+			children = (
+				C8327468538F6A389952A6D3 /* Sources */,
+			);
+			path = "OfficeWord-visionOS";
+			sourceTree = "<group>";
+		};
+		73B7EBC7AC2F45AC6746D755 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				ACD67BC73DA26D74DA5A424A /* OfficeCoreKit */,
+			);
+			path = Packages;
+			sourceTree = "<group>";
+		};
+		BAC39FBA3753805D5D454407 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				721C3291219E9BE2DF4FD381 /* AdaptiveIOSShellView.swift */,
+				BA867CA214B32208B1339CC5 /* IOSBackstageView.swift */,
+				4866FA451F170C7B358B753D /* IOSDocumentCanvasView.swift */,
+				48427F6C2E9E0801BC706C02 /* IOSDocxStore.swift */,
+				49EF980BB74B012CD7C0F0B0 /* OfficeWordIOSApp.swift */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		C3557F0A33B7226563BA3C95 /* OfficeWord-iOSTests */ = {
+			isa = PBXGroup;
+			children = (
+				D2E82A0CA64BA57DD22828E5 /* OfficeWordIOSTests.swift */,
+			);
+			path = "OfficeWord-iOSTests";
+			sourceTree = "<group>";
+		};
+		C8327468538F6A389952A6D3 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				02C40D021822EFED2BDF3741 /* OfficeWordVisionApp.swift */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		CE05D6BC17B4B0F56804129D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				EE0DFC651D861659DC3E5091 /* PencilKit.framework */,
+				9BE0B2A173E69E4EC17E67E3 /* UIKit.framework */,
+				04DFD3FAF3084B68D7FE1ED4 /* UniformTypeIdentifiers.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		96B29A97D9917EF7E46AF7C3 /* OfficeWord-visionOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2ED3310DA20162317B54F0C5 /* Build configuration list for PBXNativeTarget "OfficeWord-visionOS" */;
+			buildPhases = (
+				6FD0002FA500BFEB6CD25001 /* Sources */,
+				AF1F86E99269A9EC94F4279D /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "OfficeWord-visionOS";
+			packageProductDependencies = (
+				D8576EDFED5D2B6475A30345 /* OfficeCoreKit */,
+			);
+			productName = "OfficeWord-visionOS";
+			productReference = AED7165C6F75B987A83A5E26 /* OfficeWord-visionOS.app */;
+			productType = "com.apple.product-type.application";
+		};
+		D7B3ED112FDCCD4CA5EE60B9 /* OfficeWord-iOSTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D9592BE198E9AF7AA8246BF5 /* Build configuration list for PBXNativeTarget "OfficeWord-iOSTests" */;
+			buildPhases = (
+				D7D25E68D28CBB2149A04CA8 /* Sources */,
+				427F418003A941964DBED9B3 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5AAC5BEE60F8C370BBEDC111 /* PBXTargetDependency */,
+			);
+			name = "OfficeWord-iOSTests";
+			packageProductDependencies = (
+				D6C966805207208513CCEF01 /* OfficeCoreKit */,
+			);
+			productName = "OfficeWord-iOSTests";
+			productReference = 0EC51266C12891AF3D2AD58E /* OfficeWord-iOSTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		FCDE03898B90969B90B596AE /* OfficeWord-iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0CEA145261FA3DFEB8AA42A7 /* Build configuration list for PBXNativeTarget "OfficeWord-iOS" */;
+			buildPhases = (
+				4A5D72C7B375B8111D5F708B /* Sources */,
+				BE20659F6E8317CB7095CC51 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "OfficeWord-iOS";
+			packageProductDependencies = (
+				FE37D0EABF259ADB15B1C3E8 /* OfficeCoreKit */,
+			);
+			productName = "OfficeWord-iOS";
+			productReference = FD653638AD740D17953BA7A6 /* OfficeWord-iOS.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B29DDD8315F2A05116D0020F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+				};
+			};
+			buildConfigurationList = 382691A05553710485F6DD7F /* Build configuration list for PBXProject "DocxDocx" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 55309D714AD0AFA79F09811E;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				0B093CD3B8B77C619F28190B /* XCLocalSwiftPackageReference "Packages/OfficeCoreKit" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 4D3E48C2CC1230BF7A35C7FB /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				FCDE03898B90969B90B596AE /* OfficeWord-iOS */,
+				D7B3ED112FDCCD4CA5EE60B9 /* OfficeWord-iOSTests */,
+				96B29A97D9917EF7E46AF7C3 /* OfficeWord-visionOS */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		4A5D72C7B375B8111D5F708B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ED09C151AC638E73D562581A /* AdaptiveIOSShellView.swift in Sources */,
+				58D61CBA1D52F59C1E6D22CE /* IOSBackstageView.swift in Sources */,
+				62FF8A609F4C538FF5B33A59 /* IOSDocumentCanvasView.swift in Sources */,
+				AC77056BD5CF9DA181BF5D94 /* IOSDocxStore.swift in Sources */,
+				8D34A1D71646BA14B3A6C081 /* OfficeWordIOSApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6FD0002FA500BFEB6CD25001 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A845CA152008F4AC632B6F37 /* OfficeWordVisionApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D7D25E68D28CBB2149A04CA8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				95B9E71A5630271D36289D3A /* OfficeWordIOSTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		5AAC5BEE60F8C370BBEDC111 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FCDE03898B90969B90B596AE /* OfficeWord-iOS */;
+			targetProxy = 9DE5A983BA586B0E9533AAF4 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		2C3498342D6401DB2068DDB7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_LANGUAGE = "es-419";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = DocxDocx;
+				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportsDocumentBrowser = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = app.ofiofi.docxdocx;
+				PRODUCT_NAME = DocxDocx;
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		497658F2846B5A91628B8A14 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = app.ofiofi.docxdocx.tests;
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DocxDocx.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/DocxDocx";
+			};
+			name = Release;
+		};
+		7CA84956EBB8DECD0CD2C20D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_LANGUAGE = "es-419";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = DocxDocx;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = app.ofiofi.docxdocx.vision;
+				PRODUCT_NAME = DocxDocx;
+				SDKROOT = xros;
+				SUPPORTED_PLATFORMS = "xrsimulator xros";
+				TARGETED_DEVICE_FAMILY = 7;
+			};
+			name = Release;
+		};
+		84F7CA5245512411DD03DA66 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = x86_64;
+				"EXCLUDED_ARCHS[sdk=xrsimulator*]" = x86_64;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
+				XROS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Release;
+		};
+		AA99FFECF4FDE7B948E0CA18 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_LANGUAGE = "es-419";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = DocxDocx;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = app.ofiofi.docxdocx.vision;
+				PRODUCT_NAME = DocxDocx;
+				SDKROOT = xros;
+				SUPPORTED_PLATFORMS = "xrsimulator xros";
+				TARGETED_DEVICE_FAMILY = 7;
+			};
+			name = Debug;
+		};
+		AAAD689FF89DA9CEDC47C316 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_LANGUAGE = "es-419";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = DocxDocx;
+				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportsDocumentBrowser = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = app.ofiofi.docxdocx;
+				PRODUCT_NAME = DocxDocx;
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		C9E3DB5DDAE68BD42F4C7376 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = x86_64;
+				"EXCLUDED_ARCHS[sdk=xrsimulator*]" = x86_64;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
+				XROS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Debug;
+		};
+		D2E7629F35E8BD80B163F2EC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = app.ofiofi.docxdocx.tests;
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DocxDocx.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/DocxDocx";
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0CEA145261FA3DFEB8AA42A7 /* Build configuration list for PBXNativeTarget "OfficeWord-iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2C3498342D6401DB2068DDB7 /* Debug */,
+				AAAD689FF89DA9CEDC47C316 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		2ED3310DA20162317B54F0C5 /* Build configuration list for PBXNativeTarget "OfficeWord-visionOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA99FFECF4FDE7B948E0CA18 /* Debug */,
+				7CA84956EBB8DECD0CD2C20D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		382691A05553710485F6DD7F /* Build configuration list for PBXProject "DocxDocx" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C9E3DB5DDAE68BD42F4C7376 /* Debug */,
+				84F7CA5245512411DD03DA66 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		D9592BE198E9AF7AA8246BF5 /* Build configuration list for PBXNativeTarget "OfficeWord-iOSTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D2E7629F35E8BD80B163F2EC /* Debug */,
+				497658F2846B5A91628B8A14 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		0B093CD3B8B77C619F28190B /* XCLocalSwiftPackageReference "Packages/OfficeCoreKit" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/OfficeCoreKit;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		D6C966805207208513CCEF01 /* OfficeCoreKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = OfficeCoreKit;
+		};
+		D8576EDFED5D2B6475A30345 /* OfficeCoreKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = OfficeCoreKit;
+		};
+		FE37D0EABF259ADB15B1C3E8 /* OfficeCoreKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = OfficeCoreKit;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = B29DDD8315F2A05116D0020F /* Project object */;
+}
