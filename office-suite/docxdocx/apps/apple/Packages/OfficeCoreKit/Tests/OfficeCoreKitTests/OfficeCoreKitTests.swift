@@ -67,4 +67,14 @@ func systemFontsAndRulerMetrics() throws {
     let fonts = DocxCoreBridge.loadAllSystemFonts()
     #expect(fonts.count >= DocxCoreBridge.preferredWordFonts.count)
     #expect(fonts.allSatisfy { !$0.hasPrefix(".") })
+
+    #expect(OfficeRulerMath.marginsPayload(leftPt: 54.0, rightPt: 72.5) == #"{"left":54.0,"right":72.5}"#)
+    #expect(OfficeRulerMath.indentsPayload(leftPt: 18.0, rightPt: 9.0, firstLinePt: 28.3) == #"{"left":18.0,"right":9.0,"firstLine":28.3}"#)
+
+    let commentJson = #"[{"id":1,"author":"Luis Felipe","date":"2026-11-13","resolved":false,"parent":null,"text":"Revisar margen"},{"id":2,"author":"Revisor","date":"2026-11-13","resolved":true,"parent":1,"text":"Listo"}]"#
+    let comments = OfficeDocCommentParser.parseList(commentJson)
+    #expect(comments.count == 2)
+    #expect(comments[0].author == "Luis Felipe")
+    #expect(comments[1].parent == 1)
+    #expect(comments[1].resolved)
 }

@@ -151,6 +151,28 @@ public struct OfficeRulerTick: Hashable, Sendable {
     public let isMajor: Bool
 }
 
+public struct OfficeRulerViewportMetrics: Equatable, Sendable {
+    public var pageLeftPx: CGFloat
+    public var pageWidthPx: CGFloat
+    public var pageTopPx: CGFloat
+    public var pageHeightPx: CGFloat
+    public var scalePxPerPt: CGFloat
+
+    public init(
+        pageLeftPx: CGFloat = 0,
+        pageWidthPx: CGFloat = 0,
+        pageTopPx: CGFloat = 0,
+        pageHeightPx: CGFloat = 0,
+        scalePxPerPt: CGFloat = 1
+    ) {
+        self.pageLeftPx = pageLeftPx
+        self.pageWidthPx = pageWidthPx
+        self.pageTopPx = pageTopPx
+        self.pageHeightPx = pageHeightPx
+        self.scalePxPerPt = scalePxPerPt
+    }
+}
+
 public enum OfficeRulerMath {
     public static let pointsPerCm: Double = 28.3465
 
@@ -169,6 +191,85 @@ public enum OfficeRulerMath {
             ticks.append(OfficeRulerTick(positionPt: pt, label: label, isMajor: isMajor))
         }
         return ticks
+    }
+
+    public static func marginsPayload(
+        topPt: Double? = nil,
+        bottomPt: Double? = nil,
+        leftPt: Double? = nil,
+        rightPt: Double? = nil
+    ) -> String {
+        var parts: [String] = []
+        if let topPt { parts.append(String(format: "\"top\":%.1f", min(280.0, max(14.0, topPt)))) }
+        if let bottomPt { parts.append(String(format: "\"bottom\":%.1f", min(280.0, max(14.0, bottomPt)))) }
+        if let leftPt { parts.append(String(format: "\"left\":%.1f", min(280.0, max(14.0, leftPt)))) }
+        if let rightPt { parts.append(String(format: "\"right\":%.1f", min(280.0, max(14.0, rightPt)))) }
+        return "{\(parts.joined(separator: ","))}"
+    }
+
+    public static func indentsPayload(leftPt: Double, rightPt: Double, firstLinePt: Double) -> String {
+        String(
+            format: "{\"left\":%.1f,\"right\":%.1f,\"firstLine\":%.1f}",
+            min(360.0, max(0.0, leftPt)),
+            min(360.0, max(0.0, rightPt)),
+            min(240.0, max(-180.0, firstLinePt))
+        )
+    }
+}
+
+public struct OfficeDocCommentItem: Identifiable, Equatable, Sendable {
+    public let id: Int
+    public let author: String
+    public let date: String
+    public let resolved: Bool
+    public let parent: Int?
+    public let text: String
+
+    public init(id: Int, author: String, date: String, resolved: Bool, parent: Int?, text: String) {
+        self.id = id
+        self.author = author
+        self.date = date
+        self.resolved = resolved
+        self.parent = parent
+        self.text = text
+    }
+}
+
+public enum OfficeDocCommentParser {
+    public static func parseList(_ json: String?) -> [OfficeDocCommentItem] {
+        guard let json = json?.trimmingCharacters(in: .whitespacesAndNewlines), !json.isEmpty,
+              let data = json.data(using: .utf8),
+              let parsed = try? JSONSerialization.jsonObject(with: data) else {
+            return []
+        }
+        let array: [[String: Any]]
+        if let direct = parsed as? [[String: Any]] {
+            array = direct
+        } else if let dict = parsed as? [String: Any], let inner = dict["comments"] as? [[String: Any]] {
+            array = inner
+        } else {
+            return []
+        }
+        return array.compactMap { item in
+            guard let id = item["id"] as? Int, id >= 0 else { return nil }
+            let parent = (item["parent"] as? Int).flatMap { $0 >= 0 ? $0 : nil }
+            return OfficeDocCommentItem(
+                id: id,
+                author: (item["author"] as? String) ?? "Usuario",
+                date: (item["date"] as? String) ?? "",
+                resolved: (item["resolved"] as? Bool) ?? false,
+                parent: parent,
+                text: (item["text"] as? String) ?? ""
+            )
+        }
+    }
+
+    public static func newCommentPayload(_ text: String) -> String {
+        #"{"text":"\#(OfficeRibbonPresets.escapeJson(text))"}"#
+    }
+
+    public static func replyCommentPayload(id: Int, text: String) -> String {
+        #"{"id":\#(id),"text":"\#(OfficeRibbonPresets.escapeJson(text))"}"#
     }
 }
 

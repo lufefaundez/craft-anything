@@ -58,4 +58,47 @@ final class OfficeWordIOSTests: XCTestCase {
         XCTAssertTrue(store.documentTitle.contains("Oficio"))
         XCTAssertGreaterThan(store.wordCount, 5)
     }
+
+    func testInteractiveRulerMetricsAndCommentsLifecycle() throws {
+        let store = IOSDocxStore()
+        XCTAssertGreaterThan(store.rulerMetrics.marginLeftPt, 0)
+
+        store.executeCommand(
+            "layout.margins",
+            paramsJson: OfficeRulerMath.marginsPayload(topPt: 54.0, bottomPt: 54.0, leftPt: 85.0, rightPt: 57.0)
+        )
+        XCTAssertEqual(Double(store.rulerMetrics.marginLeftPt), 85.0, accuracy: 1.0)
+        XCTAssertEqual(Double(store.rulerMetrics.marginRightPt), 57.0, accuracy: 1.0)
+        XCTAssertEqual(Double(store.rulerMetrics.marginTopPt), 54.0, accuracy: 1.0)
+
+        store.executeCommand(
+            "para.indents",
+            paramsJson: OfficeRulerMath.indentsPayload(leftPt: 36.0, rightPt: 18.0, firstLinePt: 18.0)
+        )
+        XCTAssertEqual(Double(store.rulerMetrics.paraLeftPt), 36.0, accuracy: 1.0)
+        XCTAssertEqual(Double(store.rulerMetrics.paraRightPt), 18.0, accuracy: 1.0)
+        XCTAssertEqual(Double(store.rulerMetrics.paraFirstLinePt), 18.0, accuracy: 1.0)
+
+        store.executeCommand("review.newComment")
+        XCTAssertTrue(store.showCommentsPane)
+
+        store.executeCommand(
+            "review.newComment",
+            paramsJson: OfficeDocCommentParser.newCommentPayload("Revisar ortografía")
+        )
+        let created = try XCTUnwrap(store.comments.first(where: { $0.text == "Revisar ortografía" }))
+        XCTAssertFalse(created.resolved)
+
+        store.executeCommand(
+            "review.reply",
+            paramsJson: OfficeDocCommentParser.replyCommentPayload(id: created.id, text: "Corregido")
+        )
+        XCTAssertTrue(store.comments.contains(where: { $0.parent == created.id && $0.text == "Corregido" }))
+
+        store.executeCommand("review.resolveComment", paramsJson: #"{"id":\#(created.id)}"#)
+        XCTAssertTrue(store.comments.first(where: { $0.id == created.id })?.resolved == true)
+
+        store.executeCommand("review.deleteComment", paramsJson: #"{"id":\#(created.id)}"#)
+        XCTAssertFalse(store.comments.contains(where: { $0.id == created.id }))
+    }
 }

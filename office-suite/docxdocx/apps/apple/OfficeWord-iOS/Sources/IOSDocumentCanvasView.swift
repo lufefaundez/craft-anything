@@ -69,12 +69,13 @@ final class DocxIndexedTextRange: UITextRange {
 }
 
 @MainActor
-public final class DocxUIKitCanvasContainer: UIView, UITextInput, UIKeyInput, UIScrollViewDelegate {
+public final class DocxUIKitCanvasContainer: UIView, UITextInput, UIKeyInput, UIScrollViewDelegate, UIContextMenuInteractionDelegate {
     private var store: IOSDocxStore
     private var isDark: Bool
     private var lastRevision: Int = -1
     private var lastZoom: CGFloat = -1
     private var lastInkTool: AppleInkTool = .none
+    private var currentFitScale: CGFloat = 1.0
 
     private let scrollView = UIScrollView()
     private let pageCanvasView = DocxRenderedPageView()
@@ -125,6 +126,9 @@ public final class DocxUIKitCanvasContainer: UIView, UITextInput, UIKeyInput, UI
 
         let pinch = UIPinchGestureRecognizer(target: self, action: #selector(handlePinch(_:)))
         scrollView.addGestureRecognizer(pinch)
+
+        let contextInteraction = UIContextMenuInteraction(delegate: self)
+        scrollView.addInteraction(contextInteraction)
     }
 
     public func syncState(store: IOSDocxStore, isDark: Bool) {
@@ -168,6 +172,7 @@ public final class DocxUIKitCanvasContainer: UIView, UITextInput, UIKeyInput, UI
             scale: fitScale
         )
         placedPages = placements
+        currentFitScale = fitScale
         scrollView.contentSize = contentSize
         let contentFrame = CGRect(origin: .zero, size: contentSize)
         pageCanvasView.frame = contentFrame
@@ -178,6 +183,71 @@ public final class DocxUIKitCanvasContainer: UIView, UITextInput, UIKeyInput, UI
             scale: fitScale,
             isDark: isDark
         )
+        publishViewportMetrics()
+    }
+
+    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        publishViewportMetrics()
+    }
+
+    private func publishViewportMetrics() {
+        let activeIdx = Int(store.selection.caret?.pageIndex ?? 0)
+        guard let activePlacement = placedPages.first(where: { $0.pageIndex == activeIdx }) ?? placedPages.first else {
+            return
+        }
+        let next = OfficeRulerViewportMetrics(
+            pageLeftPx: activePlacement.rectPx.minX - scrollView.contentOffset.x,
+            pageWidthPx: activePlacement.rectPx.width,
+            pageTopPx: activePlacement.rectPx.minY - scrollView.contentOffset.y,
+            pageHeightPx: activePlacement.rectPx.height,
+            scalePxPerPt: currentFitScale
+        )
+        if abs(store.viewportMetrics.pageLeftPx - next.pageLeftPx) > 0.5
+            || abs(store.viewportMetrics.pageTopPx - next.pageTopPx) > 0.5
+            || abs(store.viewportMetrics.pageWidthPx - next.pageWidthPx) > 0.5
+            || abs(store.viewportMetrics.scalePxPerPt - next.scalePxPerPt) > 0.002 {
+            let capturedStore = store
+            Task { @MainActor in
+                capturedStore.viewportMetrics = next
+            }
+        }
+    }
+
+    public func contextMenuInteraction(
+        _ interaction: UIContextMenuInteraction,
+        configurationForMenuAtLocation location: CGPoint
+    ) -> UIContextMenuConfiguration? {
+        let ptInCanvas = scrollView.convert(location, to: pageCanvasView)
+        dispatchTap(at: ptInCanvas, tapCount: 1)
+        return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { [weak self] _ in
+            guard let self else { return nil }
+            let cut = UIAction(title: "Cortar", image: UIImage(systemName: "scissors")) { _ in
+                self.store.executeCommand("edit.cut")
+            }
+            let copy = UIAction(title: "Copiar", image: UIImage(systemName: "doc.on.doc")) { _ in
+                self.store.executeCommand("edit.copy")
+            }
+            let paste = UIAction(title: "Pegar", image: UIImage(systemName: "doc.on.clipboard")) { _ in
+                self.store.executeCommand("edit.paste")
+            }
+            let comment = UIAction(title: "Nuevo comentario...", image: UIImage(systemName: "text.bubble")) { _ in
+                self.store.executeCommand("review.newComment")
+            }
+            let font = UIAction(title: "Fuente...", image: UIImage(systemName: "textformat")) { _ in
+                self.store.executeCommand("format.fontDialog")
+            }
+            let para = UIAction(title: "Párrafo...", image: UIImage(systemName: "paragraphsign")) { _ in
+                self.store.executeCommand("para.dialog")
+            }
+            let printDoc = UIAction(title: "Imprimir...", image: UIImage(systemName: "printer")) { _ in
+                self.store.executeCommand("file.print")
+            }
+            return UIMenu(title: "", children: [
+                UIMenu(options: .displayInline, children: [cut, copy, paste]),
+                UIMenu(options: .displayInline, children: [comment, font, para]),
+                UIMenu(options: .displayInline, children: [printDoc]),
+            ])
+        }
     }
 
     private func configurePencilTool(_ tool: AppleInkTool) {

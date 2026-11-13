@@ -54,8 +54,22 @@ public final class IOSDocxStore {
     public var recentDocs: [IOSRecentDoc] = []
     public var showBackstage: Bool = false
     public var showFindReplaceBar: Bool = false
+    public var showCommentsPane: Bool = false
     public var activeModalDialog: IOSModalDialogKind?
     public var lastError: String?
+    public var viewportMetrics: OfficeRulerViewportMetrics = .init()
+    public var rulerMetrics: RulerMetrics = RulerMetrics(
+        widthPt: 612,
+        heightPt: 792,
+        marginTopPt: 72,
+        marginBottomPt: 72,
+        marginLeftPt: 72,
+        marginRightPt: 72,
+        paraLeftPt: 0,
+        paraRightPt: 0,
+        paraFirstLinePt: 0
+    )
+    public var comments: [OfficeDocCommentItem] = []
 
     private var composingText: String = ""
     private let tileCache = NSCache<NSString, CGImage>()
@@ -72,6 +86,7 @@ public final class IOSDocxStore {
         self.wordCount = Int(blankSession.wordCount())
         self.tileCache.countLimit = 96
         loadRecents()
+        refreshDocumentMetadata()
     }
 
     public func executeCommand(_ commandId: String, paramsJson: String = "{}") {
@@ -89,6 +104,18 @@ public final class IOSDocxStore {
         case "view.zoom100":
             zoom = 1.0
             return
+        case "view.comments", "review.showComments":
+            showCommentsPane.toggle()
+            if showCommentsPane {
+                refreshDocumentMetadata()
+            }
+            return
+        case "review.newComment":
+            if paramsJson == "{}" {
+                showCommentsPane = true
+                refreshDocumentMetadata()
+                return
+            }
         case "view.webLayout":
             isMobileReflow = true
         case "view.printLayout":
@@ -175,6 +202,7 @@ public final class IOSDocxStore {
             pageCount = Int(session.pageCount())
             wordCount = Int(session.wordCount())
             docRevision += 1
+            refreshDocumentMetadata()
         } catch {
             lastError = error.localizedDescription
         }
@@ -313,6 +341,7 @@ public final class IOSDocxStore {
         recentDocs.insert(entry, at: 0)
         if recentDocs.count > 12 { recentDocs.removeLast(recentDocs.count - 12) }
         saveRecents()
+        refreshDocumentMetadata()
     }
 
     private func applyOutcome(_ outcome: CommandOutcome) {
@@ -329,6 +358,17 @@ public final class IOSDocxStore {
         activeStyleName = summary.style
         docRevision += 1
         tileCache.removeAllObjects()
+        refreshDocumentMetadata()
+    }
+
+    public func refreshDocumentMetadata() {
+        let currentPageIdx = selection.caret?.pageIndex ?? 0
+        if let metrics = try? session.getRulerMetrics(pageIndex: currentPageIdx) {
+            rulerMetrics = metrics
+        }
+        if let outcome = try? session.executeCommand(cmdId: "review.comments", paramsJson: "{}") {
+            comments = OfficeDocCommentParser.parseList(outcome.resultJson)
+        }
     }
 
     private func loadRecents() {

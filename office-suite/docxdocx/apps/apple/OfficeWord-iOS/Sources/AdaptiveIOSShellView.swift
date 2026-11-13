@@ -45,7 +45,30 @@ public struct AdaptiveIOSShellView: View {
                     findReplaceBar
                 }
                 if store.showRuler {
-                    IOSHorizontalRulerView(surfaces: surfaces)
+                    HStack(spacing: 0) {
+                        Rectangle()
+                            .fill(surfaces.panel)
+                            .frame(width: 22, height: 22)
+                        IOSHorizontalRulerView(
+                            rulerMetrics: store.rulerMetrics,
+                            viewportMetrics: store.viewportMetrics,
+                            zoom: store.zoom,
+                            surfaces: surfaces,
+                            accent: accent,
+                            onCommitMargins: { l, r in
+                                store.executeCommand(
+                                    "layout.margins",
+                                    paramsJson: OfficeRulerMath.marginsPayload(leftPt: l, rightPt: r)
+                                )
+                            },
+                            onCommitIndents: { l, r, fl in
+                                store.executeCommand(
+                                    "para.indents",
+                                    paramsJson: OfficeRulerMath.indentsPayload(leftPt: l, rightPt: r, firstLinePt: fl)
+                                )
+                            }
+                        )
+                    }
                 }
             } else {
                 iphoneTopBar
@@ -54,8 +77,36 @@ public struct AdaptiveIOSShellView: View {
                 }
             }
 
-            IOSDocumentCanvasView(store: store, isDark: isDark)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            HStack(spacing: 0) {
+                if sizeClass == .regular && store.showRuler {
+                    IOSVerticalRulerView(
+                        rulerMetrics: store.rulerMetrics,
+                        viewportMetrics: store.viewportMetrics,
+                        surfaces: surfaces,
+                        accent: accent,
+                        onCommitMargins: { t, b in
+                            store.executeCommand(
+                                "layout.margins",
+                                paramsJson: OfficeRulerMath.marginsPayload(topPt: t, bottomPt: b)
+                            )
+                        }
+                    )
+                }
+
+                IOSDocumentCanvasView(store: store, isDark: isDark)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+
+                if sizeClass == .regular && store.showCommentsPane {
+                    IOSCommentsSidePane(
+                        store: store,
+                        surfaces: surfaces,
+                        accent: accent,
+                        onDismiss: { store.showCommentsPane = false }
+                    )
+                    .frame(width: 296)
+                }
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
 
             Divider()
 
@@ -73,6 +124,17 @@ public struct AdaptiveIOSShellView: View {
         }
         .sheet(item: $store.activeModalDialog) { kind in
             IOSModalDialogSheet(store: store, kind: kind, surfaces: surfaces, accent: accent)
+        }
+        .sheet(isPresented: Binding(
+            get: { sizeClass == .compact && store.showCommentsPane },
+            set: { store.showCommentsPane = $0 }
+        )) {
+            IOSCommentsSidePane(
+                store: store,
+                surfaces: surfaces,
+                accent: accent,
+                onDismiss: { store.showCommentsPane = false }
+            )
         }
     }
 
@@ -110,9 +172,67 @@ public struct AdaptiveIOSShellView: View {
 
             Spacer()
 
-            Text("OfiOfi Free • Local / iCloud / Drive / WebDAV")
-                .font(.system(size: 11))
-                .foregroundStyle(surfaces.textDim)
+            HStack(spacing: 6) {
+                Button {
+                    store.executeCommand("edit.find")
+                } label: {
+                    Label("Buscar", systemImage: "magnifyingglass")
+                        .font(.system(size: 11, weight: .medium))
+                        .foregroundStyle(surfaces.text)
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 4)
+                        .background(surfaces.ribbonCard)
+                        .clipShape(RoundedRectangle(cornerRadius: 6))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 6)
+                                .strokeBorder(surfaces.ribbonBorder, lineWidth: 1)
+                        )
+                }
+                .buttonStyle(.plain)
+
+                Button {
+                    store.showCommentsPane.toggle()
+                } label: {
+                    HStack(spacing: 4) {
+                        Image(systemName: "text.bubble")
+                            .font(.system(size: 11))
+                        Text(store.comments.isEmpty ? "Comentarios" : "Comentarios (\(store.comments.count))")
+                            .font(.system(size: 11, weight: store.showCommentsPane ? .semibold : .medium))
+                    }
+                    .foregroundStyle(store.showCommentsPane ? accent : surfaces.text)
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 4)
+                    .background(store.showCommentsPane ? accent.opacity(0.14) : surfaces.ribbonCard)
+                    .clipShape(RoundedRectangle(cornerRadius: 6))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 6)
+                            .strokeBorder(store.showCommentsPane ? accent.opacity(0.5) : surfaces.ribbonBorder, lineWidth: 1)
+                    )
+                }
+                .buttonStyle(.plain)
+
+                Button {
+                    store.executeCommand("file.print")
+                } label: {
+                    Label("Imprimir", systemImage: "printer")
+                        .font(.system(size: 11, weight: .medium))
+                        .foregroundStyle(surfaces.text)
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 4)
+                        .background(surfaces.ribbonCard)
+                        .clipShape(RoundedRectangle(cornerRadius: 6))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 6)
+                                .strokeBorder(surfaces.ribbonBorder, lineWidth: 1)
+                        )
+                }
+                .buttonStyle(.plain)
+
+                Text("Local / iCloud / WebDAV")
+                    .font(.system(size: 10.5))
+                    .foregroundStyle(surfaces.textDim)
+                    .padding(.leading, 4)
+            }
         }
         .padding(.horizontal, 12)
         .frame(height: 36)
@@ -279,6 +399,13 @@ public struct AdaptiveIOSShellView: View {
                 .lineLimit(1)
 
             Spacer()
+
+            Button {
+                store.showCommentsPane.toggle()
+            } label: {
+                Image(systemName: store.comments.isEmpty ? "text.bubble" : "text.bubble.fill")
+                    .foregroundStyle(store.showCommentsPane ? accent : surfaces.text)
+            }
 
             Button { showPhoneRibbonSheet = true } label: {
                 Image(systemName: "magnifyingglass")
@@ -614,35 +741,6 @@ struct IOSRibbonControlView: View {
                 .background(checked ? checkedBg : .clear)
                 .clipShape(RoundedRectangle(cornerRadius: OfficeTokens.Radii.button))
         }
-    }
-}
-
-struct IOSHorizontalRulerView: View {
-    let surfaces: OfficeTokens.SurfacePalette
-
-    var body: some View {
-        Canvas { ctx, size in
-            let ticks = OfficeRulerMath.buildTicks(totalPoints: 612.0, marginStartPt: 72.0)
-            let rulerW = min(size.width - 36.0, 760.0)
-            let startX = max(18.0, (size.width - rulerW) / 2.0)
-            let pxPerPt = rulerW / 612.0
-            for t in ticks {
-                let x = startX + t.positionPt * pxPerPt
-                let topY = t.isMajor ? size.height * 0.48 : size.height * 0.68
-                var p = Path()
-                p.move(to: CGPoint(x: x, y: topY))
-                p.addLine(to: CGPoint(x: x, y: size.height))
-                ctx.stroke(p, with: .color(surfaces.textDim.opacity(0.7)), lineWidth: t.isMajor ? 1.0 : 0.6)
-                if let lbl = t.label {
-                    ctx.draw(
-                        Text(lbl).font(.system(size: 8.5)).foregroundStyle(surfaces.textDim),
-                        at: CGPoint(x: x, y: size.height * 0.28)
-                    )
-                }
-            }
-        }
-        .frame(height: 20)
-        .background(surfaces.panel)
     }
 }
 
