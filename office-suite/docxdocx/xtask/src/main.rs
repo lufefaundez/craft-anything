@@ -23,11 +23,13 @@ fn run() -> Result<(), String> {
     let release = flags.iter().any(|a| a == "--release");
     let all_abis = flags.iter().any(|a| a == "--all-abis");
     let sim_only = flags.iter().any(|a| a == "--sim-only");
+    let install_app = flags.iter().any(|a| a == "--install");
 
     let root = workspace_root()?;
     match subcmd {
         "mobile-android" => build_android(&root, check_only, release, all_abis),
         "mobile-apple" => build_apple(&root, check_only, release, sim_only),
+        "mac-app" => build_mac_app(&root, release, install_app),
         "-h" | "--help" | "help" => {
             println!("{}", usage());
             Ok(())
@@ -37,7 +39,7 @@ fn run() -> Result<(), String> {
 }
 
 fn usage() -> String {
-    "Usage:\n  cargo xtask mobile-android [--check] [--release] [--all-abis]\n  cargo xtask mobile-apple   [--check] [--release] [--sim-only]"
+    "Usage:\n  cargo xtask mobile-android [--check] [--release] [--all-abis]\n  cargo xtask mobile-apple   [--check] [--release] [--sim-only]\n  cargo xtask mac-app        [--release] [--install]"
         .to_string()
 }
 
@@ -235,9 +237,14 @@ fn build_apple(
     let uniffi_bindgen = resolve_tool("uniffi-bindgen")?;
 
     let targets: Vec<&str> = if sim_only {
-        vec!["aarch64-apple-ios-sim", "aarch64-apple-visionos-sim"]
+        vec![
+            "aarch64-apple-darwin",
+            "aarch64-apple-ios-sim",
+            "aarch64-apple-visionos-sim",
+        ]
     } else {
         vec![
+            "aarch64-apple-darwin",
             "aarch64-apple-ios",
             "aarch64-apple-ios-sim",
             "aarch64-apple-visionos",
@@ -329,13 +336,99 @@ fn build_apple(
     let _ = verify_non_empty(&plist)?;
     let apple_resources = root.join("apps/apple/Packages/OfficeCoreKit/Sources/OfficeCoreKit/Resources");
     let staged = stage_shared_assets(root, &apple_resources)?;
+    let schema_src = root.join("../specs/ribbon-schema.json");
+    if schema_src.is_file() {
+        fs::create_dir_all(&apple_resources)
+            .map_err(|e| format!("failed to create {}: {e}", apple_resources.display()))?;
+        fs::copy(&schema_src, apple_resources.join("ribbon-schema.json"))
+            .map_err(|e| format!("failed to stage ribbon-schema.json: {e}"))?;
+    }
 
     println!(
         "mobile-apple ({profile}, check={check_only}) OK: {} ({} slices), Swift {} KB, {} resource files staged",
         xcfw_path.display(),
         targets.len(),
         swift_bytes / 1024,
-        staged
+        staged + 1
     );
+    Ok(())
+}
+
+fn build_mac_app(root: &Path, release: bool, install_app: bool) -> Result<(), String> {
+    build_apple(root, false, release, true)?;
+
+    let swift = resolve_tool("swift")?;
+    let codesign = resolve_tool("codesign")?;
+    let mac_pkg = root.join("apps/apple/DocxDocxMac");
+    let config = if release { "release" } else { "debug" };
+
+    let mut build = Command::new(&swift);
+    build
+        .current_dir(&mac_pkg)
+        .args(["build", "-c", config]);
+    run_cmd(&mut build, "swift build DocxDocxMac")?;
+
+    let mut bin_path_cmd = Command::new(&swift);
+    bin_path_cmd
+        .current_dir(&mac_pkg)
+        .args(["build", "-c", config, "--show-bin-path"]);
+    let out = bin_path_cmd
+        .output()
+        .map_err(|e| format!("failed to query swift bin path: {e}"))?;
+    if !out.status.success() {
+        return Err("swift --show-bin-path failed".to_string());
+    }
+    let bin_dir = PathBuf::from(String::from_utf8_lossy(&out.stdout).trim());
+    let exe_src = bin_dir.join("DocxDocxMac");
+    let _ = verify_non_empty(&exe_src)?;
+
+    let app_bundle = root.join("apps/apple/build/DocxDocx.app");
+    let contents = app_bundle.join("Contents");
+    let macos_dir = contents.join("MacOS");
+    let resources_dir = contents.join("Resources");
+    if app_bundle.exists() {
+        fs::remove_dir_all(&app_bundle)
+            .map_err(|e| format!("failed to clean {}: {e}", app_bundle.display()))?;
+    }
+    fs::create_dir_all(&macos_dir)
+        .map_err(|e| format!("failed to create {}: {e}", macos_dir.display()))?;
+    fs::create_dir_all(&resources_dir)
+        .map_err(|e| format!("failed to create {}: {e}", resources_dir.display()))?;
+
+    fs::copy(&exe_src, macos_dir.join("DocxDocxMac"))
+        .map_err(|e| format!("failed to copy DocxDocxMac binary: {e}"))?;
+
+    let plist_src = mac_pkg.join("Support/Info.plist");
+    fs::copy(&plist_src, contents.join("Info.plist"))
+        .map_err(|e| format!("failed to copy Info.plist: {e}"))?;
+
+    // Copy SwiftPM resource bundles (OfficeCoreKit_OfficeCoreKit.bundle, etc.)
+    for entry in fs::read_dir(&bin_dir).map_err(|e| format!("failed to read bin dir: {e}"))? {
+        let entry = entry.map_err(|e| format!("bin dir entry error: {e}"))?;
+        let path = entry.path();
+        if path.extension().and_then(|s| s.to_str()) == Some("bundle") {
+            let name = entry.file_name();
+            copy_dir_recursive(&path, &resources_dir.join(name))?;
+        }
+    }
+
+    let mut sign = Command::new(codesign);
+    sign.args(["--force", "--deep", "--sign", "-"]).arg(&app_bundle);
+    run_cmd(&mut sign, "codesign DocxDocx.app")?;
+
+    println!("mac-app OK: {}", app_bundle.display());
+
+    if install_app {
+        let target_app = PathBuf::from("/Applications/DocxDocx.app");
+        if target_app.exists() {
+            fs::remove_dir_all(&target_app)
+                .map_err(|e| format!("failed to replace {}: {e}", target_app.display()))?;
+        }
+        let mut ditto = Command::new("/usr/bin/ditto");
+        ditto.arg(&app_bundle).arg(&target_app);
+        run_cmd(&mut ditto, "ditto DocxDocx.app -> /Applications")?;
+        println!("Installed: {}", target_app.display());
+    }
+
     Ok(())
 }

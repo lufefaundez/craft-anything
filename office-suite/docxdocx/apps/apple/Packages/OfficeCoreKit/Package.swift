@@ -7,6 +7,7 @@ let package = Package(
     platforms: [
         .iOS(.v17),
         .visionOS(.v1),
+        .macOS(.v14),
     ],
     products: [
         .library(
@@ -26,6 +27,7 @@ let package = Package(
                 .process("Resources/OfficeIcons.xcassets"),
                 .copy("Resources/fonts"),
                 .copy("Resources/language-packs"),
+                .copy("Resources/ribbon-schema.json"),
             ],
         ),
         .testTarget(

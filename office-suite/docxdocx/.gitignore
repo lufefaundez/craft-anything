@@ -1,4 +1,5 @@
 target/
+.build/
 **/*.rs.bk
 .DS_Store
 apps/android/app/src/main/jniLibs/
@@ -7,6 +8,11 @@ apps/android/app/src/main/assets/language-packs/
 apps/apple/Frameworks/WordMobileFFI.xcframework/
 apps/apple/Packages/OfficeCoreKit/Sources/OfficeCoreKit/Resources/fonts/
 apps/apple/Packages/OfficeCoreKit/Sources/OfficeCoreKit/Resources/language-packs/
+apps/apple/Packages/OfficeCoreKit/Sources/OfficeCoreKit/Resources/ribbon-schema.json
+apps/apple/.build/
+apps/apple/build/
+apps/apple/DocxDocxMac/.build/
+*.app/
 *.so
 *.dylib
 *.a
