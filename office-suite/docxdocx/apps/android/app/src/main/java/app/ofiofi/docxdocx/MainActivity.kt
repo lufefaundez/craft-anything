@@ -1,292 +1,311 @@
 package app.ofiofi.docxdocx
 
-import android.annotation.SuppressLint
-import android.graphics.Bitmap
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.OpenableColumns
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import app.ofiofi.docxdocx.canvas.DocumentCanvas
+import app.ofiofi.docxdocx.canvas.DocumentLayoutMode
+import app.ofiofi.docxdocx.input.SessionDocumentTextSink
+import app.ofiofi.docxdocx.input.WordInputBridge
+import app.ofiofi.docxdocx.input.WordInputHost
+import app.ofiofi.docxdocx.input.WordInputView
+import app.ofiofi.docxdocx.storage.RecentDocEntry
+import app.ofiofi.docxdocx.storage.RecentDocumentStore
+import app.ofiofi.docxdocx.storage.SafDocumentHelper
+import app.ofiofi.docxdocx.storage.StorageProviderKind
+import app.ofiofi.docxdocx.ui.backstage.BackstageArchivoOverlay
+import app.ofiofi.docxdocx.ui.shell.AdaptiveShellModel
+import app.ofiofi.docxdocx.ui.shell.DocxAdaptiveChrome
 import app.ofiofi.docxdocx.ui.theme.OfficeTokens
+import uniffi.word_mobile_ffi.CommandOutcome
 import uniffi.word_mobile_ffi.MobileDocumentSession
-import uniffi.word_mobile_ffi.TileRequest
+import kotlin.math.roundToInt
 
 class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         DocxAssetInitializer.ensureInitialized(applicationContext)
-        val session = MobileDocumentSession.newBlank("es-CL")
+        val initialSession = loadSessionFromIntent(intent) ?: MobileDocumentSession.newBlank("es-CL")
+        val initialUri = intent?.data
+        val initialTitle = initialUri?.let { resolveDisplayName(it) } ?: "Documento1"
         val catalog = RibbonCatalogLoader.loadFromAssets(applicationContext)
 
         setContent {
             val windowSizeClass = calculateWindowSizeClass(this)
             val isDark = isSystemInDarkTheme()
             DocxWorkspaceScreen(
-                session = session,
+                initialSession = initialSession,
+                initialTitle = initialTitle,
+                initialUri = initialUri,
                 catalog = catalog,
                 isExpandedWidth = windowSizeClass.widthSizeClass != WindowWidthSizeClass.Compact,
                 isDark = isDark,
             )
         }
     }
+
+    private fun loadSessionFromIntent(intent: Intent?): MobileDocumentSession? {
+        val uri = intent?.data ?: return null
+        val name = resolveDisplayName(uri) ?: "documento.docx"
+        return runCatching {
+            val bytes = SafDocumentHelper.readBytes(contentResolver, uri)
+            MobileDocumentSession.openBytes(name, bytes, null)
+        }.getOrNull()
+    }
+
+    private fun resolveDisplayName(uri: Uri): String? {
+        contentResolver.query(uri, arrayOf(OpenableColumns.DISPLAY_NAME), null, null, null)?.use { cursor ->
+            if (cursor.moveToFirst()) {
+                val idx = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+                if (idx >= 0) return cursor.getString(idx)
+            }
+        }
+        return uri.lastPathSegment?.substringAfterLast('/')
+    }
 }
 
-@SuppressLint("DiscouragedApi")
 @Composable
 fun DocxWorkspaceScreen(
-    session: MobileDocumentSession,
+    initialSession: MobileDocumentSession,
+    initialTitle: String,
+    initialUri: Uri?,
     catalog: RibbonSchemaCatalog,
     isExpandedWidth: Boolean,
     isDark: Boolean,
 ) {
+    val context = LocalContext.current
     val surfaces = if (isDark) OfficeTokens.DarkSurfaces else OfficeTokens.LightSurfaces
-    val accent = if (isDark) OfficeTokens.AppAccents.Word.accentDark else OfficeTokens.AppAccents.Word.accentLight
-    var activeTabIndex by remember { mutableIntStateOf(0) }
-    var docRevision by remember { mutableIntStateOf(0) }
-    var statusMessage by remember { mutableStateOf("Página 1 de ${session.pageCount()}  •  ${session.wordCount()} palabras") }
+    val formFactor = remember(isExpandedWidth) { AdaptiveShellModel.resolveFormFactor(isExpandedWidth) }
+    val recentStore = remember(context) { RecentDocumentStore(context) }
 
-    val renderedPage = remember(docRevision, isDark) {
-        val pageSize = session.pageSizePt(0u)
-        val widthPx = 794u
-        val scale = widthPx.toFloat() / pageSize.widthPt
-        val heightPx = (pageSize.heightPt * scale).toUInt().coerceAtLeast(1u)
-        val rgba = session.renderTile(
-            TileRequest(
-                pageIndex = 0u,
-                dpiScale = scale,
-                tileXPx = 0u,
-                tileYPx = 0u,
-                tileWPx = widthPx,
-                tileHPx = heightPx,
-                darkPage = false,
-            ),
-        )
-        rgbaBytesToBitmap(rgba, widthPx.toInt(), heightPx.toInt())
+    var activeSession by remember { mutableStateOf(initialSession) }
+    var documentTitle by remember { mutableStateOf(initialTitle) }
+    var activeUri by remember { mutableStateOf(initialUri) }
+    var recentDocs by remember { mutableStateOf(recentStore.loadRecent()) }
+    var docRevision by remember { mutableIntStateOf(0) }
+    var zoom by remember { mutableFloatStateOf(1.0f) }
+    var layoutMode by remember { mutableStateOf(DocumentLayoutMode.PRINT_LAYOUT) }
+    var selectionGeometry by remember { mutableStateOf(activeSession.getSelectionGeometry()) }
+    var canUndo by remember { mutableStateOf(false) }
+    var canRedo by remember { mutableStateOf(false) }
+    var activeToggleIds by remember { mutableStateOf(emptySet<String>()) }
+    var activeContexts by remember { mutableStateOf(emptySet<String>()) }
+    var statusMessage by remember {
+        mutableStateOf("Página 1 de ${activeSession.pageCount()}  •  ${activeSession.wordCount()} palabras")
+    }
+    var showBackstage by remember { mutableStateOf(false) }
+
+    val applyOutcome: (CommandOutcome) -> Unit = { outcome ->
+        selectionGeometry = outcome.selection
+        canUndo = outcome.canUndo
+        canRedo = outcome.canRedo
+        activeToggleIds = AdaptiveShellModel.parseActiveToggleIds(outcome.formatStateJson)
+        activeContexts = AdaptiveShellModel.parseActiveContexts(outcome.formatStateJson)
+        docRevision += 1
+        val pageIdx = (outcome.selection.caret?.pageIndex?.toInt() ?: 0) + 1
+        statusMessage = "Página $pageIdx de ${outcome.pageCount}  •  ${outcome.wordCount} palabras"
     }
 
-    val context = LocalContext.current
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(surfaces.canvas),
-    ) {
-        // Title Bar + QAT (38 dp)
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(38.dp)
-                .background(surfaces.titleBar)
-                .padding(horizontal = 12.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween,
-        ) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Text("DocxDocx", color = accent, fontWeight = FontWeight.SemiBold, fontSize = 14.sp)
-                Spacer(Modifier.width(12.dp))
-                Text("Documento1", color = surfaces.text, fontSize = 13.sp)
+    val swapSession: (MobileDocumentSession, String, Uri?, StorageProviderKind, String?) -> Unit =
+        { nextSession, title, uri, provider, originStr ->
+            activeSession = nextSession
+            documentTitle = title
+            activeUri = uri
+            layoutMode = DocumentLayoutMode.PRINT_LAYOUT
+            selectionGeometry = nextSession.getSelectionGeometry()
+            canUndo = false
+            canRedo = false
+            activeToggleIds = emptySet()
+            activeContexts = emptySet()
+            docRevision += 1
+            statusMessage = "Página 1 de ${nextSession.pageCount()}  •  ${nextSession.wordCount()} palabras"
+            if (originStr != null) {
+                recentStore.record(RecentDocEntry(title, originStr, provider, System.currentTimeMillis()))
+                recentDocs = recentStore.loadRecent()
             }
-            Text("OfiOfi Free", color = surfaces.textDim, fontSize = 12.sp)
         }
 
-        // Ribbon Tab Strip (32 dp)
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(32.dp)
-                .background(surfaces.tabStrip)
-                .horizontalScroll(rememberScrollState())
-                .padding(horizontal = 8.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            catalog.coreTabs.forEachIndexed { idx, tab ->
-                val selected = idx == activeTabIndex
-                Column(
-                    modifier = Modifier
-                        .clickable { activeTabIndex = idx }
-                        .padding(horizontal = 10.dp, vertical = 4.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                ) {
-                    Text(
-                        text = tab.labelEsCl,
-                        color = if (selected) accent else surfaces.text,
-                        fontWeight = if (selected) FontWeight.SemiBold else FontWeight.Normal,
-                        fontSize = 13.sp,
-                    )
-                    if (selected) {
-                        Box(
-                            modifier = Modifier
-                                .padding(top = 2.dp)
-                                .width(28.dp)
-                                .height(2.5.dp)
-                                .background(accent),
-                        )
+    var inputViewRef by remember { mutableStateOf<WordInputView?>(null) }
+    val inputBridge = remember(activeSession) {
+        WordInputBridge(SessionDocumentTextSink(activeSession), applyOutcome)
+    }
+
+    Box(modifier = Modifier.fillMaxSize()) {
+        DocxAdaptiveChrome(
+            formFactor = formFactor,
+            catalog = catalog,
+            documentTitle = documentTitle,
+            activeToggleIds = activeToggleIds,
+            activeContexts = activeContexts,
+            canUndo = canUndo,
+            canRedo = canRedo,
+            isDark = isDark,
+            onExecuteCommand = { commandId, paramsJson ->
+                if (commandId == "ui.openBackstage") {
+                    showBackstage = true
+                } else {
+                    runCatching {
+                        val outcome = activeSession.executeCommand(commandId, paramsJson)
+                        applyOutcome(outcome)
                     }
                 }
-            }
-        }
-
-        // Tablet/Foldable Ribbon Card (or compact quick bar preview on phone)
-        val currentTab = catalog.coreTabs.getOrNull(activeTabIndex)
-        if (currentTab != null && isExpandedWidth) {
-            Surface(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 8.dp, vertical = 4.dp)
-                    .height(92.dp)
-                    .border(1.dp, surfaces.ribbonBorder, RoundedCornerShape(OfficeTokens.Radii.ribbonCard)),
-                shape = RoundedCornerShape(OfficeTokens.Radii.ribbonCard),
-                color = surfaces.ribbonCard,
-            ) {
+            },
+            onOpenBackstage = { showBackstage = true },
+            canvasContent = { canvasModifier ->
+                Box(modifier = canvasModifier) {
+                    WordInputHost(
+                        bridge = inputBridge,
+                        onViewReady = { inputViewRef = it },
+                        modifier = Modifier.size(1.dp),
+                    )
+                    DocumentCanvas(
+                        session = activeSession,
+                        docRevision = docRevision,
+                        selectionGeometry = selectionGeometry,
+                        isDark = isDark,
+                        zoom = zoom,
+                        layoutMode = layoutMode,
+                        onZoomChange = { zoom = it },
+                        onToggleLayoutMode = {
+                            val nextMode = if (layoutMode == DocumentLayoutMode.PRINT_LAYOUT) {
+                                DocumentLayoutMode.MOBILE_REFLOW
+                            } else {
+                                DocumentLayoutMode.PRINT_LAYOUT
+                            }
+                            runCatching {
+                                val cmd = if (nextMode == DocumentLayoutMode.MOBILE_REFLOW) "view.webLayout" else "view.printLayout"
+                                val outcome = activeSession.executeCommand(cmd, "{}")
+                                layoutMode = nextMode
+                                applyOutcome(outcome)
+                            }
+                        },
+                        onTapPage = { hit, tapCount ->
+                            inputViewRef?.showSoftKeyboard()
+                            runCatching {
+                                selectionGeometry = when (tapCount) {
+                                    2 -> activeSession.doubleTapAt(hit.pageIndex.toUInt(), hit.xPt, hit.yPt)
+                                    3 -> activeSession.tripleTapAt(hit.pageIndex.toUInt(), hit.xPt, hit.yPt)
+                                    else -> activeSession.tapAt(hit.pageIndex.toUInt(), hit.xPt, hit.yPt)
+                                }
+                                val pageIdx = (selectionGeometry.caret?.pageIndex?.toInt() ?: hit.pageIndex) + 1
+                                statusMessage = "Página $pageIdx de ${activeSession.pageCount()}  •  ${activeSession.wordCount()} palabras"
+                            }
+                        },
+                        onSelectionUpdated = { updated ->
+                            selectionGeometry = updated
+                        },
+                        onQuickCommand = { cmdId ->
+                            runCatching {
+                                val outcome = activeSession.executeCommand(cmdId, "{}")
+                                applyOutcome(outcome)
+                            }
+                        },
+                        modifier = Modifier.fillMaxSize(),
+                    )
+                }
+            },
+            statusBarContent = {
                 Row(
                     modifier = Modifier
-                        .fillMaxSize()
-                        .horizontalScroll(rememberScrollState())
-                        .padding(horizontal = 8.dp, vertical = 6.dp),
+                        .fillMaxWidth()
+                        .height(26.dp)
+                        .background(surfaces.statusBar)
+                        .padding(horizontal = 12.dp),
                     verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween,
                 ) {
-                    currentTab.groups.forEach { group ->
-                        Column(
-                            modifier = Modifier.padding(horizontal = 6.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                        ) {
-                            Row(
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.spacedBy(4.dp),
-                            ) {
-                                group.controls.take(6).forEach { control ->
-                                    val resId = context.resources.getIdentifier(
-                                        control.icon.lowercase(),
-                                        "drawable",
-                                        context.packageName,
-                                    )
-                                    Box(
-                                        modifier = Modifier
-                                            .size(OfficeTokens.TouchTargets.tabletCompactButton)
-                                            .clip(RoundedCornerShape(OfficeTokens.Radii.button))
-                                            .clickable {
-                                                runCatching {
-                                                    session.executeCommand(control.commandId, "{}")
-                                                    docRevision += 1
-                                                    statusMessage = "Página 1 de ${session.pageCount()}  •  ${session.wordCount()} palabras"
-                                                }
-                                            },
-                                        contentAlignment = Alignment.Center,
-                                    ) {
-                                        if (resId != 0) {
-                                            Icon(
-                                                painter = painterResource(resId),
-                                                contentDescription = control.labelEsCl,
-                                                tint = Color.Unspecified,
-                                                modifier = Modifier.size(20.dp),
-                                            )
-                                        }
-                                    }
-                                }
-                            }
-                            Text(group.labelEsCl, color = surfaces.textDim, fontSize = 10.sp)
-                        }
-                        Box(
-                            modifier = Modifier
-                                .padding(horizontal = 4.dp)
-                                .width(1.dp)
-                                .height(64.dp)
-                                .background(surfaces.ribbonBorder),
-                        )
-                    }
+                    Text(statusMessage, color = surfaces.textDim, fontSize = 11.sp)
+                    Text("Español (Chile)  •  ${(zoom * 100f).roundToInt()} %", color = surfaces.textDim, fontSize = 11.sp)
                 }
-            }
-        }
+            },
+        )
 
-        // Document Canvas Area
-        Box(
-            modifier = Modifier
-                .weight(1f)
-                .fillMaxWidth()
-                .padding(16.dp),
-            contentAlignment = Alignment.TopCenter,
-        ) {
-            if (renderedPage != null) {
-                Image(
-                    bitmap = renderedPage.asImageBitmap(),
-                    contentDescription = "Documento actual",
-                    modifier = Modifier
-                        .border(1.dp, surfaces.ribbonBorder)
-                        .background(surfaces.page),
-                )
-            }
-        }
-
-        HorizontalDivider(color = surfaces.ribbonBorder)
-        // Status Bar (26 dp)
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(26.dp)
-                .background(surfaces.statusBar)
-                .padding(horizontal = 12.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween,
-        ) {
-            Text(statusMessage, color = surfaces.textDim, fontSize = 11.sp)
-            Text("Español (Chile)  •  100 %", color = surfaces.textDim, fontSize = 11.sp)
+        if (showBackstage) {
+            BackstageArchivoOverlay(
+                currentTitle = documentTitle,
+                activeUri = activeUri,
+                recentDocs = recentDocs,
+                pageCount = activeSession.pageCount(),
+                wordCount = activeSession.wordCount(),
+                isDark = isDark,
+                isCompactWidth = !isExpandedWidth,
+                onDismiss = { showBackstage = false },
+                onNewFromTemplate = { template ->
+                    val next = SafDocumentHelper.createSessionFromTemplate(template, "es-CL")
+                    swapSession(next, template.titleEsCl, null, StorageProviderKind.LOCAL_OR_DRIVE_SAF, null)
+                },
+                onOpenSafUri = { uri ->
+                    runCatching {
+                        val resolver = context.contentResolver
+                        runCatching {
+                            resolver.takePersistableUriPermission(
+                                uri,
+                                Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION,
+                            )
+                        }
+                        val name = uri.lastPathSegment?.substringAfterLast('/') ?: "documento.docx"
+                        val bytes = SafDocumentHelper.readBytes(resolver, uri)
+                        val next = MobileDocumentSession.openBytes(name, bytes, null)
+                        swapSession(next, name, uri, StorageProviderKind.LOCAL_OR_DRIVE_SAF, uri.toString())
+                    }
+                },
+                onSaveToSafUri = { uri ->
+                    runCatching {
+                        val bytes = activeSession.saveDocxBytes()
+                        SafDocumentHelper.writeBytes(context.contentResolver, uri, bytes)
+                        val name = uri.lastPathSegment?.substringAfterLast('/') ?: "$documentTitle.docx"
+                        activeUri = uri
+                        documentTitle = name
+                        recentStore.record(
+                            RecentDocEntry(name, uri.toString(), StorageProviderKind.LOCAL_OR_DRIVE_SAF, System.currentTimeMillis()),
+                        )
+                        recentDocs = recentStore.loadRecent()
+                    }
+                },
+                onExportPdfToSafUri = { uri ->
+                    runCatching {
+                        val pdfBytes = activeSession.exportPdfBytes()
+                        SafDocumentHelper.writeBytes(context.contentResolver, uri, pdfBytes)
+                    }
+                },
+                onReplaceSessionFromBytes = { filename, bytes, origin, provider ->
+                    runCatching {
+                        val next = MobileDocumentSession.openBytes(filename, bytes, null)
+                        swapSession(next, filename, null, provider, origin)
+                    }
+                },
+                onGetDocxBytes = { activeSession.saveDocxBytes() },
+            )
         }
     }
-}
-
-private fun rgbaBytesToBitmap(rgba: ByteArray, width: Int, height: Int): Bitmap? {
-    if (width <= 0 || height <= 0 || rgba.size != width * height * 4) return null
-    val pixels = IntArray(width * height)
-    var i = 0
-    var p = 0
-    while (p < pixels.size) {
-        val r = rgba[i].toInt() and 0xFF
-        val g = rgba[i + 1].toInt() and 0xFF
-        val b = rgba[i + 2].toInt() and 0xFF
-        val a = rgba[i + 3].toInt() and 0xFF
-        pixels[p] = (a shl 24) or (r shl 16) or (g shl 8) or b
-        i += 4
-        p += 1
-    }
-    return Bitmap.createBitmap(pixels, width, height, Bitmap.Config.ARGB_8888)
 }
