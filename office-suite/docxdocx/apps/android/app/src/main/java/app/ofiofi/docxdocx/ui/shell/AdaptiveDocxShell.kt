@@ -53,6 +53,9 @@ import androidx.compose.ui.unit.sp
 import app.ofiofi.docxdocx.RibbonControlSpec
 import app.ofiofi.docxdocx.RibbonSchemaCatalog
 import app.ofiofi.docxdocx.RibbonTabSpec
+import app.ofiofi.docxdocx.ui.ribbon.RibbonAdvancedPresets
+import app.ofiofi.docxdocx.ui.ribbon.RibbonCorePresets
+import app.ofiofi.docxdocx.ui.ribbon.RibbonInteractiveControl
 import app.ofiofi.docxdocx.ui.theme.OfficeTokens
 
 /**
@@ -68,6 +71,7 @@ fun DocxAdaptiveChrome(
     documentTitle: String,
     activeToggleIds: Set<String>,
     activeContexts: Set<String>,
+    formatSummary: RibbonFormatSummary = RibbonFormatSummary.Default,
     canUndo: Boolean,
     canRedo: Boolean,
     isDark: Boolean,
@@ -109,6 +113,7 @@ fun DocxAdaptiveChrome(
             RibbonTabStripBar(
                 tabs = tabs,
                 selectedIndex = safeTabIndex,
+                activeContexts = activeContexts,
                 surfaces = surfaces,
                 accent = accent,
                 onOpenBackstage = onOpenBackstage,
@@ -118,6 +123,7 @@ fun DocxAdaptiveChrome(
                 TabletFloatingRibbonCard(
                     tab = currentTab,
                     activeToggleIds = activeToggleIds,
+                    formatSummary = formatSummary,
                     surfaces = surfaces,
                     accent = accent,
                     checkedBg = checkedBg,
@@ -179,6 +185,7 @@ fun DocxAdaptiveChrome(
                 selectedIndex = safeTabIndex,
                 searchQuery = searchQuery,
                 activeToggleIds = activeToggleIds,
+                formatSummary = formatSummary,
                 surfaces = surfaces,
                 accent = accent,
                 checkedBg = checkedBg,
@@ -269,11 +276,13 @@ private fun TabletTitleAndQatBar(
 private fun RibbonTabStripBar(
     tabs: List<RibbonTabSpec>,
     selectedIndex: Int,
+    activeContexts: Set<String>,
     surfaces: OfficeTokens.SurfacePalette,
     accent: Color,
     onOpenBackstage: () -> Unit,
     onSelectTab: (Int) -> Unit,
 ) {
+    val contextBanner = RibbonAdvancedPresets.contextualBannerLabel(activeContexts)
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -325,10 +334,22 @@ private fun RibbonTabStripBar(
                             .padding(top = 2.dp)
                             .width(26.dp)
                             .height(2.5.dp)
-                            .background(accent),
+                            .background(if (isContextual) Color(0xFFB7472A) else accent),
                     )
                 }
             }
+        }
+        if (contextBanner != null) {
+            Spacer(Modifier.width(10.dp))
+            Text(
+                text = contextBanner,
+                color = Color(0xFFB7472A),
+                fontSize = 11.sp,
+                fontWeight = FontWeight.SemiBold,
+                modifier = Modifier
+                    .background(Color(0x1AB7472A), RoundedCornerShape(4.dp))
+                    .padding(horizontal = 8.dp, vertical = 2.dp),
+            )
         }
     }
 }
@@ -337,6 +358,7 @@ private fun RibbonTabStripBar(
 private fun TabletFloatingRibbonCard(
     tab: RibbonTabSpec,
     activeToggleIds: Set<String>,
+    formatSummary: RibbonFormatSummary,
     surfaces: OfficeTokens.SurfacePalette,
     accent: Color,
     checkedBg: Color,
@@ -380,6 +402,7 @@ private fun TabletFloatingRibbonCard(
                                         control = slot.control,
                                         tall = true,
                                         checked = activeToggleIds.contains(slot.control.commandId),
+                                        formatSummary = formatSummary,
                                         surfaces = surfaces,
                                         accent = accent,
                                         checkedBg = checkedBg,
@@ -395,6 +418,7 @@ private fun TabletFloatingRibbonCard(
                                             control = slot.top,
                                             tall = false,
                                             checked = activeToggleIds.contains(slot.top.commandId),
+                                            formatSummary = formatSummary,
                                             surfaces = surfaces,
                                             accent = accent,
                                             checkedBg = checkedBg,
@@ -405,6 +429,7 @@ private fun TabletFloatingRibbonCard(
                                                 control = slot.bottom,
                                                 tall = false,
                                                 checked = activeToggleIds.contains(slot.bottom.commandId),
+                                                formatSummary = formatSummary,
                                                 surfaces = surfaces,
                                                 accent = accent,
                                                 checkedBg = checkedBg,
@@ -456,77 +481,91 @@ private fun RibbonControlWithSubmenu(
     control: RibbonControlSpec,
     tall: Boolean,
     checked: Boolean,
+    formatSummary: RibbonFormatSummary,
     surfaces: OfficeTokens.SurfacePalette,
     accent: Color,
     checkedBg: Color,
     onExecuteCommand: (String, String) -> Unit,
 ) {
-    var expanded by remember(control.commandId) { mutableStateOf(false) }
+    RibbonInteractiveControl(
+        control = control,
+        formatSummary = formatSummary,
+        surfaces = surfaces,
+        accent = accent,
+        checkedBg = checkedBg,
+        onExecuteCommand = onExecuteCommand,
+        iconContent = { iconName, contentDescription, sizeDp ->
+            ControlVectorIcon(iconName = iconName, contentDescription = contentDescription, sizeDp = sizeDp)
+        },
+        fallbackButton = {
+            var expanded by remember(control.commandId) { mutableStateOf(false) }
 
-    Box {
-        if (tall) {
-            Column(
-                modifier = Modifier
-                    .height(OfficeTokens.TouchTargets.tabletLargeButton)
-                    .width(52.dp)
-                    .clip(RoundedCornerShape(OfficeTokens.Radii.button))
-                    .background(if (checked) checkedBg else Color.Transparent)
-                    .clickable {
-                        if (control.submenu.isNotEmpty()) {
-                            expanded = true
-                        } else {
-                            onExecuteCommand(control.commandId, "{}")
-                        }
+            Box {
+                if (tall) {
+                    Column(
+                        modifier = Modifier
+                            .height(OfficeTokens.TouchTargets.tabletLargeButton)
+                            .width(56.dp)
+                            .clip(RoundedCornerShape(OfficeTokens.Radii.button))
+                            .background(if (checked) checkedBg else Color.Transparent)
+                            .clickable {
+                                if (control.submenu.isNotEmpty()) {
+                                    expanded = true
+                                } else {
+                                    onExecuteCommand(control.commandId, "{}")
+                                }
+                            }
+                            .padding(horizontal = 3.dp, vertical = 2.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center,
+                    ) {
+                        ControlVectorIcon(iconName = control.icon, contentDescription = control.labelEsCl, sizeDp = 22)
+                        Spacer(Modifier.height(2.dp))
+                        Text(
+                            text = control.labelEsCl,
+                            color = if (checked) accent else surfaces.text,
+                            fontSize = 9.sp,
+                            maxLines = 2,
+                            lineHeight = 10.sp,
+                            overflow = TextOverflow.Ellipsis,
+                        )
                     }
-                    .padding(horizontal = 3.dp, vertical = 2.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center,
-            ) {
-                ControlVectorIcon(iconName = control.icon, contentDescription = control.labelEsCl, sizeDp = 22)
-                Spacer(Modifier.height(2.dp))
-                Text(
-                    text = control.labelEsCl,
-                    color = if (checked) accent else surfaces.text,
-                    fontSize = 9.sp,
-                    maxLines = 2,
-                    lineHeight = 10.sp,
-                    overflow = TextOverflow.Ellipsis,
-                )
-            }
-        } else {
-            RibbonIconButton(
-                control = control,
-                enabled = true,
-                checked = checked,
-                surfaces = surfaces,
-                checkedBg = checkedBg,
-                onClick = {
-                    if (control.submenu.isNotEmpty()) {
-                        expanded = true
-                    } else {
-                        onExecuteCommand(control.commandId, "{}")
-                    }
-                },
-            )
-        }
-
-        if (control.submenu.isNotEmpty()) {
-            DropdownMenu(
-                expanded = expanded,
-                onDismissRequest = { expanded = false },
-            ) {
-                control.submenu.forEach { sub ->
-                    DropdownMenuItem(
-                        text = { Text(sub.labelEsCl, fontSize = 13.sp) },
+                } else {
+                    RibbonIconButton(
+                        control = control,
+                        enabled = true,
+                        checked = checked,
+                        surfaces = surfaces,
+                        checkedBg = checkedBg,
                         onClick = {
-                            expanded = false
-                            onExecuteCommand(sub.commandId, "{}")
+                            if (control.submenu.isNotEmpty()) {
+                                expanded = true
+                            } else {
+                                onExecuteCommand(control.commandId, "{}")
+                            }
                         },
                     )
                 }
+
+                if (control.submenu.isNotEmpty()) {
+                    DropdownMenu(
+                        expanded = expanded,
+                        onDismissRequest = { expanded = false },
+                    ) {
+                        control.submenu.forEach { sub ->
+                            DropdownMenuItem(
+                                text = { Text(sub.labelEsCl, fontSize = 13.sp) },
+                                onClick = {
+                                    expanded = false
+                                    onExecuteCommand(sub.commandId, "{}")
+                                },
+                            )
+                        }
+                    }
+                }
             }
-        }
-    }
+        },
+    )
 }
 
 @Composable
@@ -702,6 +741,7 @@ private fun PhoneRibbonSheetContent(
     selectedIndex: Int,
     searchQuery: String,
     activeToggleIds: Set<String>,
+    formatSummary: RibbonFormatSummary,
     surfaces: OfficeTokens.SurfacePalette,
     accent: Color,
     checkedBg: Color,
@@ -842,23 +882,46 @@ private fun PhoneRibbonSheetContent(
                             Spacer(Modifier.height(6.dp))
                             group.controls.forEach { ctrl ->
                                 val isChecked = activeToggleIds.contains(ctrl.commandId)
+                                val hasInlinePicker = RibbonCorePresets.supportsInteractiveControl(ctrl)
                                 Row(
                                     modifier = Modifier
                                         .fillMaxWidth()
                                         .sizeIn(minHeight = OfficeTokens.TouchTargets.phoneMin)
                                         .clip(RoundedCornerShape(OfficeTokens.Radii.button))
                                         .background(if (isChecked) checkedBg else Color.Transparent)
-                                        .clickable { onExecuteCommand(ctrl.commandId, "{}") }
+                                        .clickable(enabled = !hasInlinePicker) {
+                                            onExecuteCommand(ctrl.commandId, "{}")
+                                        }
                                         .padding(horizontal = 8.dp, vertical = 6.dp),
                                     verticalAlignment = Alignment.CenterVertically,
-                                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                                    horizontalArrangement = Arrangement.SpaceBetween,
                                 ) {
-                                    ControlVectorIcon(iconName = ctrl.icon, contentDescription = ctrl.labelEsCl, sizeDp = 22)
-                                    Text(
-                                        text = ctrl.labelEsCl,
-                                        color = if (isChecked) accent else surfaces.text,
-                                        fontSize = 14.sp,
-                                    )
+                                    Row(
+                                        verticalAlignment = Alignment.CenterVertically,
+                                        horizontalArrangement = Arrangement.spacedBy(10.dp),
+                                        modifier = Modifier.weight(1f),
+                                    ) {
+                                        ControlVectorIcon(iconName = ctrl.icon, contentDescription = ctrl.labelEsCl, sizeDp = 22)
+                                        Text(
+                                            text = ctrl.labelEsCl,
+                                            color = if (isChecked) accent else surfaces.text,
+                                            fontSize = 14.sp,
+                                        )
+                                    }
+                                    if (hasInlinePicker) {
+                                        RibbonInteractiveControl(
+                                            control = ctrl,
+                                            formatSummary = formatSummary,
+                                            surfaces = surfaces,
+                                            accent = accent,
+                                            checkedBg = checkedBg,
+                                            onExecuteCommand = onExecuteCommand,
+                                            iconContent = { iconName, desc, sz ->
+                                                ControlVectorIcon(iconName = iconName, contentDescription = desc, sizeDp = sz)
+                                            },
+                                            fallbackButton = {},
+                                        )
+                                    }
                                 }
                             }
                         }

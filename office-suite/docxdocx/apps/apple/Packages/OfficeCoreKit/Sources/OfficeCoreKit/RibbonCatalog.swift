@@ -232,7 +232,10 @@ public enum AdaptiveRibbonHelper {
         if (dict["bold"] as? Bool) == true { toggles.insert("format.bold") }
         if (dict["italic"] as? Bool) == true { toggles.insert("format.italic") }
         if (dict["underline"] as? Bool) == true { toggles.insert("format.underline") }
-        if (dict["strikethrough"] as? Bool) == true { toggles.insert("format.strike") }
+        if (dict["strike"] as? Bool) == true || (dict["strikethrough"] as? Bool) == true {
+            toggles.insert("format.strikethrough")
+            toggles.insert("format.strike")
+        }
         if (dict["superscript"] as? Bool) == true { toggles.insert("format.superscript") }
         if (dict["subscript"] as? Bool) == true { toggles.insert("format.subscript") }
         switch dict["align"] as? String {
@@ -246,6 +249,23 @@ public enum AdaptiveRibbonHelper {
         if (dict["numbering"] as? Bool) == true { toggles.insert("para.numbering") }
         if (dict["marks"] as? Bool) == true { toggles.insert("view.marks") }
         return toggles
+    }
+
+    public static func parseFormatSummary(formatStateJson: String) -> (font: String, size: Double, style: String, colorHex: String) {
+        guard let data = formatStateJson.data(using: .utf8),
+              let dict = try? JSONSerialization.jsonObject(with: data) as? [String: Any] else {
+            return ("Aptos", 12.0, "Normal", "auto")
+        }
+        let font = (dict["font"] as? String)?.trimmingCharacters(in: .whitespacesAndNewlines)
+        let sizeNum = (dict["size"] as? NSNumber)?.doubleValue
+        let style = (dict["styleName"] as? String) ?? (dict["style"] as? String)
+        let colorHex = dict["color"] as? String
+        return (
+            font: (font?.isEmpty == false ? font! : "Aptos"),
+            size: (sizeNum ?? 12.0),
+            style: (style?.isEmpty == false ? style! : "Normal"),
+            colorHex: colorHex ?? "auto"
+        )
     }
 
     public static func parseActiveContexts(formatStateJson: String) -> Set<String> {

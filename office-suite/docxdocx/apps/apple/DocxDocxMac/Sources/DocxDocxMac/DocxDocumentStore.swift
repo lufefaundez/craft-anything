@@ -29,6 +29,11 @@ final class DocxWorkspaceModel {
     var selection: SelectionGeometry
     var activeToggleIds: Set<String> = []
     var activeContexts: Set<String> = []
+    var activeFontName: String = "Aptos"
+    var activeFontSize: Double = 12.0
+    var activeStyleName: String = "Normal"
+    var activeFontColorHex: String = "auto"
+    var showRuler: Bool = true
     var statusBanner: String?
 
     init() {
@@ -56,11 +61,19 @@ final class DocxWorkspaceModel {
         wordCount = outcome.wordCount
         activeToggleIds = AdaptiveRibbonHelper.parseActiveToggleIds(formatStateJson: outcome.formatStateJson)
         activeContexts = AdaptiveRibbonHelper.parseActiveContexts(formatStateJson: outcome.formatStateJson)
+        let summary = AdaptiveRibbonHelper.parseFormatSummary(formatStateJson: outcome.formatStateJson)
+        activeFontName = summary.font
+        activeFontSize = summary.size
+        activeStyleName = summary.style
+        activeFontColorHex = summary.colorHex
         docRevision &+= 1
     }
 
     func executeCommand(_ commandId: String, paramsJson: String = "{}") {
         switch commandId {
+        case "view.ruler":
+            showRuler.toggle()
+            return
         case "ui.openBackstage":
             showBackstage = true
             return
@@ -127,6 +140,11 @@ final class DocxWorkspaceModel {
             if let fmt = try? session.executeCommand(cmdId: "format.state", paramsJson: "{}") {
                 activeToggleIds = AdaptiveRibbonHelper.parseActiveToggleIds(formatStateJson: fmt.formatStateJson)
                 activeContexts = AdaptiveRibbonHelper.parseActiveContexts(formatStateJson: fmt.formatStateJson)
+                let summary = AdaptiveRibbonHelper.parseFormatSummary(formatStateJson: fmt.formatStateJson)
+                activeFontName = summary.font
+                activeFontSize = summary.size
+                activeStyleName = summary.style
+                activeFontColorHex = summary.colorHex
             }
         } catch {
             statusBanner = error.localizedDescription

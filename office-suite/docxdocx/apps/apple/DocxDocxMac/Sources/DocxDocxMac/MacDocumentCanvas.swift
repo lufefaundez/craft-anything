@@ -6,6 +6,10 @@ import SwiftUI
 struct MacDocumentCanvas: NSViewRepresentable {
     @Bindable var model: DocxWorkspaceModel
 
+    func makeCoordinator() -> Coordinator {
+        Coordinator()
+    }
+
     func makeNSView(context: Context) -> NSScrollView {
         let scrollView = NSScrollView()
         scrollView.hasVerticalScroller = true
@@ -13,12 +17,16 @@ struct MacDocumentCanvas: NSViewRepresentable {
         scrollView.allowsMagnification = false
         scrollView.drawsBackground = true
         scrollView.backgroundColor = NSColor(srgbRed: 0.925, green: 0.925, blue: 0.925, alpha: 1.0)
+        scrollView.contentView.postsBoundsChangedNotifications = true
+        scrollView.contentView.postsFrameChangedNotifications = true
 
         let docView = DocxPageCanvasNSView(model: model)
-        docView.autoresizingMask = [.width]
         scrollView.documentView = docView
 
+        context.coordinator.observe(clipView: scrollView.contentView, docView: docView)
+
         DispatchQueue.main.async {
+            docView.syncFromModel(viewportSize: scrollView.contentView.bounds.size)
             scrollView.window?.makeFirstResponder(docView)
         }
         return scrollView
@@ -26,7 +34,25 @@ struct MacDocumentCanvas: NSViewRepresentable {
 
     func updateNSView(_ scrollView: NSScrollView, context: Context) {
         guard let docView = scrollView.documentView as? DocxPageCanvasNSView else { return }
-        docView.syncFromModel(viewportSize: scrollView.contentSize)
+        docView.syncFromModel(viewportSize: scrollView.contentView.bounds.size)
+    }
+
+    @MainActor
+    final class Coordinator {
+        private var observer: NSObjectProtocol?
+
+        func observe(clipView: NSClipView, docView: DocxPageCanvasNSView) {
+            observer = NotificationCenter.default.addObserver(
+                forName: NSView.frameDidChangeNotification,
+                object: clipView,
+                queue: .main
+            ) { [weak docView, weak clipView] _ in
+                MainActor.assumeIsolated {
+                    guard let docView, let clipView else { return }
+                    docView.syncFromModel(viewportSize: clipView.bounds.size)
+                }
+            }
+        }
     }
 }
 
@@ -51,7 +77,7 @@ final class DocxPageCanvasNSView: NSView, @preconcurrency NSTextInputClient {
     init(model: DocxWorkspaceModel) {
         self.model = model
         super.init(frame: .zero)
-        tileCache.countLimit = 220
+        tileCache.countLimit = 240
     }
 
     @available(*, unavailable)
@@ -59,21 +85,24 @@ final class DocxPageCanvasNSView: NSView, @preconcurrency NSTextInputClient {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func viewDidMoveToWindow() {
-        super.viewDidMoveToWindow()
-        if window != nil {
-            startCaretBlink()
-        } else {
-            caretTimer?.invalidate()
-            caretTimer = nil
-        }
-    }
-
     override var isFlipped: Bool { true }
     override var acceptsFirstResponder: Bool { true }
 
     override func becomeFirstResponder() -> Bool {
         true
+    }
+
+    override func viewDidMoveToWindow() {
+        super.viewDidMoveToWindow()
+        if window != nil {
+            startCaretBlink()
+            if let clipSize = enclosingScrollView?.contentView.bounds.size {
+                syncFromModel(viewportSize: clipSize)
+            }
+        } else {
+            caretTimer?.invalidate()
+            caretTimer = nil
+        }
     }
 
     private func startCaretBlink() {
@@ -100,8 +129,8 @@ final class DocxPageCanvasNSView: NSView, @preconcurrency NSTextInputClient {
     }
 
     private func recomputeLayout(viewportSize: CGSize) {
-        let vpW = max(400, viewportSize.width)
-        let vpH = max(300, viewportSize.height)
+        let vpW = max(500, viewportSize.width)
+        let vpH = max(360, viewportSize.height)
         let count = max(1, Int(model.session.pageCount()))
         var sizes: [PageSizePt] = []
         sizes.reserveCapacity(count)
@@ -109,19 +138,22 @@ final class DocxPageCanvasNSView: NSView, @preconcurrency NSTextInputClient {
             sizes.append((try? model.session.pageSizePt(pageIndex: UInt32(idx))) ?? PageSizePt(widthPt: 612, heightPt: 792))
         }
         let refW = CGFloat(sizes.first?.widthPt ?? 612)
-        let sidePad: CGFloat = 28
-        let baseScale = min(3.0, max(0.5, (vpW - sidePad * 2) / refW))
+        let sidePad: CGFloat = 32
+        // Natural desktop Word proportions (~780pt page at 100%, shrinking smoothly on narrow windows)
+        let maxComfortableWidth: CGFloat = 820
+        let targetBaseWidth = min(maxComfortableWidth, vpW - sidePad * 2)
+        let baseScale = max(0.5, targetBaseWidth / refW)
         let scale = baseScale * CGFloat(model.zoom)
         lastScalePxPerPt = scale
 
-        let pageGap: CGFloat = 20
+        let pageGap: CGFloat = 24
         var y: CGFloat = 24
         var maxRight: CGFloat = vpW
         var result: [PlacedPageRect] = []
         for (idx, pt) in sizes.enumerated() {
             let wPx = max(1, CGFloat(pt.widthPt) * scale)
             let hPx = max(1, CGFloat(pt.heightPt) * scale)
-            let x = max(sidePad, (vpW - wPx) / 2)
+            let x = max(sidePad, (vpW - wPx) / 2.0)
             let rect = CGRect(x: x, y: y, width: wPx, height: hPx)
             result.append(PlacedPageRect(pageIndex: idx, frameInView: rect, widthPt: CGFloat(pt.widthPt), heightPt: CGFloat(pt.heightPt)))
             y += hPx + pageGap
@@ -149,14 +181,13 @@ final class DocxPageCanvasNSView: NSView, @preconcurrency NSTextInputClient {
             let pf = page.frameInView
             guard pf.intersects(dirtyRect) else { continue }
 
-            // Page shadow + crisp white paper surface
             ctx.saveGState()
-            ctx.setShadow(offset: CGSize(width: 0, height: -2), blur: 8, color: NSColor.black.withAlphaComponent(0.14).cgColor)
+            ctx.setShadow(offset: CGSize(width: 0, height: -2), blur: 10, color: NSColor.black.withAlphaComponent(0.16).cgColor)
             NSColor.white.setFill()
             ctx.fill(pf)
             ctx.restoreGState()
 
-            ctx.setStrokeColor(NSColor(srgbRed: 0.88, green: 0.88, blue: 0.88, alpha: 1).cgColor)
+            ctx.setStrokeColor(NSColor(srgbRed: 0.85, green: 0.85, blue: 0.85, alpha: 1).cgColor)
             ctx.setLineWidth(1)
             ctx.stroke(pf)
 
@@ -197,7 +228,6 @@ final class DocxPageCanvasNSView: NSView, @preconcurrency NSTextInputClient {
                             width: CGFloat(tw) / backingScale,
                             height: CGFloat(th) / backingScale
                         )
-                        // In a flipped NSView, CGContext.draw expects inverted image coordinates
                         ctx.saveGState()
                         ctx.translateBy(x: 0, y: dst.maxY + dst.minY)
                         ctx.scaleBy(x: 1, y: -1)

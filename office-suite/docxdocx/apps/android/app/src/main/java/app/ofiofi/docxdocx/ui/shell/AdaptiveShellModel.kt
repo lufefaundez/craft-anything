@@ -25,6 +25,17 @@ data class RibbonSearchMatch(
     val control: RibbonControlSpec,
 )
 
+data class RibbonFormatSummary(
+    val font: String = "Aptos",
+    val size: String = "12",
+    val style: String = "Normal",
+    val colorHex: String = "auto",
+) {
+    companion object {
+        val Default = RibbonFormatSummary()
+    }
+}
+
 object AdaptiveShellModel {
     fun resolveFormFactor(isExpandedWidth: Boolean): ShellFormFactor =
         if (isExpandedWidth) ShellFormFactor.TABLET_EXPANDED_RIBBON else ShellFormFactor.PHONE_COMPACT_SHEET
@@ -138,9 +149,14 @@ object AdaptiveShellModel {
             if (jsonBool(formatStateJson, "bold")) add("format.bold")
             if (jsonBool(formatStateJson, "italic")) add("format.italic")
             if (jsonBool(formatStateJson, "underline")) add("format.underline")
-            if (jsonBool(formatStateJson, "strikethrough")) add("format.strike")
+            if (jsonBool(formatStateJson, "strike") || jsonBool(formatStateJson, "strikethrough")) {
+                add("format.strike")
+            }
             if (jsonBool(formatStateJson, "superscript")) add("format.superscript")
             if (jsonBool(formatStateJson, "subscript")) add("format.subscript")
+            if (jsonString(formatStateJson, "highlight")?.let { it.isNotEmpty() && it != "none" } == true) {
+                add("format.highlight")
+            }
             when (jsonString(formatStateJson, "align")) {
                 "left" -> add("para.alignLeft")
                 "center" -> add("para.alignCenter")
@@ -150,7 +166,24 @@ object AdaptiveShellModel {
             if (jsonBool(formatStateJson, "bullets")) add("para.bullets")
             if (jsonBool(formatStateJson, "numbering")) add("para.numbering")
             if (jsonBool(formatStateJson, "marks")) add("view.marks")
+            if (jsonBool(formatStateJson, "trackChanges") || jsonBool(formatStateJson, "track_changes")) {
+                add("review.trackChanges")
+            }
         }
+
+    fun parseFormatSummary(formatStateJson: String): RibbonFormatSummary {
+        val font = jsonString(formatStateJson, "font")?.takeIf { it.isNotBlank() } ?: "Aptos"
+        val rawSize = jsonNumber(formatStateJson, "size")
+        val size = rawSize?.let { num ->
+            val asInt = num.toInt()
+            if (kotlin.math.abs(num - asInt) < 0.01) asInt.toString() else num.toString()
+        } ?: "12"
+        val style = jsonString(formatStateJson, "styleName")?.takeIf { it.isNotBlank() }
+            ?: jsonString(formatStateJson, "style")?.takeIf { it.isNotBlank() }
+            ?: "Normal"
+        val colorHex = jsonString(formatStateJson, "color")?.takeIf { it.isNotBlank() } ?: "auto"
+        return RibbonFormatSummary(font = font, size = size, style = style, colorHex = colorHex)
+    }
 
     fun parseActiveContexts(formatStateJson: String): Set<String> =
         buildSet {
@@ -179,6 +212,11 @@ object AdaptiveShellModel {
     private fun jsonString(json: String, key: String): String? {
         val pattern = Regex(""""${Regex.escape(key)}"\s*:\s*"([^"]*)"""")
         return pattern.find(json)?.groupValues?.get(1)
+    }
+
+    private fun jsonNumber(json: String, key: String): Double? {
+        val pattern = Regex(""""${Regex.escape(key)}"\s*:\s*(-?\d+(?:\.\d+)?)""")
+        return pattern.find(json)?.groupValues?.get(1)?.toDoubleOrNull()
     }
 
     private fun foldSpanish(input: String): String =

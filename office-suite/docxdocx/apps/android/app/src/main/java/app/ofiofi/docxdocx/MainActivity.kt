@@ -10,7 +10,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -29,22 +31,39 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.ofiofi.docxdocx.canvas.DocumentCanvas
 import app.ofiofi.docxdocx.canvas.DocumentLayoutMode
+import app.ofiofi.docxdocx.input.KeyboardShortcutRegistry
 import app.ofiofi.docxdocx.input.SessionDocumentTextSink
 import app.ofiofi.docxdocx.input.WordInputBridge
 import app.ofiofi.docxdocx.input.WordInputHost
 import app.ofiofi.docxdocx.input.WordInputView
+import app.ofiofi.docxdocx.print.DocxPrintDocumentAdapter
 import app.ofiofi.docxdocx.storage.RecentDocEntry
 import app.ofiofi.docxdocx.storage.RecentDocumentStore
 import app.ofiofi.docxdocx.storage.SafDocumentHelper
 import app.ofiofi.docxdocx.storage.StorageProviderKind
 import app.ofiofi.docxdocx.ui.backstage.BackstageArchivoOverlay
+import app.ofiofi.docxdocx.ui.canvas.HorizontalPageRuler
+import app.ofiofi.docxdocx.ui.canvas.VerticalPageRuler
+import app.ofiofi.docxdocx.ui.dialogs.OfficeDialogRouter
+import app.ofiofi.docxdocx.ui.dialogs.OfficeModalDialogHost
+import app.ofiofi.docxdocx.ui.dialogs.OfficeModalDialogKind
+import app.ofiofi.docxdocx.ui.ink.InkEngineBridge
+import app.ofiofi.docxdocx.ui.ink.InkStroke
+import app.ofiofi.docxdocx.ui.ink.InkToolKind
+import app.ofiofi.docxdocx.ui.ink.StylusInkOverlay
+import app.ofiofi.docxdocx.ui.ribbon.AdvancedToolPanel
+import app.ofiofi.docxdocx.ui.ribbon.FindReplaceOverlayBar
+import app.ofiofi.docxdocx.ui.ribbon.QuickNoteComposerBar
+import app.ofiofi.docxdocx.ui.ribbon.RibbonAdvancedPresets
 import app.ofiofi.docxdocx.ui.shell.AdaptiveShellModel
 import app.ofiofi.docxdocx.ui.shell.DocxAdaptiveChrome
+import app.ofiofi.docxdocx.ui.shell.RibbonFormatSummary
 import app.ofiofi.docxdocx.ui.theme.OfficeTokens
 import uniffi.word_mobile_ffi.CommandOutcome
 import uniffi.word_mobile_ffi.MobileDocumentSession
@@ -105,6 +124,7 @@ fun DocxWorkspaceScreen(
 ) {
     val context = LocalContext.current
     val surfaces = if (isDark) OfficeTokens.DarkSurfaces else OfficeTokens.LightSurfaces
+    val accent = if (isDark) OfficeTokens.AppAccents.Word.accentDark else OfficeTokens.AppAccents.Word.accentLight
     val formFactor = remember(isExpandedWidth) { AdaptiveShellModel.resolveFormFactor(isExpandedWidth) }
     val recentStore = remember(context) { RecentDocumentStore(context) }
 
@@ -120,6 +140,13 @@ fun DocxWorkspaceScreen(
     var canRedo by remember { mutableStateOf(false) }
     var activeToggleIds by remember { mutableStateOf(emptySet<String>()) }
     var activeContexts by remember { mutableStateOf(emptySet<String>()) }
+    var formatSummary by remember { mutableStateOf(RibbonFormatSummary.Default) }
+    var showRuler by remember(isExpandedWidth) { mutableStateOf(isExpandedWidth) }
+    var activeToolPanel by remember { mutableStateOf<AdvancedToolPanel?>(null) }
+    var activeModalDialog by remember { mutableStateOf<OfficeModalDialogKind?>(null) }
+    var activeInkTool by remember { mutableStateOf(InkToolKind.NONE) }
+    var inkStrokes by remember { mutableStateOf(emptyList<InkStroke>()) }
+    var inkReplayTrigger by remember { mutableIntStateOf(0) }
     var statusMessage by remember {
         mutableStateOf("Página 1 de ${activeSession.pageCount()}  •  ${activeSession.wordCount()} palabras")
     }
@@ -131,6 +158,7 @@ fun DocxWorkspaceScreen(
         canRedo = outcome.canRedo
         activeToggleIds = AdaptiveShellModel.parseActiveToggleIds(outcome.formatStateJson)
         activeContexts = AdaptiveShellModel.parseActiveContexts(outcome.formatStateJson)
+        formatSummary = AdaptiveShellModel.parseFormatSummary(outcome.formatStateJson)
         docRevision += 1
         val pageIdx = (outcome.selection.caret?.pageIndex?.toInt() ?: 0) + 1
         statusMessage = "Página $pageIdx de ${outcome.pageCount}  •  ${outcome.wordCount} palabras"
@@ -147,6 +175,7 @@ fun DocxWorkspaceScreen(
             canRedo = false
             activeToggleIds = emptySet()
             activeContexts = emptySet()
+            formatSummary = RibbonFormatSummary.Default
             docRevision += 1
             statusMessage = "Página 1 de ${nextSession.pageCount()}  •  ${nextSession.wordCount()} palabras"
             if (originStr != null) {
@@ -160,78 +189,197 @@ fun DocxWorkspaceScreen(
         WordInputBridge(SessionDocumentTextSink(activeSession), applyOutcome)
     }
 
-    Box(modifier = Modifier.fillMaxSize()) {
+    val dispatchCommand: (String, String) -> Unit = { commandId, paramsJson ->
+        val inkTool = InkEngineBridge.toolForCommand(commandId)
+        val dialogKind = OfficeDialogRouter.dialogForCommand(commandId)
+        val panel = RibbonAdvancedPresets.panelForCommand(commandId)
+        when {
+            commandId == "ui.openBackstage" -> showBackstage = true
+            commandId == "file.print" -> DocxPrintDocumentAdapter.launchPrintJob(context, documentTitle, activeSession)
+            commandId == "view.ruler" -> showRuler = !showRuler
+            commandId == "view.zoom100" -> zoom = 1.0f
+            inkTool != null -> {
+                activeInkTool = if (activeInkTool == inkTool && inkTool != InkToolKind.NONE) InkToolKind.NONE else inkTool
+            }
+            commandId == "draw.replay" -> inkReplayTrigger += 1
+            commandId == "draw.inkToShape" -> {
+                if (inkStrokes.isNotEmpty()) {
+                    inkStrokes = emptyList()
+                    runCatching {
+                        val outcome = activeSession.executeCommand("insert.shape", """{"kind":"rectangle"}""")
+                        applyOutcome(outcome)
+                    }
+                }
+            }
+            dialogKind != null -> activeModalDialog = dialogKind
+            panel != null && paramsJson == "{}" -> activeToolPanel = panel
+            else -> {
+                runCatching {
+                    val outcome = activeSession.executeCommand(commandId, paramsJson)
+                    applyOutcome(outcome)
+                }
+            }
+        }
+    }
+
+    val effectiveToggleIds = buildSet {
+        addAll(activeToggleIds)
+        if (showRuler) add("view.ruler")
+        when (activeInkTool) {
+            InkToolKind.PEN -> add("draw.pen")
+            InkToolKind.PENCIL -> add("draw.pencil")
+            InkToolKind.HIGHLIGHTER -> add("draw.highlighter")
+            InkToolKind.ERASER -> add("draw.eraser")
+            InkToolKind.LASSO -> add("draw.lasso")
+            InkToolKind.NONE -> Unit
+        }
+    }
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .onPreviewKeyEvent { keyEvent ->
+                val match = KeyboardShortcutRegistry.resolveKeyEvent(keyEvent.nativeKeyEvent)
+                if (match != null) {
+                    dispatchCommand(match.commandId, match.paramsJson)
+                    true
+                } else {
+                    false
+                }
+            },
+    ) {
         DocxAdaptiveChrome(
             formFactor = formFactor,
             catalog = catalog,
             documentTitle = documentTitle,
-            activeToggleIds = activeToggleIds,
+            activeToggleIds = effectiveToggleIds,
             activeContexts = activeContexts,
+            formatSummary = formatSummary,
             canUndo = canUndo,
             canRedo = canRedo,
             isDark = isDark,
-            onExecuteCommand = { commandId, paramsJson ->
-                if (commandId == "ui.openBackstage") {
-                    showBackstage = true
-                } else {
-                    runCatching {
-                        val outcome = activeSession.executeCommand(commandId, paramsJson)
-                        applyOutcome(outcome)
-                    }
-                }
-            },
+            onExecuteCommand = dispatchCommand,
             onOpenBackstage = { showBackstage = true },
             canvasContent = { canvasModifier ->
-                Box(modifier = canvasModifier) {
-                    WordInputHost(
-                        bridge = inputBridge,
-                        onViewReady = { inputViewRef = it },
-                        modifier = Modifier.size(1.dp),
-                    )
-                    DocumentCanvas(
-                        session = activeSession,
-                        docRevision = docRevision,
-                        selectionGeometry = selectionGeometry,
-                        isDark = isDark,
-                        zoom = zoom,
-                        layoutMode = layoutMode,
-                        onZoomChange = { zoom = it },
-                        onToggleLayoutMode = {
-                            val nextMode = if (layoutMode == DocumentLayoutMode.PRINT_LAYOUT) {
-                                DocumentLayoutMode.MOBILE_REFLOW
-                            } else {
-                                DocumentLayoutMode.PRINT_LAYOUT
-                            }
-                            runCatching {
-                                val cmd = if (nextMode == DocumentLayoutMode.MOBILE_REFLOW) "view.webLayout" else "view.printLayout"
-                                val outcome = activeSession.executeCommand(cmd, "{}")
-                                layoutMode = nextMode
-                                applyOutcome(outcome)
-                            }
-                        },
-                        onTapPage = { hit, tapCount ->
-                            inputViewRef?.showSoftKeyboard()
-                            runCatching {
-                                selectionGeometry = when (tapCount) {
-                                    2 -> activeSession.doubleTapAt(hit.pageIndex.toUInt(), hit.xPt, hit.yPt)
-                                    3 -> activeSession.tripleTapAt(hit.pageIndex.toUInt(), hit.xPt, hit.yPt)
-                                    else -> activeSession.tapAt(hit.pageIndex.toUInt(), hit.xPt, hit.yPt)
+                Column(modifier = canvasModifier) {
+                    when (activeToolPanel) {
+                        AdvancedToolPanel.FIND_REPLACE -> FindReplaceOverlayBar(
+                            surfaces = surfaces,
+                            accent = accent,
+                            onExecuteCommand = { cmd, json ->
+                                runCatching {
+                                    val outcome = activeSession.executeCommand(cmd, json)
+                                    applyOutcome(outcome)
                                 }
-                                val pageIdx = (selectionGeometry.caret?.pageIndex?.toInt() ?: hit.pageIndex) + 1
-                                statusMessage = "Página $pageIdx de ${activeSession.pageCount()}  •  ${activeSession.wordCount()} palabras"
-                            }
-                        },
-                        onSelectionUpdated = { updated ->
-                            selectionGeometry = updated
-                        },
-                        onQuickCommand = { cmdId ->
-                            runCatching {
-                                val outcome = activeSession.executeCommand(cmdId, "{}")
-                                applyOutcome(outcome)
-                            }
-                        },
-                        modifier = Modifier.fillMaxSize(),
-                    )
+                            },
+                            onDismiss = { activeToolPanel = null },
+                        )
+                        AdvancedToolPanel.NEW_COMMENT -> QuickNoteComposerBar(
+                            title = "Nuevo comentario",
+                            placeholder = "Escribir comentario de revisión...",
+                            confirmLabel = "Comentar",
+                            surfaces = surfaces,
+                            accent = accent,
+                            onSubmit = { note ->
+                                runCatching {
+                                    val outcome = activeSession.executeCommand(
+                                        "review.newComment",
+                                        RibbonAdvancedPresets.buildCommentPayload(note),
+                                    )
+                                    applyOutcome(outcome)
+                                }
+                            },
+                            onDismiss = { activeToolPanel = null },
+                        )
+                        AdvancedToolPanel.NEW_FOOTNOTE -> QuickNoteComposerBar(
+                            title = "Nota al pie",
+                            placeholder = "Texto de la nota al pie...",
+                            confirmLabel = "Insertar nota",
+                            surfaces = surfaces,
+                            accent = accent,
+                            onSubmit = { note ->
+                                runCatching {
+                                    val outcome = activeSession.executeCommand(
+                                        "references.footnote",
+                                        RibbonAdvancedPresets.buildFootnotePayload(note),
+                                    )
+                                    applyOutcome(outcome)
+                                }
+                            },
+                            onDismiss = { activeToolPanel = null },
+                        )
+                        null -> Unit
+                    }
+                    if (showRuler) {
+                        HorizontalPageRuler(
+                            zoom = zoom,
+                            surfaces = surfaces,
+                        )
+                    }
+                    Row(modifier = Modifier.weight(1f).fillMaxWidth()) {
+                        if (showRuler && isExpandedWidth) {
+                            VerticalPageRuler(surfaces = surfaces)
+                        }
+                        Box(modifier = Modifier.weight(1f).fillMaxHeight()) {
+                            WordInputHost(
+                                bridge = inputBridge,
+                                onViewReady = { inputViewRef = it },
+                                modifier = Modifier.size(1.dp),
+                            )
+                            DocumentCanvas(
+                                session = activeSession,
+                                docRevision = docRevision,
+                                selectionGeometry = selectionGeometry,
+                                isDark = isDark,
+                                zoom = zoom,
+                                layoutMode = layoutMode,
+                                onZoomChange = { zoom = it },
+                                onToggleLayoutMode = {
+                                    val nextMode = if (layoutMode == DocumentLayoutMode.PRINT_LAYOUT) {
+                                        DocumentLayoutMode.MOBILE_REFLOW
+                                    } else {
+                                        DocumentLayoutMode.PRINT_LAYOUT
+                                    }
+                                    runCatching {
+                                        val cmd = if (nextMode == DocumentLayoutMode.MOBILE_REFLOW) "view.webLayout" else "view.printLayout"
+                                        val outcome = activeSession.executeCommand(cmd, "{}")
+                                        layoutMode = nextMode
+                                        applyOutcome(outcome)
+                                    }
+                                },
+                                onTapPage = { hit, tapCount ->
+                                    inputViewRef?.showSoftKeyboard()
+                                    runCatching {
+                                        selectionGeometry = when (tapCount) {
+                                            2 -> activeSession.doubleTapAt(hit.pageIndex.toUInt(), hit.xPt, hit.yPt)
+                                            3 -> activeSession.tripleTapAt(hit.pageIndex.toUInt(), hit.xPt, hit.yPt)
+                                            else -> activeSession.tapAt(hit.pageIndex.toUInt(), hit.xPt, hit.yPt)
+                                        }
+                                        val pageIdx = (selectionGeometry.caret?.pageIndex?.toInt() ?: hit.pageIndex) + 1
+                                        statusMessage = "Página $pageIdx de ${activeSession.pageCount()}  •  ${activeSession.wordCount()} palabras"
+                                    }
+                                },
+                                onSelectionUpdated = { updated ->
+                                    selectionGeometry = updated
+                                },
+                                onQuickCommand = { cmdId ->
+                                    dispatchCommand(cmdId, "{}")
+                                },
+                                modifier = Modifier.fillMaxSize(),
+                            )
+                            StylusInkOverlay(
+                                strokes = inkStrokes,
+                                activeTool = activeInkTool,
+                                activeColorArgb = InkEngineBridge.defaultColorForTool(activeInkTool),
+                                replayTrigger = inkReplayTrigger,
+                                onAddStroke = { stroke -> inkStrokes = inkStrokes + stroke },
+                                onEraseAt = { x, y ->
+                                    inkStrokes = inkStrokes.filterNot { InkEngineBridge.hitTestStroke(it, x, y) }
+                                },
+                                modifier = Modifier.fillMaxSize(),
+                            )
+                        }
+                    }
                 }
             },
             statusBarContent = {
@@ -305,6 +453,23 @@ fun DocxWorkspaceScreen(
                     }
                 },
                 onGetDocxBytes = { activeSession.saveDocxBytes() },
+            )
+        }
+
+        activeModalDialog?.let { kind ->
+            OfficeModalDialogHost(
+                dialogKind = kind,
+                formatSummary = formatSummary,
+                activeToggleIds = activeToggleIds,
+                surfaces = surfaces,
+                accent = accent,
+                onSwitchDialog = { activeModalDialog = it },
+                onExecuteCommands = { calls ->
+                    calls.forEach { call ->
+                        dispatchCommand(call.commandId, call.paramsJson)
+                    }
+                },
+                onDismiss = { activeModalDialog = null },
             )
         }
     }
